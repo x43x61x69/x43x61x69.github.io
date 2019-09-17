@@ -207,6 +207,9 @@ sub {
   opacity: 0.25;
   margin-right: 30px;
   font-size: 16px;
+	white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 @media only screen
@@ -294,6 +297,7 @@ li a:hover, .active {
 .menu-note {
   margin-right: 20px;
   font-size: 12px;
+	max-width: 30%;
 }
 }
 
