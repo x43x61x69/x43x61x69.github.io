@@ -17,6 +17,11 @@ $(document).ready(function() {
 		$("#made").removeClass("active");
     });
 
+	$("#contact").mouseover(function(){
+        $("#made-menu").fadeOut(100);
+		$("#made").removeClass("active");
+    });
+
 	$(".link").click(function(){
 				$("#made").removeClass("active");
         $("#made-menu").fadeOut(100);

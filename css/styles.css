@@ -267,8 +267,8 @@ body {
 	background: #555555;
 	height: 2px;
 	margin: 6px 0;
-    padding: 0;
-    display: block;
+  padding: 0;
+  display: block;
 }
 li.link a, .star {
 	text-decoration: none;
