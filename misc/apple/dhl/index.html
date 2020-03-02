@@ -25,9 +25,19 @@
     </style>
   </head>
     <body>
-      <input type="text" id="awb" name="awb" placeholder="Tracking#">
+      <label for="locale">Tracking #:</label>
+      <input type="text" id="awb" name="awb" placeholder="Tracking #">
       <button onclick="load()">Load</button>
       <br />
+      <label for="locale">Localization:</label>
+	  <select id="locale" name="locale">
+		<option value="ZT" selected>正體中文</option>
+		<option value="ZH">簡體中文</option>
+		<option value="ZF">English</option>
+		<option value="JP">日本語</option>
+	  </select>
+      <br />
+      <label for="locale">Step:</label>
       <button onclick="prev()">Prev</button>
       <input type="text" id="step" name="step" value="1" placeholder="Step(s)">
       <button onclick="next()">Next</button>
@@ -44,12 +54,18 @@
         function load()
         {
             var awb = parseInt(document.getElementById("awb").value);
+            var locale = document.getElementById("locale").value.trim().toUpperCase();
+            var localeStr = '';
             if (Number.isNaN(awb) || awb < 0)
             {
               awb = sample;
               document.getElementById("awb").value = awb;
             }
-            document.getElementById('dhlView').src = url + awb.toString();
+            if (locale)
+            {
+              localeStr = '&LOCALE=' + locale;
+            }
+            document.getElementById('dhlView').src = url + awb.toString() + localeStr;
         }
         function checkIframeLoaded()
         {
@@ -81,6 +97,10 @@
             else if (e.keyCode == '39')
             {
                next();
+            }
+            else if (e.keyCode == '82')
+            {
+               load();
             }
         }
         function prev()
