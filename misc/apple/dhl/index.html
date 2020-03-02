@@ -47,7 +47,7 @@
       <script>
 
         const sample = 8477545215;
-        const url = "http://mrt2.ap.dhl.com/mrt?";
+        const url = "http://mrt2.ap.dhl.com/mrt?CUSTCODE=APPLEASEAN";
 
         load();
         document.onkeydown = keyDown;
@@ -64,9 +64,9 @@
             }
             if (locale)
             {
-              localeStr = 'LOCALE=' + locale + '&';
+              localeStr = '&LOCALE=' + locale;
             }
-            document.getElementById('dhlView').src = url + localeStr + 'AWB=' + awb.toString();
+            document.getElementById('dhlView').src = url + localeStr + '&AWB=' + awb.toString();
         }
         function checkIframeLoaded()
         {
