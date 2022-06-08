@@ -6,10 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>One</title>
-  <meta name='description' content='Been there. Done that.'>
+  <title>Install macOS Ventura Beta in VMware Fusion | One</title>
+  <meta name='description' content='Test out all the new features without taking risks.'>
 
-  <link rel="canonical" href="http://0.0.0.0/">
+  <link rel="canonical" href="http://0.0.0.0/blog/install-macos-ventura-beta-in-vmware-fusion">
   <link rel="alternate" type="application/rss+xml" title="One" href="/feed.xml">
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -17,14 +17,14 @@
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="One">
-  <meta name="twitter:description" content="Been there. Done that.">
-  <meta name="twitter:image:src" content="http://0.0.0.0/images/01.jpg">
+  <meta name="twitter:title" content="Install macOS Ventura Beta in VMware Fusion – One">
+  <meta name="twitter:description" content="Test out all the new features without taking risks.">
+  <meta name="twitter:image:src" content="http://0.0.0.0/images/8187bc26-3fab-4947-be03-2fac6c048001_cover.jpg">
 
   <!-- Facebook OpenGraph -->
-  <meta property="og:title" content="One">
-  <meta property="og:description" content="Been there. Done that.">
-  <meta property="og:image" content="http://0.0.0.0/images/01.jpg">
+  <meta property="og:title" content="Install macOS Ventura Beta in VMware Fusion – One">
+  <meta property="og:description" content="Test out all the new features without taking risks.">
+  <meta property="og:image" content="http://0.0.0.0/images/8187bc26-3fab-4947-be03-2fac6c048001_cover.jpg">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -89,7 +89,7 @@
               
                 
                 <li class="nav__item">
-                  <a href="/" class="nav__link active-link">Home</a>
+                  <a href="/" class="nav__link">Home</a>
                 </li>
                 
               
@@ -173,83 +173,250 @@
 
   <!-- begin content -->
   <main class="content" aria-label="Content">
-    
-  <!-- begin hero -->
-<section class="hero">
+    <div class="post-head post-image-right">
   <div class="container">
-    <div class="hero__inner">
-      <h1 class="hero__title">Welcome to One.</h1>
-      <p class="hero__description">This is my personal blog, where I share about the things I see and what I'm learning. Hope you find them interesting.</p>
+    <div class="row">
+
+      <div class="col col-6 col-d-12 post-head__info">
+        <div class="post__info">
+
+          
+          <div class="post__tags">
+            
+              <a href="/tags#Mac" class="post__tag" style="background-color: #f73535;" >Mac</a>
+            
+          </div>
+          
+
+          <h1 class="post__title">Install macOS Ventura Beta in VMware Fusion</h1>
+
+          <div class="post__meta">
+            
+              <a href="/about/" class="post__author">Cai</a>
+            
+            <time datetime="2022-06-08T14:54:24+08:00" class="post__date">08 Jun 2022</time>
+          </div>
+
+        </div>
+      </div>
+
+      
+      <div class="col col-6 col-d-12 post-head__image">
+        <div class="post-image">
+          <img class="lazy" data-src="/images/8187bc26-3fab-4947-be03-2fac6c048001_cover.jpg" alt="Install macOS Ventura Beta in VMware Fusion">
+        </div>
+      </div>
+      
+
     </div>
   </div>
-</section>
-<!-- end hero -->
-  
+</div>
+
+<!-- begin post -->
+<div class="container animate">
+
+  <article class="post">
+
+    <div class="post__content">
+      
+        
+        
+        <div class="post__locale">
+          <h4>Read this post in a different language:</h4>
+          <ul>
+          
+            
+            
+          
+            
+            <li>
+              <a href="/tw/blog/install-macos-ventura-beta-in-vmware-fusion" class="tw" title="閱讀中文版本">🇹🇼 中文</a>
+            </li>
+            
+          
+          </ul>
+        </div>
+        <hr />
+        
+      
+      <p>macOS 13 “Ventura” beta has just been announced at the WWDC 2022. In case you want to test it out without breaking anything vital to your existing workflow, install it as a VM sounds like a great way to start.</p>
+
+<p>I use VMware vSphere on a daily basis for work, and it’s only nature for me to choose Fusion on macOS for virtualization. Unfortunately, since macOS Monterey, VMware Fusion has some issues preventing it from working as intended. This guide is to help you jump through all the necessary hoops in order to install macOS Ventura in VMware Fusion.</p>
+
+<h2 id="pre-requirements">Pre-requirements</h2>
+
+<ul>
+  <li>(Preferably) an Intel Mac <a href="https://www.apple.com/macos/macos-ventura-preview/">supported by macOS Ventura</a>.</li>
+  <li>A copy of macOS Ventura installer (more on this later).</li>
+  <li><a href="https://www.vmware.com/go/getfusion">VMware Fusion 12.2</a> or later.</li>
+</ul>
+
+<p>Beware that, although technically it’s possible to install macOS Ventura in a VM on an ARM-based Mac with <a href="https://customerconnect.vmware.com/downloads/get-download?downloadGroup=FUS-PUBTP-2021H1">VMware Fusion Technical Preview</a>, it isn’t officially supported at the time of writing. You can search for other guides to setup the environment before you can follow this guide.</p>
+
+<h2 id="obtain-the-macos-ventura-installer">Obtain the macOS Ventura Installer</h2>
+
+<p>At the time of writing, there’s only <a href="https://developer.apple.com/download/">Developer Beta</a> version available and require an active Apple Developer Subscription to obtain the installer legally. If you do not have a developer subscription, you also can wait until the <a href="https://beta.apple.com/sp/betaprogram">Public Beta</a> is available. I strongly recommend <strong>NOT</strong> to download the installer from any source other than Apple for security reasons.</p>
+
+<p>Here are some links directly from Apple CDN (use them at your own risk):</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Release</th>
+      <th>Build</th>
+      <th>Download</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Beta 1</td>
+      <td>22A5266r</td>
+      <td><a href="https://swcdn.apple.com/content/downloads/38/13/012-20267-A_8II0GZVCTD/vsifpgvw3a3xjgyznf6415vin9xv7a6ws5/InstallAssistant.pkg">InstallAssistant.pkg</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>If you use the “<code class="language-plaintext highlighter-rouge">macOS Developer Beta Access Utility</code>” to get the installer, remember to make a copy of the app bundle somewhere first in case it got deleted once you cancel the installation. If you choose to get the “<code class="language-plaintext highlighter-rouge">InstallAssistant.pkg</code>”, you would need to install it first in order to get the required “<code class="language-plaintext highlighter-rouge">Install macOS 13 beta.app</code>” within your Applications folder for this guide.</p>
+
+<h2 id="create-the-installation-media">Create the Installation Media</h2>
+
+<p>This was usually done automatically by Fusion. But as mentioned earlier, it’s broken since Monterey so we would’ve to do it manually.</p>
+
+<p>Make sure you the “<code class="language-plaintext highlighter-rouge">Install macOS 13 beta.app</code>” is in your Applications folder and have at least 30GB of free space left on your system partition. Then use the following commands in the Terminal to create an ISO:</p>
+
+<div class="language-zsh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>hdiutil create <span class="nt">-o</span> /tmp/Ventura <span class="nt">-size</span> 13650m <span class="nt">-volname</span> Ventura <span class="nt">-layout</span> SPUD <span class="nt">-fs</span> HFS+J
+hdiutil attach /tmp/Ventura.dmg <span class="nt">-noverify</span> <span class="nt">-mountpoint</span> /Volumes/Ventura
+<span class="nb">sudo</span> /Applications/Install<span class="se">\ </span>macOS<span class="se">\ </span>13<span class="se">\ </span>beta.app/Contents/Resources/createinstallmedia <span class="nt">--volume</span> /Volumes/Ventura <span class="nt">--nointeraction</span>
+<span class="nb">sudo </span>hdiutil detach <span class="nt">-force</span> /Volumes/Install<span class="se">\ </span>macOS<span class="se">\ </span>Ventura
+hdiutil convert /tmp/Ventura.dmg <span class="nt">-format</span> UDTO <span class="nt">-o</span> ~/Desktop/Ventura.cdr
+<span class="nb">mv</span> ~/Desktop/Ventura.cdr ~/Desktop/Ventura.iso
+<span class="nb">rm</span> /tmp/Ventura.dmg
+</code></pre></div></div>
+
+<p>If you have done it correctly, you should have a file named “<code class="language-plaintext highlighter-rouge">Ventura.iso</code>” on your Desktop.</p>
+
+<p><a href="https://support.apple.com/en-us/HT201372">Here</a> is the official guide for creating bootable installer.</p>
+
+<h2 id="configure-the-vm">Configure the VM</h2>
+
+<p>Simply create a new VM in Fusion with the ISO we just created. Select the operating system as “Apple OS X &gt; macOS 11”, customize the hardware if needed then save it somewhere you prefer WITHOUT turning it on yet.</p>
+
+<p>Now select the VM you just created in the <em>Virtual Machine Library</em> (open with <code class="language-plaintext highlighter-rouge">Shift + CMD + L</code>), right click on it and move the cursor to “Show in Finder”. Now hold <code class="language-plaintext highlighter-rouge">Option</code> key, the item will change to “Open Config File in Editor”. Click on the item and the VMX file will be opened with TextEdit:</p>
+
+<p><img src="/images/8187bc26-3fab-4947-be03-2fac6c048001_001.gif" alt="Edit VMX" /></p>
+
+<p>Add the following lines to the VMX file (doesn’t matter where):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>appleGPU0.present = "TRUE"
+svga.present = "FALSE"
+</code></pre></div></div>
+
+<p>This will greatly improves the graphic performance later on.</p>
+
+<p>To fix the eternet connection, find the follow line:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ethernet0.virtualDev = "e1000e"
+</code></pre></div></div>
+
+<p>And change the “<code class="language-plaintext highlighter-rouge">e1000e</code>” to “<code class="language-plaintext highlighter-rouge">vmxnet3</code>”.</p>
+
+<p>If you wish, you can also make the VM relecting the actual hardware you have by adding the following line:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SMBIOS.reflectHost = "TRUE"
+SMBIOS.noOEMStrings = "TRUE"
+smbios.addHostVendor = "TRUE"
+</code></pre></div></div>
+
+<p>Now save the VMX file and close the editor.</p>
+
+<h2 id="install-macos-ventura">Install macOS Ventura</h2>
+
+<p>By now, you should be able to install it normally just like any previous versions of macOS! Simply boot up the VM we just setup and follow through the setup process.</p>
+
+<p>Once the installation is done, use the VMware Tools <a href="https://customerconnect.vmware.com/en/downloads/info/slug/datacenter_cloud_infrastructure/vmware_tools/12_x">here</a> instead of the built-in one so you can <a href="https://kb.vmware.com/s/article/81657">dynamically adjust the screen resolutions</a>.</p>
+
+<p><img src="/images/8187bc26-3fab-4947-be03-2fac6c048001_002.jpg" alt="macOS Ventura" /></p>
+
+<p>You should now have a fully working VM os macOS Ventura.</p>
+
+    </div>
+
+    <div class="post__share">
+      <ul class="share__list list-reset">
+        <li class="share__item">
+          <a class="share__link share__twitter"
+            href="https://twitter.com/intent/tweet?text=Install%20macOS%20Ventura%20Beta%20in%20VMware%20Fusion&url=http://0.0.0.0:80/blog/install-macos-ventura-beta-in-vmware-fusion"
+            onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"
+            title="Share on Twitter" rel="nofollow"><i class="ion ion-logo-twitter"></i></a>
+        </li>
+        <li class="share__item">
+          <a class="share__link share__facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://0.0.0.0:80/blog/install-macos-ventura-beta-in-vmware-fusion"
+            onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"
+            title="Share on Facebook" rel="nofollow"><i class="ion ion-logo-facebook"></i></a>
+        </li>
+      </ul>
+    </div>
+
+    
+    
+    
+
+    
+
+    <div class="post__navigation">
+      
+
+      
+    </div>
+
+  </article>
+</div>
+<!-- end post -->
 
 
 
 
+
+
+
+
+
+
+<!-- begin related posts -->
 <div class="container">
-  <div class="row animate">
-    
-      
-        <div class="article col col-12 article--first">
-  <div class="article__inner">
+  <section class="related-posts  animate">
+    <div class="row">
+      <div class="col col-12">
+        <div class="container__inner">
+          <div class="section__info">
+            <div class="section__head">
+              <h2 class="section__title">You may also like</h2>
+                
+                
+                  
+                    <a href="/tags#Mac" class="section__link related-tag">See all<span> Mac</span></a>
+                  
+                
+              
+            </div>
+          </div>
+          <div class="row">
 
+          
+            
+            
 
-    <a class="article__image" href="/blog/install-macos-ventura-beta-in-vmware-fusion" style="background-color: #f73535;">
-      
-      <div class="article__image__cover image-cover-js" data-accent="#f73535"></div>
-      <img class="lazy" data-src="/images/8187bc26-3fab-4947-be03-2fac6c048001_cover.jpg" alt="Install macOS Ventura Beta in VMware Fusion">
-      
-    </a>
+            
 
-    <div class="article__content">
-
-      
-      <div class="article__tags">
-        
-          <a href="/tags#mac" class="article__tag" style="background-color: #f73535;">Mac</a>
-        
+            
+            
+          </div>
+        </div>
       </div>
-      
-
-      <h2 class="article__title">
-        <a href="/blog/install-macos-ventura-beta-in-vmware-fusion">Install macOS Ventura Beta in VMware Fusion</a>
-      </h2>
-
-      <div class="article__meta">
-        
-        <a href="/about/" class="article__author">Cai</a>
-        
-        <time datetime="2022-06-08T14:54:24+08:00" class="article__date" >08 Jun 2022</time>
-      </div>
-
     </div>
-  </div>
+  </section>
 </div>
-      
-    
-  </div>
-</div>
-
-<!-- begin pagination -->
-<nav class="pagination animate">
-  <div class="container">
-    <div class="pagination__list">
-
-      
-
-      <div class="counter-box">
-        
-      </div>
-
-      
-
-    </div>
-  </div>
-</nav>
-<!-- end pagination -->
+<!-- end related posts -->
 
 
   </main>

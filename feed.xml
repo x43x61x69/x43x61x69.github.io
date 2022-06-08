@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title></title>
+        <description></description>
+        <link>http://0.0.0.0:80/</link>
+        <atom:link href="http://0.0.0.0/feed.xml" rel="self" type="application/rss+xml"/>
+        <pubDate>Wed, 08 Jun 2022 16:29:42 +0800</pubDate>
+        <lastBuildDate>Wed, 08 Jun 2022 16:29:42 +0800</lastBuildDate>
+        <generator>Jekyll v4.2.2</generator>
+        
+            <item>
+                <title>在 VMware Fusion 中安裝 macOS Ventura 預覽版</title>
+                <description>&lt;p&gt;macOS 13 「Ventura」預覽版已於 WWDC 2022 正式發表。如果你想測試新系統帶來的全新功能而不影響到目前既有的工作流程，選擇透過虛擬機安裝測試版本的 macOS 是一個不錯的做法。&lt;/p&gt;
+
+&lt;p&gt;因為日常工作上經常會用到 VMware vSphere，所以選擇同門的 Fusion 作為 macOS 平台的虛擬化解決方案對我而言再自然不過。不幸的是，從 macOS Monterey 開始 VMware Fusion 就有許多小問題而無法正確的初始化系統安裝。這篇教學的目的便是教你如何順利的透過 VMware Fusion 安裝 將 macOS Ventura。&lt;/p&gt;
+
+&lt;h2 id=&quot;事前準備&quot;&gt;事前準備&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;（建議為）搭載 Intel 處理器且&lt;a href=&quot;https://www.apple.com/tw/macos/macos-ventura-preview/&quot;&gt;可以執行 macOS Ventura&lt;/a&gt; 的 Mac。&lt;/li&gt;
+  &lt;li&gt;macOS Ventura 的安裝磁碟（稍後詳述）。&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.vmware.com/go/getfusion&quot;&gt;VMware Fusion 12.2&lt;/a&gt; 或更新的版本。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;請留意，雖然技術上可以透過 &lt;a href=&quot;https://customerconnect.vmware.com/downloads/get-download?downloadGroup=FUS-PUBTP-2021H1&quot;&gt;VMware Fusion 技術預覽版&lt;/a&gt;於 ARM 架構的 Mac 上安裝 macOS Ventura，然而安裝 macOS 於本文撰寫時仍未獲得官方正式支援。你可以在網路上搜尋相關的前置作業以便繼續參照本教學的後續流程。&lt;/p&gt;
+
+&lt;h2 id=&quot;取得-macos-ventura-安裝磁碟&quot;&gt;取得 macOS Ventura 安裝磁碟&lt;/h2&gt;
+
+&lt;p&gt;截至本文撰寫時，目前僅有&lt;a href=&quot;https://developer.apple.com/download/&quot;&gt;開發者預覽版&lt;/a&gt;（Developer Beta）可供下載，且需要訂閱 Apple 開發者會員方能合法取得。如果你不具有 Apple 開發者會員資格，你也可以等待日後的&lt;a href=&quot;https://beta.apple.com/sp/betaprogram&quot;&gt;公開預覽版&lt;/a&gt;（Public Beta）推出後再進行安裝。這裡強烈建議「不要」由任何非 Apple 的管道取得安裝磁碟以避免安全問題。&lt;/p&gt;
+
+&lt;p&gt;下列為 Apple CDN 上的下載連結（請自行判斷相關風險）：&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;發布&lt;/th&gt;
+      &lt;th&gt;版本&lt;/th&gt;
+      &lt;th&gt;下載&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Beta 1&lt;/td&gt;
+      &lt;td&gt;22A5266r&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;https://swcdn.apple.com/content/downloads/38/13/012-20267-A_8II0GZVCTD/vsifpgvw3a3xjgyznf6415vin9xv7a6ws5/InstallAssistant.pkg&quot;&gt;InstallAssistant.pkg&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;如果你是透過「&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;macOS Developer Beta Access Utility&lt;/code&gt;」來取得安裝磁碟，切記在下載完成後自動開啟的安裝流程取消前先複製一份安裝程式以便免其遭到自動刪除。如果你選擇下載「&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;InstallAssistant.pkg&lt;/code&gt;」，你必須先安裝它以便於「應用程式」資料夾中產生本教學所需要的「&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Install macOS 13 beta.app&lt;/code&gt;」。&lt;/p&gt;
+
+&lt;h2 id=&quot;製作安裝磁碟&quot;&gt;製作安裝磁碟&lt;/h2&gt;
+
+&lt;p&gt;這個步驟以往都是透過 Fusion 自動完成。不過如前述，自 Monterey 發布以來它便無法正常運作，我們需要手動進行安裝磁碟的製作。&lt;/p&gt;
+
+&lt;p&gt;請先確認「&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Install macOS 13 beta.app&lt;/code&gt;」已位於「應用程式」資料夾中，且系統磁碟分區尚有至少 30GB 的可用空間。接著在終端機中透過下列指令建立映像檔（ISO）：&lt;/p&gt;
+
+&lt;div class=&quot;language-zsh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;hdiutil create &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; /tmp/Ventura &lt;span class=&quot;nt&quot;&gt;-size&lt;/span&gt; 13650m &lt;span class=&quot;nt&quot;&gt;-volname&lt;/span&gt; Ventura &lt;span class=&quot;nt&quot;&gt;-layout&lt;/span&gt; SPUD &lt;span class=&quot;nt&quot;&gt;-fs&lt;/span&gt; HFS+J
+hdiutil attach /tmp/Ventura.dmg &lt;span class=&quot;nt&quot;&gt;-noverify&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-mountpoint&lt;/span&gt; /Volumes/Ventura
+&lt;span class=&quot;nb&quot;&gt;sudo&lt;/span&gt; /Applications/Install&lt;span class=&quot;se&quot;&gt;\ &lt;/span&gt;macOS&lt;span class=&quot;se&quot;&gt;\ &lt;/span&gt;13&lt;span class=&quot;se&quot;&gt;\ &lt;/span&gt;beta.app/Contents/Resources/createinstallmedia &lt;span class=&quot;nt&quot;&gt;--volume&lt;/span&gt; /Volumes/Ventura &lt;span class=&quot;nt&quot;&gt;--nointeraction&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;hdiutil detach &lt;span class=&quot;nt&quot;&gt;-force&lt;/span&gt; /Volumes/Install&lt;span class=&quot;se&quot;&gt;\ &lt;/span&gt;macOS&lt;span class=&quot;se&quot;&gt;\ &lt;/span&gt;Ventura
+hdiutil convert /tmp/Ventura.dmg &lt;span class=&quot;nt&quot;&gt;-format&lt;/span&gt; UDTO &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; ~/Desktop/Ventura.cdr
+&lt;span class=&quot;nb&quot;&gt;mv&lt;/span&gt; ~/Desktop/Ventura.cdr ~/Desktop/Ventura.iso
+&lt;span class=&quot;nb&quot;&gt;rm&lt;/span&gt; /tmp/Ventura.dmg
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;如果操作正確，這時你的桌面上將會有一個名為「&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Ventura.iso&lt;/code&gt;」的檔案。&lt;/p&gt;
+
+&lt;p&gt;Apple 官方關於如何製作可開機的 macOS 安裝磁碟的教學請見&lt;a href=&quot;https://support.apple.com/zh-tw/HT201372&quot;&gt;此處&lt;/a&gt;。&lt;/p&gt;
+
+&lt;h2 id=&quot;設定虛擬機&quot;&gt;設定虛擬機&lt;/h2&gt;
+
+&lt;p&gt;請依 VMware Fusion 內的指示，利用剛才製作的映像檔建立一個新的虛擬機。作業系統請選擇「Apple OS X &amp;gt; macOS 11」，並自訂硬體設置（如果需要），接著儲存虛擬機（但先「不要」啟動）。&lt;/p&gt;
+
+&lt;p&gt;接著於 &lt;em&gt;Virtual Machine Library&lt;/em&gt;（組合鍵 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Shift + CMD + L&lt;/code&gt;）中，在剛建立的虛擬機上按右鍵、將游標移至「Show in Finder」。此時按住「&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Option&lt;/code&gt;」鍵，剛才游標位置的選單會變為「Open Config File in Editor」。點選選項將會於文字編輯器中開啟 VMX 檔案：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/8187bc26-3fab-4947-be03-2fac6c048001_001.gif&quot; alt=&quot;Edit VMX&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;於 VMX 檔案中新增下列內容（任意位置）：&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;appleGPU0.present = &quot;TRUE&quot;
+svga.present = &quot;FALSE&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;這將會在之後顯著提升顯示效能。&lt;/p&gt;
+
+&lt;p&gt;修復乙太網路功能，在檔案中搜尋下面這行：&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ethernet0.virtualDev = &quot;e1000e&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;將此行中的「&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;e1000e&lt;/code&gt;」更改為「&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;vmxnet3&lt;/code&gt;」。&lt;/p&gt;
+
+&lt;p&gt;如果你想，也可以新增下列內容來將 Mac 的實體型號映射至虛擬機：&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;SMBIOS.reflectHost = &quot;TRUE&quot;
+SMBIOS.noOEMStrings = &quot;TRUE&quot;
+smbios.addHostVendor = &quot;TRUE&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;完成後儲存 VMX 檔案並關閉編輯器。&lt;/p&gt;
+
+&lt;h2 id=&quot;安裝-macos-ventura&quot;&gt;安裝 macOS Ventura&lt;/h2&gt;
+
+&lt;p&gt;至此，你應該有辦法正常的如同先前的 macOS 版本一樣進行安裝！只要啟動虛擬機，並依照安裝流程指示操作。&lt;/p&gt;
+
+&lt;p&gt;一旦安裝完成，安裝&lt;a href=&quot;https://customerconnect.vmware.com/en/downloads/info/slug/datacenter_cloud_infrastructure/vmware_tools/12_x&quot;&gt;此處&lt;/a&gt;的 VMware Tools 來代替內建的版本以便使用&lt;a href=&quot;https://kb.vmware.com/s/article/81657&quot;&gt;動態螢幕解析度&lt;/a&gt;功能。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/8187bc26-3fab-4947-be03-2fac6c048001_002.jpg&quot; alt=&quot;macOS Ventura&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;現在你有了一台功能完整的 macOS Ventura 虛擬機。&lt;/p&gt;
+</description>
+                <pubDate>Wed, 08 Jun 2022 14:54:24 +0800</pubDate>
+                <link>http://0.0.0.0/tw/blog/install-macos-ventura-beta-in-vmware-fusion</link>
+                <guid isPermaLink="true">http://0.0.0.0/tw/blog/install-macos-ventura-beta-in-vmware-fusion</guid>
+                
+                <category>Mac</category>
+                
+                
+                <category>tw</category>
+                
+            </item>
+        
+            <item>
+                <title>Install macOS Ventura Beta in VMware Fusion</title>
+                <description>&lt;p&gt;macOS 13 “Ventura” beta has just been announced at the WWDC 2022. In case you want to test it out without breaking anything vital to your existing workflow, install it as a VM sounds like a great way to start.&lt;/p&gt;
+
+&lt;p&gt;I use VMware vSphere on a daily basis for work, and it’s only nature for me to choose Fusion on macOS for virtualization. Unfortunately, since macOS Monterey, VMware Fusion has some issues preventing it from working as intended. This guide is to help you jump through all the necessary hoops in order to install macOS Ventura in VMware Fusion.&lt;/p&gt;
+
+&lt;h2 id=&quot;pre-requirements&quot;&gt;Pre-requirements&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;(Preferably) an Intel Mac &lt;a href=&quot;https://www.apple.com/macos/macos-ventura-preview/&quot;&gt;supported by macOS Ventura&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;A copy of macOS Ventura installer (more on this later).&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.vmware.com/go/getfusion&quot;&gt;VMware Fusion 12.2&lt;/a&gt; or later.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Beware that, although technically it’s possible to install macOS Ventura in a VM on an ARM-based Mac with &lt;a href=&quot;https://customerconnect.vmware.com/downloads/get-download?downloadGroup=FUS-PUBTP-2021H1&quot;&gt;VMware Fusion Technical Preview&lt;/a&gt;, it isn’t officially supported at the time of writing. You can search for other guides to setup the environment before you can follow this guide.&lt;/p&gt;
+
+&lt;h2 id=&quot;obtain-the-macos-ventura-installer&quot;&gt;Obtain the macOS Ventura Installer&lt;/h2&gt;
+
+&lt;p&gt;At the time of writing, there’s only &lt;a href=&quot;https://developer.apple.com/download/&quot;&gt;Developer Beta&lt;/a&gt; version available and require an active Apple Developer Subscription to obtain the installer legally. If you do not have a developer subscription, you also can wait until the &lt;a href=&quot;https://beta.apple.com/sp/betaprogram&quot;&gt;Public Beta&lt;/a&gt; is available. I strongly recommend &lt;strong&gt;NOT&lt;/strong&gt; to download the installer from any source other than Apple for security reasons.&lt;/p&gt;
+
+&lt;p&gt;Here are some links directly from Apple CDN (use them at your own risk):&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Release&lt;/th&gt;
+      &lt;th&gt;Build&lt;/th&gt;
+      &lt;th&gt;Download&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Beta 1&lt;/td&gt;
+      &lt;td&gt;22A5266r&lt;/td&gt;
+      &lt;td&gt;&lt;a href=&quot;https://swcdn.apple.com/content/downloads/38/13/012-20267-A_8II0GZVCTD/vsifpgvw3a3xjgyznf6415vin9xv7a6ws5/InstallAssistant.pkg&quot;&gt;InstallAssistant.pkg&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;If you use the “&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;macOS Developer Beta Access Utility&lt;/code&gt;” to get the installer, remember to make a copy of the app bundle somewhere first in case it got deleted once you cancel the installation. If you choose to get the “&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;InstallAssistant.pkg&lt;/code&gt;”, you would need to install it first in order to get the required “&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Install macOS 13 beta.app&lt;/code&gt;” within your Applications folder for this guide.&lt;/p&gt;
+
+&lt;h2 id=&quot;create-the-installation-media&quot;&gt;Create the Installation Media&lt;/h2&gt;
+
+&lt;p&gt;This was usually done automatically by Fusion. But as mentioned earlier, it’s broken since Monterey so we would’ve to do it manually.&lt;/p&gt;
+
+&lt;p&gt;Make sure you the “&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Install macOS 13 beta.app&lt;/code&gt;” is in your Applications folder and have at least 30GB of free space left on your system partition. Then use the following commands in the Terminal to create an ISO:&lt;/p&gt;
+
+&lt;div class=&quot;language-zsh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;hdiutil create &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; /tmp/Ventura &lt;span class=&quot;nt&quot;&gt;-size&lt;/span&gt; 13650m &lt;span class=&quot;nt&quot;&gt;-volname&lt;/span&gt; Ventura &lt;span class=&quot;nt&quot;&gt;-layout&lt;/span&gt; SPUD &lt;span class=&quot;nt&quot;&gt;-fs&lt;/span&gt; HFS+J
+hdiutil attach /tmp/Ventura.dmg &lt;span class=&quot;nt&quot;&gt;-noverify&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-mountpoint&lt;/span&gt; /Volumes/Ventura
+&lt;span class=&quot;nb&quot;&gt;sudo&lt;/span&gt; /Applications/Install&lt;span class=&quot;se&quot;&gt;\ &lt;/span&gt;macOS&lt;span class=&quot;se&quot;&gt;\ &lt;/span&gt;13&lt;span class=&quot;se&quot;&gt;\ &lt;/span&gt;beta.app/Contents/Resources/createinstallmedia &lt;span class=&quot;nt&quot;&gt;--volume&lt;/span&gt; /Volumes/Ventura &lt;span class=&quot;nt&quot;&gt;--nointeraction&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;hdiutil detach &lt;span class=&quot;nt&quot;&gt;-force&lt;/span&gt; /Volumes/Install&lt;span class=&quot;se&quot;&gt;\ &lt;/span&gt;macOS&lt;span class=&quot;se&quot;&gt;\ &lt;/span&gt;Ventura
+hdiutil convert /tmp/Ventura.dmg &lt;span class=&quot;nt&quot;&gt;-format&lt;/span&gt; UDTO &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; ~/Desktop/Ventura.cdr
+&lt;span class=&quot;nb&quot;&gt;mv&lt;/span&gt; ~/Desktop/Ventura.cdr ~/Desktop/Ventura.iso
+&lt;span class=&quot;nb&quot;&gt;rm&lt;/span&gt; /tmp/Ventura.dmg
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;If you have done it correctly, you should have a file named “&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Ventura.iso&lt;/code&gt;” on your Desktop.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://support.apple.com/en-us/HT201372&quot;&gt;Here&lt;/a&gt; is the official guide for creating bootable installer.&lt;/p&gt;
+
+&lt;h2 id=&quot;configure-the-vm&quot;&gt;Configure the VM&lt;/h2&gt;
+
+&lt;p&gt;Simply create a new VM in Fusion with the ISO we just created. Select the operating system as “Apple OS X &amp;gt; macOS 11”, customize the hardware if needed then save it somewhere you prefer WITHOUT turning it on yet.&lt;/p&gt;
+
+&lt;p&gt;Now select the VM you just created in the &lt;em&gt;Virtual Machine Library&lt;/em&gt; (open with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Shift + CMD + L&lt;/code&gt;), right click on it and move the cursor to “Show in Finder”. Now hold &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Option&lt;/code&gt; key, the item will change to “Open Config File in Editor”. Click on the item and the VMX file will be opened with TextEdit:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/8187bc26-3fab-4947-be03-2fac6c048001_001.gif&quot; alt=&quot;Edit VMX&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Add the following lines to the VMX file (doesn’t matter where):&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;appleGPU0.present = &quot;TRUE&quot;
+svga.present = &quot;FALSE&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This will greatly improves the graphic performance later on.&lt;/p&gt;
+
+&lt;p&gt;To fix the eternet connection, find the follow line:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ethernet0.virtualDev = &quot;e1000e&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;And change the “&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;e1000e&lt;/code&gt;” to “&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;vmxnet3&lt;/code&gt;”.&lt;/p&gt;
+
+&lt;p&gt;If you wish, you can also make the VM relecting the actual hardware you have by adding the following line:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;SMBIOS.reflectHost = &quot;TRUE&quot;
+SMBIOS.noOEMStrings = &quot;TRUE&quot;
+smbios.addHostVendor = &quot;TRUE&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now save the VMX file and close the editor.&lt;/p&gt;
+
+&lt;h2 id=&quot;install-macos-ventura&quot;&gt;Install macOS Ventura&lt;/h2&gt;
+
+&lt;p&gt;By now, you should be able to install it normally just like any previous versions of macOS! Simply boot up the VM we just setup and follow through the setup process.&lt;/p&gt;
+
+&lt;p&gt;Once the installation is done, use the VMware Tools &lt;a href=&quot;https://customerconnect.vmware.com/en/downloads/info/slug/datacenter_cloud_infrastructure/vmware_tools/12_x&quot;&gt;here&lt;/a&gt; instead of the built-in one so you can &lt;a href=&quot;https://kb.vmware.com/s/article/81657&quot;&gt;dynamically adjust the screen resolutions&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/8187bc26-3fab-4947-be03-2fac6c048001_002.jpg&quot; alt=&quot;macOS Ventura&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;You should now have a fully working VM os macOS Ventura.&lt;/p&gt;
+</description>
+                <pubDate>Wed, 08 Jun 2022 14:54:24 +0800</pubDate>
+                <link>http://0.0.0.0/blog/install-macos-ventura-beta-in-vmware-fusion</link>
+                <guid isPermaLink="true">http://0.0.0.0/blog/install-macos-ventura-beta-in-vmware-fusion</guid>
+                
+                <category>Mac</category>
+                
+                
+            </item>
+        
+    </channel>
+</rss>

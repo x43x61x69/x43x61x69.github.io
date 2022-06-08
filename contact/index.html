@@ -6,10 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>One</title>
+  <title>Contact | One</title>
   <meta name='description' content='Been there. Done that.'>
 
-  <link rel="canonical" href="http://0.0.0.0/">
+  <link rel="canonical" href="http://0.0.0.0/contact/">
   <link rel="alternate" type="application/rss+xml" title="One" href="/feed.xml">
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -17,14 +17,14 @@
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="One">
-  <meta name="twitter:description" content="Been there. Done that.">
-  <meta name="twitter:image:src" content="http://0.0.0.0/images/01.jpg">
+  <meta name="twitter:title" content="Contact – One">
+  <meta name="twitter:description" content="">
+  <meta name="twitter:image:src" content="">
 
   <!-- Facebook OpenGraph -->
-  <meta property="og:title" content="One">
-  <meta property="og:description" content="Been there. Done that.">
-  <meta property="og:image" content="http://0.0.0.0/images/01.jpg">
+  <meta property="og:title" content="Contact – One">
+  <meta property="og:description" content="">
+  <meta property="og:image" content="">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -89,7 +89,7 @@
               
                 
                 <li class="nav__item">
-                  <a href="/" class="nav__link active-link">Home</a>
+                  <a href="/" class="nav__link">Home</a>
                 </li>
                 
               
@@ -101,7 +101,7 @@
               
                 
                 <li class="nav__item">
-                  <a href="/contact/" class="nav__link">Contact</a>
+                  <a href="/contact/" class="nav__link active-link">Contact</a>
                 </li>
                 
               
@@ -173,85 +173,68 @@
 
   <!-- begin content -->
   <main class="content" aria-label="Content">
-    
-  <!-- begin hero -->
-<section class="hero">
+    <div class="page-head page-image-center">
   <div class="container">
-    <div class="hero__inner">
-      <h1 class="hero__title">Welcome to One.</h1>
-      <p class="hero__description">This is my personal blog, where I share about the things I see and what I'm learning. Hope you find them interesting.</p>
+    <div class="row">
+
+      <div class="col col-12 page-head__info">
+        <div class="page__info">
+          <h1 class="page__title">Contact</h1>
+        </div>
+      </div>
+
+      
+
     </div>
   </div>
-</section>
-<!-- end hero -->
+</div>
+
+<!-- begin page -->
+<div class="container animate">
+
+  <article class="page">
+    <div class="page__content">
+      <div class="form-box">
+  <div class="contact-head">
   
-
-
-
-
-<div class="container">
-  <div class="row animate">
-    
-      
-        <div class="article col col-12 article--first">
-  <div class="article__inner">
-
-
-    <a class="article__image" href="/blog/install-macos-ventura-beta-in-vmware-fusion" style="background-color: #f73535;">
-      
-      <div class="article__image__cover image-cover-js" data-accent="#f73535"></div>
-      <img class="lazy" data-src="/images/8187bc26-3fab-4947-be03-2fac6c048001_cover.jpg" alt="Install macOS Ventura Beta in VMware Fusion">
-      
-    </a>
-
-    <div class="article__content">
-
-      
-      <div class="article__tags">
-        
-          <a href="/tags#mac" class="article__tag" style="background-color: #f73535;">Mac</a>
-        
-      </div>
-      
-
-      <h2 class="article__title">
-        <a href="/blog/install-macos-ventura-beta-in-vmware-fusion">Install macOS Ventura Beta in VMware Fusion</a>
-      </h2>
-
-      <div class="article__meta">
-        
-        <a href="/about/" class="article__author">Cai</a>
-        
-        <time datetime="2022-06-08T14:54:24+08:00" class="article__date" >08 Jun 2022</time>
-      </div>
-
+    <p class="page-description">Found something interesting and wanna share? Let's hear it.</p>
+  
+  </div>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <form class="form" action="https://formspree.io/f/xayvvdek" method="POST">
+    <div class="form__group">
+      <label class="form__label screen-reader-text" for="form-name">Your Name</label>
+      <input class="form__input" id="form-name" type="text" name="name" placeholder="Name" required>
     </div>
-  </div>
-</div>
-      
-    
-  </div>
+    <div class="form__group">
+      <label class="form__label screen-reader-text" for="form-email">Your Email</label>
+      <input class="form__input" id="form-email" type="email" name="_replyto" placeholder="Email" required>
+    </div>
+    <div class="form__group">
+      <label class="form__label screen-reader-text" for="form-text">Your Message</label>
+      <textarea class="form__input" id="form-text" name="text" rows="10" placeholder="Message" required></textarea>
+    </div>
+    <div class="form__group">
+      <button class="button button--middle button--rounded" type="submit">Send Message</button>
+    </div>
+    <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
+    <script src="https://www.google.com/recaptcha/api.js?render=6LdHhH0UAAAAAKtT53UBHJerKxP1tzTBDEpnKDhV"></script>
+      <script>
+          grecaptcha.ready(function () {
+              grecaptcha.execute('6LdHhH0UAAAAAKtT53UBHJerKxP1tzTBDEpnKDhV', {action: 'submit'}).then(function (token) {
+                  console.info("got token: " + token);
+                  document.getElementById('g-recaptcha-response').value = token;
+              });
+          });
+      </script>
+  </form>
 </div>
 
-<!-- begin pagination -->
-<nav class="pagination animate">
-  <div class="container">
-    <div class="pagination__list">
-
-      
-
-      <div class="counter-box">
-        
-      </div>
-
-      
-
     </div>
-  </div>
-</nav>
-<!-- end pagination -->
+  </article>
 
-
+</div>
+<!-- end page -->
   </main>
   <!-- end content -->
 
