@@ -5,8 +5,8 @@
         <description></description>
         <link>https://one.vg/</link>
         <atom:link href="https://one.vg/feed.xml" rel="self" type="application/rss+xml"/>
-        <pubDate>Wed, 08 Jun 2022 16:42:42 +0800</pubDate>
-        <lastBuildDate>Wed, 08 Jun 2022 16:42:42 +0800</lastBuildDate>
+        <pubDate>Wed, 08 Jun 2022 17:35:45 +0800</pubDate>
+        <lastBuildDate>Wed, 08 Jun 2022 17:35:45 +0800</lastBuildDate>
         <generator>Jekyll v4.2.2</generator>
         
             <item>
@@ -95,8 +95,6 @@ svga.present = &quot;FALSE&quot;
 &lt;p&gt;如果你想，也可以新增下列內容來將 Mac 的實體型號映射至虛擬機：&lt;/p&gt;
 
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;SMBIOS.reflectHost = &quot;TRUE&quot;
-SMBIOS.noOEMStrings = &quot;TRUE&quot;
-smbios.addHostVendor = &quot;TRUE&quot;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;完成後儲存 VMX 檔案並關閉編輯器。&lt;/p&gt;
@@ -208,8 +206,6 @@ svga.present = &quot;FALSE&quot;
 &lt;p&gt;If you wish, you can also make the VM relecting the actual hardware you have by adding the following line:&lt;/p&gt;
 
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;SMBIOS.reflectHost = &quot;TRUE&quot;
-SMBIOS.noOEMStrings = &quot;TRUE&quot;
-smbios.addHostVendor = &quot;TRUE&quot;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Now save the VMX file and close the editor.&lt;/p&gt;
