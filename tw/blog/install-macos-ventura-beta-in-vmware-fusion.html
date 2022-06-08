@@ -317,7 +317,9 @@ svga.present = "FALSE"
 
 <p>如果你想，也可以新增下列內容來將 Mac 的實體型號映射至虛擬機：</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SMBIOS.reflectHost = "TRUE"
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>serialNumber.reflectHost = "TRUE"
+hw.model.reflectHost = "TRUE"
+smbios.reflectHost = "TRUE"
 </code></pre></div></div>
 
 <p>完成後儲存 VMX 檔案並關閉編輯器。</p>
