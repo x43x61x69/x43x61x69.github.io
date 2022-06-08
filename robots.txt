@@ -1,1 +1,1 @@
-Sitemap: http://0.0.0.0/sitemap.xml
+Sitemap: https://one.vg/sitemap.xml
