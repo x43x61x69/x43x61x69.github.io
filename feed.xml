@@ -5,8 +5,8 @@
         <description></description>
         <link>https://one.vg/</link>
         <atom:link href="https://one.vg/feed.xml" rel="self" type="application/rss+xml"/>
-        <pubDate>Thu, 09 Jun 2022 07:42:43 +0800</pubDate>
-        <lastBuildDate>Thu, 09 Jun 2022 07:42:43 +0800</lastBuildDate>
+        <pubDate>Thu, 09 Jun 2022 08:32:54 +0800</pubDate>
+        <lastBuildDate>Thu, 09 Jun 2022 08:32:54 +0800</lastBuildDate>
         <generator>Jekyll v4.2.2</generator>
         
             <item>
@@ -23,7 +23,7 @@
   &lt;li&gt;&lt;a href=&quot;https://www.vmware.com/go/getfusion&quot;&gt;VMware Fusion 12.2&lt;/a&gt; 或更新的版本。&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;請留意，雖然技術上可以透過 &lt;a href=&quot;https://customerconnect.vmware.com/downloads/get-download?downloadGroup=FUS-PUBTP-2021H1&quot;&gt;VMware Fusion 技術預覽版&lt;/a&gt;於 ARM 架構的 Mac 上安裝 macOS Ventura，然而安裝 macOS 於本文撰寫時仍未獲得官方正式支援。你可以在網路上搜尋相關的前置作業以便繼續參照本教學的後續流程。&lt;/p&gt;
+&lt;p&gt;請留意，雖然技術上可以透過 &lt;a href=&quot;https://customerconnect.vmware.com/downloads/get-download?downloadGroup=FUS-PUBTP-2021H1&quot;&gt;VMware Fusion 技術預覽版&lt;/a&gt;於 ARM 架構的 Mac 上安裝 macOS Ventura，然而安裝 macOS 於本文撰寫時仍未獲得官方正式支援。&lt;/p&gt;
 
 &lt;h2 id=&quot;取得-macos-ventura-安裝磁碟&quot;&gt;取得 macOS Ventura 安裝磁碟&lt;/h2&gt;
 
@@ -136,7 +136,7 @@ smbios.reflectHost = &quot;TRUE&quot;
   &lt;li&gt;&lt;a href=&quot;https://www.vmware.com/go/getfusion&quot;&gt;VMware Fusion 12.2&lt;/a&gt; or later.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Beware that, although technically it’s possible to install macOS Ventura in a VM on an ARM-based Mac with &lt;a href=&quot;https://customerconnect.vmware.com/downloads/get-download?downloadGroup=FUS-PUBTP-2021H1&quot;&gt;VMware Fusion Technical Preview&lt;/a&gt;, it isn’t officially supported at the time of writing. You can search for other guides to setup the environment before you can follow this guide.&lt;/p&gt;
+&lt;p&gt;Beware that, although technically it’s possible to install macOS Ventura in a VM on an ARM-based Mac with &lt;a href=&quot;https://customerconnect.vmware.com/downloads/get-download?downloadGroup=FUS-PUBTP-2021H1&quot;&gt;VMware Fusion Technical Preview&lt;/a&gt;, it isn’t officially supported at the time of writing.&lt;/p&gt;
 
 &lt;h2 id=&quot;obtain-the-macos-ventura-installer&quot;&gt;Obtain the macOS Ventura Installer&lt;/h2&gt;
 
