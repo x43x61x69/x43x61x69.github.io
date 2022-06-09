@@ -5,9 +5,283 @@
         <description></description>
         <link>https://one.vg/</link>
         <atom:link href="https://one.vg/feed.xml" rel="self" type="application/rss+xml"/>
-        <pubDate>Thu, 09 Jun 2022 08:32:54 +0800</pubDate>
-        <lastBuildDate>Thu, 09 Jun 2022 08:32:54 +0800</lastBuildDate>
+        <pubDate>Thu, 09 Jun 2022 11:49:12 +0800</pubDate>
+        <lastBuildDate>Thu, 09 Jun 2022 11:49:12 +0800</lastBuildDate>
         <generator>Jekyll v4.2.2</generator>
+        
+            <item>
+                <title>在 Apple Silicon Mac 上運行 macOS Ventura 預覽版虛擬機</title>
+                <description>&lt;p&gt;從 macOS 12「Monterey」開始，Apple 設計了 &lt;em&gt;&lt;a href=&quot;https://developer.apple.com/documentation/virtualization&quot;&gt;Virtualization 虛擬化框架&lt;/a&gt;&lt;/em&gt;，提供高階 APIs 用以於 Apple Silicon 和 Intel 架構的 Mac 電腦上建立和管理虛擬機。對 Intel 架構的 Mac 而言並沒有實際使用的必要，因為第三方商用虛擬機器監視器（Hypervisor）更加先進且具備更多功能；然而不幸的是，對於 Apple Silicon 架構的 Mac 來說，這是至本文撰寫為止唯一的 macOS 虛擬化方案。&lt;/p&gt;
+
+&lt;p&gt;然而，目前的 Virtualization 框架本身相當原始且有諸多限制，包含但不限於下列的項目：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;不支援安裝任何早於 macOS Monterey 的系統版本（因為 Virtualization 框架在其後才推出）。&lt;/li&gt;
+  &lt;li&gt;於 macOS Monterey 上嘗試使用 macOS Ventura 的 IPSW（還原映像檔）安裝虛擬機會發生錯誤性崩潰。&lt;/li&gt;
+  &lt;li&gt;無法完整客製化虛擬機硬體，僅能映射實體主機。&lt;/li&gt;
+  &lt;li&gt;虛擬機內無法登入系統 Apple ID。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;現在你大概可以理解為何 Apple Silicon 上目前尚無商業化的 macOS 虛擬化解決方案：這些 API 目前在本質上難以實用化。但撇除這些限制，虛擬機運行得相當不錯且相較於 Intel 架構的 Mac 而言速度驚人的快。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/71ac2589-ded9-4fd0-8fdc-6a8fd1d93948_001.jpg&quot; alt=&quot;macOS VM with Virtualization framework&quot; /&gt;
+&lt;em&gt;macOS Ventura 虛擬機運行於 Apple Silicon 架構的 MacBook Pro。&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;事前準備&quot;&gt;事前準備&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;一台 Apple Silicon 架構的 Mac 電腦。&lt;/li&gt;
+  &lt;li&gt;因為本篇教學建立在 Apple 的範例專案上，你需要具備基礎的程式設計（不論是 Objective-C 亦或是 Swift）能力。&lt;/li&gt;
+  &lt;li&gt;一個 Apple ID 帳號作為開發者帳號，用於程式簽章。&lt;/li&gt;
+  &lt;li&gt;Xcode 的基本使用知識，以及 Xcode 13 或更新的版本。&lt;/li&gt;
+  &lt;li&gt;一份&lt;a href=&quot;https://developer.apple.com/documentation/virtualization/running_macos_in_a_virtual_machine_on_apple_silicon_macs&quot;&gt;官方範例專案&lt;/a&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;現在我們可以開始安裝啦！&lt;/p&gt;
+
+&lt;h2 id=&quot;設定虛擬機&quot;&gt;設定虛擬機&lt;/h2&gt;
+
+&lt;p&gt;雖然官方的範例專案本身可以直接執行，你可能會想要先行調整部分設定參數以便更硬體符合需求。之後的文章內容將會以 Swfit 版本的程式碼作為範例，但 Objective-C 版本差異並不大，可自行推敲。&lt;/p&gt;
+
+&lt;h4 id=&quot;安裝路徑&quot;&gt;安裝路徑&lt;/h4&gt;
+
+&lt;p&gt;欲修改預設的安裝路徑，檢視「&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Path.swift&lt;/code&gt;」並作適當的修改。預設會將虛擬機安裝至使用者目錄下的「&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;VM.bundle&lt;/code&gt;」。&lt;/p&gt;
+
+&lt;h4 id=&quot;處理器核心數&quot;&gt;處理器核心數&lt;/h4&gt;
+
+&lt;p&gt;欲修改分配給虛擬機的處理器核心數，請修改「&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MacOSVirtualMachineConfigurationHelper.swift&lt;/code&gt;」中的函式「&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;computeCPUCount()&lt;/code&gt;」：&lt;/p&gt;
+
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;computeCPUCount&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Int&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;totalAvailableCPUs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;ProcessInfo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;processInfo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;processorCount&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;virtualCPUCount&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;totalAvailableCPUs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;totalAvailableCPUs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;virtualCPUCount&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;virtualCPUCount&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;VZVirtualMachineConfiguration&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;minimumAllowedCPUCount&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;virtualCPUCount&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;min&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;virtualCPUCount&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;VZVirtualMachineConfiguration&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;maximumAllowedCPUCount&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;virtualCPUCount&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;預設程式會使用你所有的核心數減去 1 個核。你也可以用演算的方式搭配 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.maximumAllowedCPUCount&lt;/code&gt; 來動態產生最佳數值。&lt;/p&gt;
+
+&lt;h4 id=&quot;記憶體&quot;&gt;記憶體&lt;/h4&gt;
+
+&lt;p&gt;欲修改分配給虛擬機的記憶體數值，請修改「&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MacOSVirtualMachineConfigurationHelper.swift&lt;/code&gt;」中的函式「&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;computeMemorySize()&lt;/code&gt;」：&lt;/p&gt;
+
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;computeMemorySize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;UInt64&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// We arbitrarily choose 4GB.&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;memorySize&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1024&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1024&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1024&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;UInt64&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;memorySize&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;memorySize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;VZVirtualMachineConfiguration&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;minimumAllowedMemorySize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;memorySize&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;min&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;memorySize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;VZVirtualMachineConfiguration&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;maximumAllowedMemorySize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;memorySize&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;預設程式分配 4GB 的記憶體。你也可以用演算的方式搭配 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.maximumAllowedMemorySize&lt;/code&gt; 來動態產生最佳數值。&lt;/p&gt;
+
+&lt;h4 id=&quot;顯示器解析度以及點距ppi&quot;&gt;顯示器解析度以及點距（PPI）&lt;/h4&gt;
+
+&lt;p&gt;Virtualization 框架目前尚未支援動態解析度調整。欲修改虛擬機的顯示器解析度以及點距，請修改「&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MacOSVirtualMachineConfigurationHelper.swift&lt;/code&gt;」中的函式「&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;createGraphicsDeviceConfiguration()&lt;/code&gt;」：&lt;/p&gt;
+
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;createGraphicsDeviceConfiguration&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;VZMacGraphicsDeviceConfiguration&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;graphicsConfiguration&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;VZMacGraphicsDeviceConfiguration&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;graphicsConfiguration&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;displays&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// We abitrarily choose the resolution of the display to be 1920 x 1200.&lt;/span&gt;
+        &lt;span class=&quot;kt&quot;&gt;VZMacGraphicsDisplayConfiguration&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;widthInPixels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1920&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;heightInPixels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1200&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;pixelsPerInch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;80&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;graphicsConfiguration&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;例如，14 英吋的 MacBook Pro 螢幕點距為 284，請依照你的實際硬體做修改。修改後將啟用高解析度（HiDPI，即 Retina）模式。&lt;/p&gt;
+
+&lt;h4 id=&quot;磁碟大小&quot;&gt;磁碟大小&lt;/h4&gt;
+
+&lt;p&gt;預設的虛擬磁碟大小為 64GB。欲調整分配給虛擬機的磁碟空間，請修改「&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MacOSVirtualMachineInstaller.swift&lt;/code&gt;」中的函式「&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;createDiskImage()&lt;/code&gt;」：&lt;/p&gt;
+
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;createDiskImage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;diskFd&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;diskImagePath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;O_RDWR&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;O_CREAT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;S_IRUSR&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;S_IWUSR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;diskFd&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nf&quot;&gt;fatalError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Cannot create disk image.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;// 64GB disk space.&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;ftruncate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;diskFd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;64&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1024&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1024&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1024&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nf&quot;&gt;fatalError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ftruncate() failed.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;diskFd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nf&quot;&gt;fatalError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Failed to close the disk image.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;請至少分配 64GB 的磁碟空間予虛擬機，以確保運行穩定。&lt;/p&gt;
+
+&lt;p&gt;當然，還有其他可以做調整的參數，不過並沒有前面提及的這些重要。&lt;/p&gt;
+
+&lt;h2 id=&quot;安裝-macos-monterey&quot;&gt;安裝 macOS Monterey&lt;/h2&gt;
+
+&lt;p&gt;一旦完成設定，請執行「InstallationTool」來進行初始化。此工具會嘗試取得目前實體 Mac 主機公開發佈的最新 macOS 版本。你也可以修改原始碼來強制使用其他的 IPSW 檔案，不過由於目前僅有 Monterey 可供下載，我們可以不做更動。&lt;/p&gt;
+
+&lt;p&gt;安裝完成後，接著執行「macOSVirtualMachineSampleApp」。程式將於新視窗中啟動剛才安裝好的 macOS 虛擬機。&lt;/p&gt;
+
+&lt;h2 id=&quot;安裝-macos-ventura-預覽版&quot;&gt;安裝 macOS Ventura 預覽版&lt;/h2&gt;
+
+&lt;p&gt;當你可以操作虛擬機時，開啟 Safari 並下載&lt;a href=&quot;/tw/blog/install-macos-ventura-beta-in-vmware-fusion#obtain-the-macos-ventura-installer&quot;&gt;此處&lt;/a&gt;的「&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;InstallAssistant.pkg&lt;/code&gt;」macOS Ventura 安裝程式。目前透過 Apple 開發者網站取得之「macOS Developer Beta Access Utility」會發生錯誤而無法透過系統更新直接升級至 macOS Ventura 預覽版。&lt;/p&gt;
+
+&lt;p&gt;安裝下載完成的 PKG 檔案，接著開啟位於應用程式資料夾中的「Install macOS 13 beta.app」來開始 macOS 安裝。有鑒於 macOS Ventura 大幅度變更了系統偏好設定的介面，這裡建議先在目前的環境下做好所需的系統設定後再進行升級安裝。&lt;/p&gt;
+
+&lt;p&gt;接著等待安裝完成。你現在應該有一台能夠在 Apple Silicon 架構的 Mac 上正常操作的 macOS Ventura 虛擬機。&lt;/p&gt;
+</description>
+                <pubDate>Thu, 09 Jun 2022 10:43:14 +0800</pubDate>
+                <link>https://one.vg/tw/blog/running-macos-ventura-in-a-virtual-machine-on-apple-silicon-macs</link>
+                <guid isPermaLink="true">https://one.vg/tw/blog/running-macos-ventura-in-a-virtual-machine-on-apple-silicon-macs</guid>
+                
+                <category>Mac</category>
+                
+                
+                <category>tw</category>
+                
+            </item>
+        
+            <item>
+                <title>Running macOS Ventura Beta in a Virtual Machine on Apple Silicon Macs</title>
+                <description>&lt;p&gt;Since macOS 12 “Monterey”, Apple has created the &lt;em&gt;&lt;a href=&quot;https://developer.apple.com/documentation/virtualization&quot;&gt;Virtualization framework&lt;/a&gt;&lt;/em&gt; which provides high-level APIs for creating and managing virtual machines (VM) on Apple silicon and Intel-based Macs. For Intel-based Macs, there is no necessity for using it, as 3rd-party commercial hypervisors are way more advanced and more feature-rich. Unfortunately for Apple silicon Macs, this seems to be the only way to virtualize macOS at the time of writing.&lt;/p&gt;
+
+&lt;p&gt;However, the current version of Virtualization framework is pretty bare-bone and has many limitations, including but not limited to:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Any macOS version prior to macOS Monterey isn’t supported (as the Virtualization framework was introduced in Monterey).&lt;/li&gt;
+  &lt;li&gt;It will crash if you try to use the IPSW (restore image file) of macOS Ventura for installation on a macOS Monterey host.&lt;/li&gt;
+  &lt;li&gt;There’s no way to fully customized the virtual hardware but only reflect hardware of the host machine.&lt;/li&gt;
+  &lt;li&gt;You can’t sign-in Apple ID in the VM.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Now you might be able to comprehend why there’s no commercial-grade 3rd-party virtualization software for macOS on Apple silicon: the APIs were just too hard to work with at this time. But other than those limitations, it works quite well and is amazingly fast compares to its Intel-based counterpart.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/71ac2589-ded9-4fd0-8fdc-6a8fd1d93948_001.jpg&quot; alt=&quot;macOS VM with Virtualization framework&quot; /&gt;
+&lt;em&gt;macOS Ventura VM running on an Apple silicon MacBook Pro.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;pre-requirements&quot;&gt;Pre-requirements&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;An Apple silicon Mac.&lt;/li&gt;
+  &lt;li&gt;As this guide is based on an Apple sample project, basic knowledge of programming (for either Objective-C or Swift) is required.&lt;/li&gt;
+  &lt;li&gt;An Apple ID as developer account for code-signing.&lt;/li&gt;
+  &lt;li&gt;Basic knowledge of Xcode and have Xcode 13 or later installed.&lt;/li&gt;
+  &lt;li&gt;A copy of &lt;a href=&quot;https://developer.apple.com/documentation/virtualization/running_macos_in_a_virtual_machine_on_apple_silicon_macs&quot;&gt;this sample project&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Now we can start the installation!&lt;/p&gt;
+
+&lt;h2 id=&quot;configure-the-virtual-machine&quot;&gt;Configure the Virtual Machine&lt;/h2&gt;
+
+&lt;p&gt;Although the sample project itself works out of the box, you might want to adjust some of the configurations. The rest of the guide will use Swift version as example, but Objective-C version is pretty similar.&lt;/p&gt;
+
+&lt;h4 id=&quot;installation-path&quot;&gt;Installation Path&lt;/h4&gt;
+
+&lt;p&gt;To change the hardcoded installation path, look into “&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Path.swift&lt;/code&gt;” and edit the path as you please. By default, it will install into “&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;VM.bundle&lt;/code&gt;” in your home folder.&lt;/p&gt;
+
+&lt;h4 id=&quot;cpu-cores&quot;&gt;CPU Cores&lt;/h4&gt;
+
+&lt;p&gt;To change the allocate CPU cores for the VM, look for function “&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;computeCPUCount()&lt;/code&gt;” in “&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MacOSVirtualMachineConfigurationHelper.swift&lt;/code&gt;”:&lt;/p&gt;
+
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;computeCPUCount&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;Int&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;totalAvailableCPUs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;ProcessInfo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;processInfo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;processorCount&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;virtualCPUCount&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;totalAvailableCPUs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;totalAvailableCPUs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;virtualCPUCount&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;virtualCPUCount&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;VZVirtualMachineConfiguration&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;minimumAllowedCPUCount&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;virtualCPUCount&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;min&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;virtualCPUCount&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;VZVirtualMachineConfiguration&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;maximumAllowedCPUCount&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;virtualCPUCount&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;By default, it will use your total available cores minus 1. You can also calculate the optimal value dynamically with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.maximumAllowedCPUCount&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h4 id=&quot;memory&quot;&gt;Memory&lt;/h4&gt;
+
+&lt;p&gt;To change the allocate memory for the VM, look for function “&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;computeMemorySize()&lt;/code&gt;” in “&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MacOSVirtualMachineConfigurationHelper.swift&lt;/code&gt;”:&lt;/p&gt;
+
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;computeMemorySize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;UInt64&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;// We arbitrarily choose 4GB.&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;memorySize&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1024&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1024&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1024&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;UInt64&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;memorySize&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;memorySize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;VZVirtualMachineConfiguration&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;minimumAllowedMemorySize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;memorySize&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;min&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;memorySize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;VZVirtualMachineConfiguration&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;maximumAllowedMemorySize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;memorySize&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;By default the value is 4GB. Instead of hardcode the memory size, you can also calculate the optimal size dynamically with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.maximumAllowedMemorySize&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h4 id=&quot;display-resolution-and-ppi&quot;&gt;Display Resolution and PPI&lt;/h4&gt;
+
+&lt;p&gt;The Virtualization framework has yet to support dynamic resolutions. To change the display resolution and PPI, look for function “&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;createGraphicsDeviceConfiguration()&lt;/code&gt;” in “&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MacOSVirtualMachineConfigurationHelper.swift&lt;/code&gt;”:&lt;/p&gt;
+
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;createGraphicsDeviceConfiguration&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;VZMacGraphicsDeviceConfiguration&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;graphicsConfiguration&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;VZMacGraphicsDeviceConfiguration&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;graphicsConfiguration&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;displays&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;// We abitrarily choose the resolution of the display to be 1920 x 1200.&lt;/span&gt;
+        &lt;span class=&quot;kt&quot;&gt;VZMacGraphicsDisplayConfiguration&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;widthInPixels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1920&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;heightInPixels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1200&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;pixelsPerInch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;80&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;graphicsConfiguration&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;For example, the PPI for 14” MacBook Pro is 284. Change it to enable HiDPI (Retina) mode.&lt;/p&gt;
+
+&lt;h4 id=&quot;disk-size&quot;&gt;Disk Size&lt;/h4&gt;
+
+&lt;p&gt;The default disk size of the VM is 64GB. To change it, look for function “&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;createDiskImage()&lt;/code&gt;” in “&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;MacOSVirtualMachineInstaller.swift&lt;/code&gt;”:&lt;/p&gt;
+
+&lt;div class=&quot;language-swift highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;createDiskImage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;diskFd&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;diskImagePath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;O_RDWR&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;O_CREAT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;S_IRUSR&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;S_IWUSR&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;diskFd&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nf&quot;&gt;fatalError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Cannot create disk image.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;// 64GB disk space.&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;ftruncate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;diskFd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;64&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1024&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1024&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1024&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nf&quot;&gt;fatalError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ftruncate() failed.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;diskFd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nf&quot;&gt;fatalError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Failed to close the disk image.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;You should allocate at least 64GB of the disk space for stability.&lt;/p&gt;
+
+&lt;p&gt;Of course, there are other settings that you can play around, but they were not as important.&lt;/p&gt;
+
+&lt;h2 id=&quot;install-macos-monterey&quot;&gt;Install macOS Monterey&lt;/h2&gt;
+
+&lt;p&gt;Once configured, run the “InstallationTool” will initiate the process. It will try to obtain the latest copy that’s public available to the host Mac. You can modified the source code to force it to use other IPSW, but as currently there’s only Monterey available, we can just leave it as it is.&lt;/p&gt;
+
+&lt;p&gt;After the installation, fire up “macOSVirtualMachineSampleApp”. It should open a window with the macOS Monterey VM we just installed.&lt;/p&gt;
+
+&lt;h2 id=&quot;install-macos-ventura-beta&quot;&gt;Install macOS Ventura Beta&lt;/h2&gt;
+
+&lt;p&gt;Once you have access to the VM, open Safari and download the macOS Ventura installer “&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;InstallAssistant.pkg&lt;/code&gt;” &lt;a href=&quot;/blog/install-macos-ventura-beta-in-vmware-fusion#obtain-the-macos-ventura-installer&quot;&gt;here&lt;/a&gt;. At the moment, the “macOS Developer Beta Access Utility” available on the Apple Developer website will result in errors so you won’t be able to upgrade directly.&lt;/p&gt;
+
+&lt;p&gt;Install the PKG file you just downloaded, then open the “Install macOS 13 beta.app” in your Applications folder to start the macOS installation. As macOS Ventura greatly alter the System Preferences UI, it’s recommended to have everything setup before you upgrade.&lt;/p&gt;
+
+&lt;p&gt;Wait until the installation finish. You should now have a working macOS Ventura VM on your Apple silicon Mac.&lt;/p&gt;
+</description>
+                <pubDate>Thu, 09 Jun 2022 10:43:14 +0800</pubDate>
+                <link>https://one.vg/blog/running-macos-ventura-in-a-virtual-machine-on-apple-silicon-macs</link>
+                <guid isPermaLink="true">https://one.vg/blog/running-macos-ventura-in-a-virtual-machine-on-apple-silicon-macs</guid>
+                
+                <category>Mac</category>
+                
+                
+            </item>
         
             <item>
                 <title>在 VMware Fusion 中安裝 macOS Ventura 預覽版</title>
@@ -23,7 +297,7 @@
   &lt;li&gt;&lt;a href=&quot;https://www.vmware.com/go/getfusion&quot;&gt;VMware Fusion 12.2&lt;/a&gt; 或更新的版本。&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;請留意，雖然技術上可以透過 &lt;a href=&quot;https://customerconnect.vmware.com/downloads/get-download?downloadGroup=FUS-PUBTP-2021H1&quot;&gt;VMware Fusion 技術預覽版&lt;/a&gt;於 ARM 架構的 Mac 上安裝 macOS Ventura，然而安裝 macOS 於本文撰寫時仍未獲得官方正式支援。&lt;/p&gt;
+&lt;p&gt;請留意，雖然技術上可以透過 &lt;a href=&quot;https://customerconnect.vmware.com/downloads/get-download?downloadGroup=FUS-PUBTP-2021H1&quot;&gt;VMware Fusion 技術預覽版&lt;/a&gt;於 ARM 架構的 Mac 上安裝 macOS Ventura，然而安裝 macOS 於本文撰寫時仍未獲得官方正式支援。如欲安裝，請參考&lt;a href=&quot;/tw/blog/running-macos-ventura-in-a-virtual-machine-on-apple-silicon-macs&quot;&gt;此處&lt;/a&gt;的教學。&lt;/p&gt;
 
 &lt;h2 id=&quot;取得-macos-ventura-安裝磁碟&quot;&gt;取得 macOS Ventura 安裝磁碟&lt;/h2&gt;
 
@@ -136,7 +410,7 @@ smbios.reflectHost = &quot;TRUE&quot;
   &lt;li&gt;&lt;a href=&quot;https://www.vmware.com/go/getfusion&quot;&gt;VMware Fusion 12.2&lt;/a&gt; or later.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Beware that, although technically it’s possible to install macOS Ventura in a VM on an ARM-based Mac with &lt;a href=&quot;https://customerconnect.vmware.com/downloads/get-download?downloadGroup=FUS-PUBTP-2021H1&quot;&gt;VMware Fusion Technical Preview&lt;/a&gt;, it isn’t officially supported at the time of writing.&lt;/p&gt;
+&lt;p&gt;Beware that, although technically it’s possible to install macOS Ventura in a VM on an ARM-based Mac with &lt;a href=&quot;https://customerconnect.vmware.com/downloads/get-download?downloadGroup=FUS-PUBTP-2021H1&quot;&gt;VMware Fusion Technical Preview&lt;/a&gt;, it isn’t officially supported at the time of writing. If you wish to install it on an Apple silicon Mac, check out &lt;a href=&quot;/blog/running-macos-ventura-in-a-virtual-machine-on-apple-silicon-macs&quot;&gt;this&lt;/a&gt; guide for more information.&lt;/p&gt;
 
 &lt;h2 id=&quot;obtain-the-macos-ventura-installer&quot;&gt;Obtain the macOS Ventura Installer&lt;/h2&gt;
 

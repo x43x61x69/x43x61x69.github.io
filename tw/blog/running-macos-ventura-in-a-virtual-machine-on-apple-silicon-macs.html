@@ -6,10 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>About | One</title>
-  <meta name='description' content='Been there. Done that.'>
+  <title>在 Apple Silicon Mac 上運行 macOS Ventura 預覽版虛擬機 | One</title>
+  <meta name='description' content='透過 Virtualization framework 在虛擬機中安裝和運行 macOS Ventura 預覽版。'>
 
-  <link rel="canonical" href="https://one.vg/about/">
+  <link rel="canonical" href="https://one.vg/tw/blog/running-macos-ventura-in-a-virtual-machine-on-apple-silicon-macs">
   <link rel="alternate" type="application/rss+xml" title="One" href="/feed.xml">
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -17,14 +17,14 @@
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="About | One">
-  <meta name="twitter:description" content="">
-  <meta name="twitter:image:src" content="">
+  <meta name="twitter:title" content="在 Apple Silicon Mac 上運行 macOS Ventura 預覽版虛擬機 | One">
+  <meta name="twitter:description" content="透過 Virtualization framework 在虛擬機中安裝和運行 macOS Ventura 預覽版。">
+  <meta name="twitter:image:src" content="https://one.vg/images/71ac2589-ded9-4fd0-8fdc-6a8fd1d93948_cover.jpg">
 
   <!-- Facebook OpenGraph -->
-  <meta property="og:title" content="About | One">
-  <meta property="og:description" content="">
-  <meta property="og:image" content="">
+  <meta property="og:title" content="在 Apple Silicon Mac 上運行 macOS Ventura 預覽版虛擬機 | One">
+  <meta property="og:description" content="透過 Virtualization framework 在虛擬機中安裝和運行 macOS Ventura 預覽版。">
+  <meta property="og:image" content="https://one.vg/images/71ac2589-ded9-4fd0-8fdc-6a8fd1d93948_cover.jpg">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -90,7 +90,7 @@
               
                 
                 <li class="nav__item">
-                  <a href="/about/" class="nav__link active-link">About</a>
+                  <a href="/about/" class="nav__link">About</a>
                 </li>
                 
               
@@ -168,38 +168,333 @@
 
   <!-- begin content -->
   <main class="content" aria-label="Content">
-    <div class="page-head page-image-center">
+    <div class="post-head post-image-right">
   <div class="container">
     <div class="row">
 
-      <div class="col col-12 page-head__info">
-        <div class="page__info">
-          <h1 class="page__title">About</h1>
+      <div class="col col-6 col-d-12 post-head__info">
+        <div class="post__info">
+
+          
+          <div class="post__tags">
+            
+              <a href="/tw/tags#Mac" class="post__tag" style="background-color: #4d1573;" >Mac</a>
+            
+          </div>
+          
+
+          <h1 class="post__title">在 Apple Silicon Mac 上運行 macOS Ventura 預覽版虛擬機</h1>
+
+          <div class="post__meta">
+            
+              <a href="/about/" class="post__author">Cai</a>
+            
+            <time datetime="2022-06-09T10:43:14+08:00" class="post__date">09 Jun 2022</time>
+          </div>
+
         </div>
       </div>
 
+      
+      <div class="col col-6 col-d-12 post-head__image">
+        <div class="post-image">
+          <img class="lazy" data-src="/images/71ac2589-ded9-4fd0-8fdc-6a8fd1d93948_cover.jpg" alt="在 Apple Silicon Mac 上運行 macOS Ventura 預覽版虛擬機">
+        </div>
+      </div>
       
 
     </div>
   </div>
 </div>
 
-<!-- begin page -->
+<!-- begin post -->
 <div class="container animate">
 
-  <article class="page">
-    <div class="page__content">
-      <h2 id="hi-im-cai-i-currently-work-as-a-full-time-engineer-in-the-semiconductor-industry">Hi, I’m Cai. I currently work as a full-time engineer in the semiconductor industry.</h2>
+  <article class="post">
 
-<p>I’m a firm believer of <a href="https://www.ted.com/talks/emilie_wapnick_why_some_of_us_don_t_have_one_true_calling">multipotentiality</a> and sharing an equal amount of enthusiasm in both science and humanities. I learned to code as an eighth-grader and have been working professionally for more than a decade, specialized in software reverse engineering and security. I studied in several different medical fields before I eventually dropped out of college, to pursue a career in cybersecurity. I love music and have a small collection of vinyl records. I’ve been fortunate to travel to or live in 30+ countries, to embrace the cultural differences and to meet people with variety of ideas.</p>
+    <div class="post__content">
+      
+        
+        
+        <div class="post__locale">
+          <h4>閱讀本文的其他語言版本：</h4>
+          <ul>
+          
+            
+            <li>
+              <a href="/blog/running-macos-ventura-in-a-virtual-machine-on-apple-silicon-macs" class="en" title="View in English">🇺🇸 English</a>
+            </li>
+            
+          
+            
+            
+          
+          </ul>
+        </div>
+        <hr />
+        
+      
+      <p>從 macOS 12「Monterey」開始，Apple 設計了 <em><a href="https://developer.apple.com/documentation/virtualization">Virtualization 虛擬化框架</a></em>，提供高階 APIs 用以於 Apple Silicon 和 Intel 架構的 Mac 電腦上建立和管理虛擬機。對 Intel 架構的 Mac 而言並沒有實際使用的必要，因為第三方商用虛擬機器監視器（Hypervisor）更加先進且具備更多功能；然而不幸的是，對於 Apple Silicon 架構的 Mac 來說，這是至本文撰寫為止唯一的 macOS 虛擬化方案。</p>
 
-<p>I married my college classmate, who’s now a pharmacist, after 10 years of dating.</p>
+<p>然而，目前的 Virtualization 框架本身相當原始且有諸多限制，包含但不限於下列的項目：</p>
+
+<ul>
+  <li>不支援安裝任何早於 macOS Monterey 的系統版本（因為 Virtualization 框架在其後才推出）。</li>
+  <li>於 macOS Monterey 上嘗試使用 macOS Ventura 的 IPSW（還原映像檔）安裝虛擬機會發生錯誤性崩潰。</li>
+  <li>無法完整客製化虛擬機硬體，僅能映射實體主機。</li>
+  <li>虛擬機內無法登入系統 Apple ID。</li>
+</ul>
+
+<p>現在你大概可以理解為何 Apple Silicon 上目前尚無商業化的 macOS 虛擬化解決方案：這些 API 目前在本質上難以實用化。但撇除這些限制，虛擬機運行得相當不錯且相較於 Intel 架構的 Mac 而言速度驚人的快。</p>
+
+<p><img src="/images/71ac2589-ded9-4fd0-8fdc-6a8fd1d93948_001.jpg" alt="macOS VM with Virtualization framework" />
+<em>macOS Ventura 虛擬機運行於 Apple Silicon 架構的 MacBook Pro。</em></p>
+
+<h2 id="事前準備">事前準備</h2>
+
+<ul>
+  <li>一台 Apple Silicon 架構的 Mac 電腦。</li>
+  <li>因為本篇教學建立在 Apple 的範例專案上，你需要具備基礎的程式設計（不論是 Objective-C 亦或是 Swift）能力。</li>
+  <li>一個 Apple ID 帳號作為開發者帳號，用於程式簽章。</li>
+  <li>Xcode 的基本使用知識，以及 Xcode 13 或更新的版本。</li>
+  <li>一份<a href="https://developer.apple.com/documentation/virtualization/running_macos_in_a_virtual_machine_on_apple_silicon_macs">官方範例專案</a>。</li>
+</ul>
+
+<p>現在我們可以開始安裝啦！</p>
+
+<h2 id="設定虛擬機">設定虛擬機</h2>
+
+<p>雖然官方的範例專案本身可以直接執行，你可能會想要先行調整部分設定參數以便更硬體符合需求。之後的文章內容將會以 Swfit 版本的程式碼作為範例，但 Objective-C 版本差異並不大，可自行推敲。</p>
+
+<h4 id="安裝路徑">安裝路徑</h4>
+
+<p>欲修改預設的安裝路徑，檢視「<code class="language-plaintext highlighter-rouge">Path.swift</code>」並作適當的修改。預設會將虛擬機安裝至使用者目錄下的「<code class="language-plaintext highlighter-rouge">VM.bundle</code>」。</p>
+
+<h4 id="處理器核心數">處理器核心數</h4>
+
+<p>欲修改分配給虛擬機的處理器核心數，請修改「<code class="language-plaintext highlighter-rouge">MacOSVirtualMachineConfigurationHelper.swift</code>」中的函式「<code class="language-plaintext highlighter-rouge">computeCPUCount()</code>」：</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">static</span> <span class="kd">func</span> <span class="nf">computeCPUCount</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Int</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">totalAvailableCPUs</span> <span class="o">=</span> <span class="kt">ProcessInfo</span><span class="o">.</span><span class="n">processInfo</span><span class="o">.</span><span class="n">processorCount</span>
+
+    <span class="k">var</span> <span class="nv">virtualCPUCount</span> <span class="o">=</span> <span class="n">totalAvailableCPUs</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="p">?</span> <span class="mi">1</span> <span class="p">:</span> <span class="n">totalAvailableCPUs</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">virtualCPUCount</span> <span class="o">=</span> <span class="nf">max</span><span class="p">(</span><span class="n">virtualCPUCount</span><span class="p">,</span> <span class="kt">VZVirtualMachineConfiguration</span><span class="o">.</span><span class="n">minimumAllowedCPUCount</span><span class="p">)</span>
+    <span class="n">virtualCPUCount</span> <span class="o">=</span> <span class="nf">min</span><span class="p">(</span><span class="n">virtualCPUCount</span><span class="p">,</span> <span class="kt">VZVirtualMachineConfiguration</span><span class="o">.</span><span class="n">maximumAllowedCPUCount</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">virtualCPUCount</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>預設程式會使用你所有的核心數減去 1 個核。你也可以用演算的方式搭配 <code class="language-plaintext highlighter-rouge">.maximumAllowedCPUCount</code> 來動態產生最佳數值。</p>
+
+<h4 id="記憶體">記憶體</h4>
+
+<p>欲修改分配給虛擬機的記憶體數值，請修改「<code class="language-plaintext highlighter-rouge">MacOSVirtualMachineConfigurationHelper.swift</code>」中的函式「<code class="language-plaintext highlighter-rouge">computeMemorySize()</code>」：</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">static</span> <span class="kd">func</span> <span class="nf">computeMemorySize</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">UInt64</span> <span class="p">{</span>
+    <span class="c1">// We arbitrarily choose 4GB.</span>
+    <span class="k">var</span> <span class="nv">memorySize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">)</span> <span class="k">as</span> <span class="kt">UInt64</span>
+    <span class="n">memorySize</span> <span class="o">=</span> <span class="nf">max</span><span class="p">(</span><span class="n">memorySize</span><span class="p">,</span> <span class="kt">VZVirtualMachineConfiguration</span><span class="o">.</span><span class="n">minimumAllowedMemorySize</span><span class="p">)</span>
+    <span class="n">memorySize</span> <span class="o">=</span> <span class="nf">min</span><span class="p">(</span><span class="n">memorySize</span><span class="p">,</span> <span class="kt">VZVirtualMachineConfiguration</span><span class="o">.</span><span class="n">maximumAllowedMemorySize</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">memorySize</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>預設程式分配 4GB 的記憶體。你也可以用演算的方式搭配 <code class="language-plaintext highlighter-rouge">.maximumAllowedMemorySize</code> 來動態產生最佳數值。</p>
+
+<h4 id="顯示器解析度以及點距ppi">顯示器解析度以及點距（PPI）</h4>
+
+<p>Virtualization 框架目前尚未支援動態解析度調整。欲修改虛擬機的顯示器解析度以及點距，請修改「<code class="language-plaintext highlighter-rouge">MacOSVirtualMachineConfigurationHelper.swift</code>」中的函式「<code class="language-plaintext highlighter-rouge">createGraphicsDeviceConfiguration()</code>」：</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">static</span> <span class="kd">func</span> <span class="nf">createGraphicsDeviceConfiguration</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">VZMacGraphicsDeviceConfiguration</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">graphicsConfiguration</span> <span class="o">=</span> <span class="kt">VZMacGraphicsDeviceConfiguration</span><span class="p">()</span>
+    <span class="n">graphicsConfiguration</span><span class="o">.</span><span class="n">displays</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="c1">// We abitrarily choose the resolution of the display to be 1920 x 1200.</span>
+        <span class="kt">VZMacGraphicsDisplayConfiguration</span><span class="p">(</span><span class="nv">widthInPixels</span><span class="p">:</span> <span class="mi">1920</span><span class="p">,</span> <span class="nv">heightInPixels</span><span class="p">:</span> <span class="mi">1200</span><span class="p">,</span> <span class="nv">pixelsPerInch</span><span class="p">:</span> <span class="mi">80</span><span class="p">)</span>
+    <span class="p">]</span>
+    <span class="k">return</span> <span class="n">graphicsConfiguration</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>例如，14 英吋的 MacBook Pro 螢幕點距為 284，請依照你的實際硬體做修改。修改後將啟用高解析度（HiDPI，即 Retina）模式。</p>
+
+<h4 id="磁碟大小">磁碟大小</h4>
+
+<p>預設的虛擬磁碟大小為 64GB。欲調整分配給虛擬機的磁碟空間，請修改「<code class="language-plaintext highlighter-rouge">MacOSVirtualMachineInstaller.swift</code>」中的函式「<code class="language-plaintext highlighter-rouge">createDiskImage()</code>」：</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">private</span> <span class="kd">func</span> <span class="nf">createDiskImage</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">diskFd</span> <span class="o">=</span> <span class="nf">open</span><span class="p">(</span><span class="n">diskImagePath</span><span class="p">,</span> <span class="kt">O_RDWR</span> <span class="o">|</span> <span class="kt">O_CREAT</span><span class="p">,</span> <span class="kt">S_IRUSR</span> <span class="o">|</span> <span class="kt">S_IWUSR</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">diskFd</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="p">{</span>
+        <span class="nf">fatalError</span><span class="p">(</span><span class="s">"Cannot create disk image."</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 64GB disk space.</span>
+    <span class="k">var</span> <span class="nv">result</span> <span class="o">=</span> <span class="nf">ftruncate</span><span class="p">(</span><span class="n">diskFd</span><span class="p">,</span> <span class="mi">64</span> <span class="o">*</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">result</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">{</span>
+        <span class="nf">fatalError</span><span class="p">(</span><span class="s">"ftruncate() failed."</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="nf">close</span><span class="p">(</span><span class="n">diskFd</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">result</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">{</span>
+        <span class="nf">fatalError</span><span class="p">(</span><span class="s">"Failed to close the disk image."</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>請至少分配 64GB 的磁碟空間予虛擬機，以確保運行穩定。</p>
+
+<p>當然，還有其他可以做調整的參數，不過並沒有前面提及的這些重要。</p>
+
+<h2 id="安裝-macos-monterey">安裝 macOS Monterey</h2>
+
+<p>一旦完成設定，請執行「InstallationTool」來進行初始化。此工具會嘗試取得目前實體 Mac 主機公開發佈的最新 macOS 版本。你也可以修改原始碼來強制使用其他的 IPSW 檔案，不過由於目前僅有 Monterey 可供下載，我們可以不做更動。</p>
+
+<p>安裝完成後，接著執行「macOSVirtualMachineSampleApp」。程式將於新視窗中啟動剛才安裝好的 macOS 虛擬機。</p>
+
+<h2 id="安裝-macos-ventura-預覽版">安裝 macOS Ventura 預覽版</h2>
+
+<p>當你可以操作虛擬機時，開啟 Safari 並下載<a href="/tw/blog/install-macos-ventura-beta-in-vmware-fusion#obtain-the-macos-ventura-installer">此處</a>的「<code class="language-plaintext highlighter-rouge">InstallAssistant.pkg</code>」macOS Ventura 安裝程式。目前透過 Apple 開發者網站取得之「macOS Developer Beta Access Utility」會發生錯誤而無法透過系統更新直接升級至 macOS Ventura 預覽版。</p>
+
+<p>安裝下載完成的 PKG 檔案，接著開啟位於應用程式資料夾中的「Install macOS 13 beta.app」來開始 macOS 安裝。有鑒於 macOS Ventura 大幅度變更了系統偏好設定的介面，這裡建議先在目前的環境下做好所需的系統設定後再進行升級安裝。</p>
+
+<p>接著等待安裝完成。你現在應該有一台能夠在 Apple Silicon 架構的 Mac 上正常操作的 macOS Ventura 虛擬機。</p>
 
     </div>
-  </article>
 
+    <div class="post__share">
+      <ul class="share__list list-reset">
+        <li class="share__item">
+          <a class="share__link share__twitter"
+            href="https://twitter.com/intent/tweet?text=%E5%9C%A8%20Apple%20Silicon%20Mac%20%E4%B8%8A%E9%81%8B%E8%A1%8C%20macOS%20Ventura%20%E9%A0%90%E8%A6%BD%E7%89%88%E8%99%9B%E6%93%AC%E6%A9%9F&url=https://one.vg/tw/blog/running-macos-ventura-in-a-virtual-machine-on-apple-silicon-macs"
+            onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"
+            title="Share on Twitter" rel="nofollow"><i class="ion ion-logo-twitter"></i></a>
+        </li>
+        <li class="share__item">
+          <a class="share__link share__facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://one.vg/tw/blog/running-macos-ventura-in-a-virtual-machine-on-apple-silicon-macs"
+            onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"
+            title="Share on Facebook" rel="nofollow"><i class="ion ion-logo-facebook"></i></a>
+        </li>
+      </ul>
+    </div>
+
+    
+    
+    
+
+    
+
+    <div class="post__navigation">
+      
+
+      
+      <a class="next" href="/tw/blog/install-macos-ventura-beta-in-vmware-fusion" style="background-color: #f73535;">
+        <img class="post__nav-image lazy" data-src="/images/8187bc26-3fab-4947-be03-2fac6c048001_cover.jpg" alt="在 VMware Fusion 中安裝 macOS Ventura 預覽版">
+        <div class="post__image__cover image-cover-js" data-accent="#f73535"></div>
+        <div class="post__nav-box">
+          <div class="post__nav post__nav__next">下一篇文章</div>
+          <h4 class="post__nav__title">在 VMware Fusion 中安裝 macOS Ventura 預覽版</h4>
+        </div>
+      </a>
+      
+    </div>
+
+  </article>
 </div>
-<!-- end page -->
+<!-- end post -->
+
+
+
+
+
+
+
+
+
+
+<!-- begin related posts -->
+<div class="container">
+  <section class="related-posts is-related animate">
+    <div class="row">
+      <div class="col col-12">
+        <div class="container__inner">
+          <div class="section__info">
+            <div class="section__head">
+              <h2 class="section__title">您可能也喜歡</h2>
+                
+                
+                  
+                    <a href="/tags#Mac" class="section__link related-tag">檢視所有<span> Mac</span></a>
+                  
+                
+              
+            </div>
+          </div>
+          <div class="row">
+
+          
+            
+            
+
+            
+
+            
+            
+            
+            
+
+            
+
+            
+
+              <div class="article col  col-4 col-d-6 col-t-12">
+  <div class="article__inner">
+
+
+    <a class="article__image" href="/tw/blog/install-macos-ventura-beta-in-vmware-fusion" style="background-color: #f73535;">
+      
+      <div class="article__image__cover image-cover-js" data-accent="#f73535"></div>
+      <img class="lazy" data-src="/images/8187bc26-3fab-4947-be03-2fac6c048001_cover.jpg" alt="在 VMware Fusion 中安裝 macOS Ventura 預覽版">
+      
+    </a>
+
+    <div class="article__content">
+
+      
+      <div class="article__tags">
+        
+          <a href="/tags#mac" class="article__tag" style="background-color: #f73535;">Mac</a>
+        
+      </div>
+      
+
+      <h2 class="article__title">
+        <a href="/tw/blog/install-macos-ventura-beta-in-vmware-fusion">在 VMware Fusion 中安裝 macOS Ventura 預覽版</a>
+      </h2>
+
+      <div class="article__meta">
+        
+        <a href="/about/" class="article__author">Cai</a>
+        
+        <time datetime="2022-06-08T14:54:24+08:00" class="article__date" >08 Jun 2022</time>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+            
+                
+              
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<!-- end related posts -->
+
+
   </main>
   <!-- end content -->
 
@@ -215,7 +510,7 @@
       <h3 class="widget__title">Cai</h3>
     </div>
 
-    <p class="widget-info__desc">A firm believer of multipotentiality. Currently working as a full-time engineer in the semiconductor industry.</p>
+    <p class="widget-info__desc">多向分化潜能（Multipotentiality）的堅定信仰者。目前於半導體產業擔任全職工程師。</p>
 
     
     <div class="social">
@@ -244,14 +539,14 @@
   <div class="widget widget-recent">
 
     <div class="widget__head">
-      <h3 class="widget__title">Latest Posts</h3>
+      <h3 class="widget__title">最新文章</h3>
     </div>
 
     
     
     <div class="recent-posts">
       
-        <a class="recent-posts__image" href="/blog/running-macos-ventura-in-a-virtual-machine-on-apple-silicon-macs" style="background-color: #4d1573;"><img class="lazy" data-src="/images/71ac2589-ded9-4fd0-8fdc-6a8fd1d93948_cover.jpg" alt="Running macOS Ventura Beta in a Virtual Machine on Apple Silicon Macs"></a>
+        <a class="recent-posts__image" href="/tw/blog/running-macos-ventura-in-a-virtual-machine-on-apple-silicon-macs" style="background-color: #4d1573;"><img class="lazy" data-src="/images/71ac2589-ded9-4fd0-8fdc-6a8fd1d93948_cover.jpg" alt="在 Apple Silicon Mac 上運行 macOS Ventura 預覽版虛擬機"></a>
       
       <div class="recent-posts__content">
         <div class="article__meta">
@@ -263,7 +558,7 @@
           </div>
           
         </div>
-        <h4 class="recent-posts__title"><a href="/blog/running-macos-ventura-in-a-virtual-machine-on-apple-silicon-macs">Running macOS Ventura Beta in a Virtual Machine on Apple Silicon Macs</a></h4>
+        <h4 class="recent-posts__title"><a href="/tw/blog/running-macos-ventura-in-a-virtual-machine-on-apple-silicon-macs">在 Apple Silicon Mac 上運行 macOS Ventura 預覽版虛擬機</a></h4>
         <div class="article__bottom">
           <div class="article__meta">
             
@@ -277,7 +572,7 @@
     
     <div class="recent-posts">
       
-        <a class="recent-posts__image" href="/blog/install-macos-ventura-beta-in-vmware-fusion" style="background-color: #f73535;"><img class="lazy" data-src="/images/8187bc26-3fab-4947-be03-2fac6c048001_cover.jpg" alt="Install macOS Ventura Beta in VMware Fusion"></a>
+        <a class="recent-posts__image" href="/tw/blog/install-macos-ventura-beta-in-vmware-fusion" style="background-color: #f73535;"><img class="lazy" data-src="/images/8187bc26-3fab-4947-be03-2fac6c048001_cover.jpg" alt="在 VMware Fusion 中安裝 macOS Ventura 預覽版"></a>
       
       <div class="recent-posts__content">
         <div class="article__meta">
@@ -289,7 +584,7 @@
           </div>
           
         </div>
-        <h4 class="recent-posts__title"><a href="/blog/install-macos-ventura-beta-in-vmware-fusion">Install macOS Ventura Beta in VMware Fusion</a></h4>
+        <h4 class="recent-posts__title"><a href="/tw/blog/install-macos-ventura-beta-in-vmware-fusion">在 VMware Fusion 中安裝 macOS Ventura 預覽版</a></h4>
         <div class="article__bottom">
           <div class="article__meta">
             

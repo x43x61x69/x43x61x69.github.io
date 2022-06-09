@@ -1,6 +1,26 @@
 [
   
     {
+      "title"    : "在 Apple Silicon Mac 上運行 macOS Ventura 預覽版虛擬機",
+      "url"      : "/tw/blog/running-macos-ventura-in-a-virtual-machine-on-apple-silicon-macs",
+      "date"     : "Jun 9, 2022",
+      "tags"     : "<div class='article__tags'><a href='/tags#mac' class='article__tag'style='background-color:#4d1573;'>Mac</a></div>",
+      "meta"     : "<div class='article__meta'><a href='/about/' class='article__author'>Cai</a><time datetime='2022-06-09T10:43:14+08:00' class='article__date' >09 Jun 2022</time> </div>",
+      "image": "/images/71ac2589-ded9-4fd0-8fdc-6a8fd1d93948_cover.jpg",
+      "image__cover": "<div class='search-results__image__cover' style='background-color:#4d1573;'></div>"
+    } ,
+  
+    {
+      "title"    : "Running macOS Ventura Beta in a Virtual Machine on Apple Silicon Macs",
+      "url"      : "/blog/running-macos-ventura-in-a-virtual-machine-on-apple-silicon-macs",
+      "date"     : "Jun 9, 2022",
+      "tags"     : "<div class='article__tags'><a href='/tags#mac' class='article__tag'style='background-color:#4d1573;'>Mac</a></div>",
+      "meta"     : "<div class='article__meta'><a href='/about/' class='article__author'>Cai</a><time datetime='2022-06-09T10:43:14+08:00' class='article__date' >09 Jun 2022</time> </div>",
+      "image": "/images/71ac2589-ded9-4fd0-8fdc-6a8fd1d93948_cover.jpg",
+      "image__cover": "<div class='search-results__image__cover' style='background-color:#4d1573;'></div>"
+    } ,
+  
+    {
       "title"    : "在 VMware Fusion 中安裝 macOS Ventura 預覽版",
       "url"      : "/tw/blog/install-macos-ventura-beta-in-vmware-fusion",
       "date"     : "Jun 8, 2022",
