@@ -5,9 +5,109 @@
         <description></description>
         <link>https://one.vg/</link>
         <atom:link href="https://one.vg/feed.xml" rel="self" type="application/rss+xml"/>
-        <pubDate>Thu, 09 Jun 2022 11:49:12 +0800</pubDate>
-        <lastBuildDate>Thu, 09 Jun 2022 11:49:12 +0800</lastBuildDate>
+        <pubDate>Sun, 12 Jun 2022 16:23:56 +0800</pubDate>
+        <lastBuildDate>Sun, 12 Jun 2022 16:23:56 +0800</lastBuildDate>
         <generator>Jekyll v4.2.2</generator>
+        
+            <item>
+                <title>透過 Quartz 濾鏡減少 PDF 檔案大小</title>
+                <description>&lt;p&gt;macOS 內建 Quartz 濾鏡「減少檔案大小」，可透過重新壓縮圖形來減少檔案的大小。對於需要降低高品質的 PDF 檔案來發送電子郵件附件或上傳至有檔案大小限制的網站時它相當的方便相當的方便。&lt;/p&gt;
+
+&lt;p&gt;不過這個濾鏡有個小問題：預設它會將圖片解析度縮小至一半，且有著 512 像素的長寬上限。這將使得壓縮後的圖片內容過於模糊而難以閱讀。幸運的是，我們有方法可以客製化濾鏡壓縮參數以符合特定的需求。&lt;/p&gt;
+
+&lt;h2 id=&quot;透過色彩同步工具程式修改-quartz-濾鏡&quot;&gt;透過「色彩同步工具程式」修改 Quartz 濾鏡&lt;/h2&gt;
+
+&lt;p&gt;「色彩同步工具程式」位於「應用程式 &amp;gt; 工具程式」中（也可以透過 Spotlight 開啟）：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/200e4c26-c102-432f-9c4d-626274db5702_001.jpg&quot; alt=&quot;色彩同步工具程式路徑&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;首先，點擊「複製」按鈕來建立一個可編輯的「減少檔案大小」濾鏡副本：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/200e4c26-c102-432f-9c4d-626274db5702_002.jpg&quot; alt=&quot;複製濾鏡&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;接著重新命名以及修改新建立的濾鏡來調整目標影像品質：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/200e4c26-c102-432f-9c4d-626274db5702_003.jpg&quot; alt=&quot;編輯濾鏡&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;直接修改-quartz-濾鏡檔案&quot;&gt;直接修改 Quartz 濾鏡檔案&lt;/h2&gt;
+
+&lt;p&gt;雖然圖形介面可以調整影像的壓縮率，但因為滑桿未顯示百分比數值導致我們無法精確的調整畫質參數。想直接編輯參數，開啟 Finder，找到位於「&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/Library/Filters&lt;/code&gt;」（簡單的方法為在 Finder 選單「前往 &amp;gt; 移至資料夾…」中貼上該路徑）的濾鏡檔案：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/200e4c26-c102-432f-9c4d-626274db5702_004.jpg&quot; alt=&quot;找出濾鏡位置&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;透過文字編輯器開啟與剛才建立的濾鏡名稱相符的「&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.qfilter&lt;/code&gt;」檔案：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/200e4c26-c102-432f-9c4d-626274db5702_005.jpg&quot; alt=&quot;編輯濾鏡&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;即可指定相關的數值。其中「Compression Quality」介於 0.0 和 1.0 之間，數值越高品質越佳。&lt;/p&gt;
+
+&lt;h2 id=&quot;套用-quartz-濾鏡&quot;&gt;套用 Quartz 濾鏡&lt;/h2&gt;
+
+&lt;p&gt;建立好的濾鏡可以透過預覽程式於儲存或匯出 PDF 檔案時套用：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/200e4c26-c102-432f-9c4d-626274db5702_006.jpg&quot; alt=&quot;套用濾鏡&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;測試相關的參數以找出最符合使用情境的組合。你也可以建立多個客製化的濾鏡。&lt;/p&gt;
+</description>
+                <pubDate>Sun, 12 Jun 2022 14:39:14 +0800</pubDate>
+                <link>https://one.vg/tw/blog/reduce-pdf-size-with-quartz-filter</link>
+                <guid isPermaLink="true">https://one.vg/tw/blog/reduce-pdf-size-with-quartz-filter</guid>
+                
+                <category>Mac</category>
+                
+                
+                <category>tw</category>
+                
+            </item>
+        
+            <item>
+                <title>Reduce PDF Size with Quartz Filter</title>
+                <description>&lt;p&gt;macOS has a built-in Quartz filter named “Reduce File Size”, which can be used to reducing the size of the file by recompressing graphics. It’s useful when you need to reduce the size of a high quality PDF for emailing or uploading to a website that has file size limitations.&lt;/p&gt;
+
+&lt;p&gt;But there’s a small issue: by default, this filter scales the image resolution by 50% and has a maximum width or height of 512 pixels, render most of the images way too blur to be readable. Fortunately, there’s a way to customize it to your needs.&lt;/p&gt;
+
+&lt;h2 id=&quot;modify-quartz-filters-in-colorsync-utility&quot;&gt;Modify Quartz filters in ColorSync Utility&lt;/h2&gt;
+
+&lt;p&gt;ColorSync Utility can be found in “Applications &amp;gt; Utilities” (or simply use Spotlight):&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/200e4c26-c102-432f-9c4d-626274db5702_001.jpg&quot; alt=&quot;ColorSync Utility Path&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;First, duplicate the existing “Reduce File Size” filter by clicking the duplicate button so we can have a modifiable copy:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/200e4c26-c102-432f-9c4d-626274db5702_002.jpg&quot; alt=&quot;Duplicate Filter&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Then rename and modify the newly created filter to adjust the target image quality:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/200e4c26-c102-432f-9c4d-626274db5702_003.jpg&quot; alt=&quot;Edit Filter&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;modify-quartz-filters-directly&quot;&gt;Modify Quartz Filters Directly&lt;/h2&gt;
+
+&lt;p&gt;Although the image compression is adjustable, we are unable to specify the quality factor/recompressing ratio as it’s set by a slider without percentage value. To edit the values directly, open Finder, locate the filter file at “&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/Library/Filters&lt;/code&gt;” (an easier way is via “Finder &amp;gt; Go &amp;gt; Go to Folder…” and paste the path):&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/200e4c26-c102-432f-9c4d-626274db5702_004.jpg&quot; alt=&quot;Locate Filter&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Open the “&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.qfilter&lt;/code&gt;” file with text editor that matched the one you created:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/200e4c26-c102-432f-9c4d-626274db5702_005.jpg&quot; alt=&quot;Edit Filter&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;You can then specify the values. The “Compression Quality” is between 0.0 and 1.0, higher means better quality.&lt;/p&gt;
+
+&lt;h2 id=&quot;apply-quartz-filters&quot;&gt;Apply Quartz Filters&lt;/h2&gt;
+
+&lt;p&gt;The created filter is accessible in Preview app when saving or exporting:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/200e4c26-c102-432f-9c4d-626274db5702_006.jpg&quot; alt=&quot;Apply Filter&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Test the values to find what works best for you. You can also have multiple customized filter.&lt;/p&gt;
+</description>
+                <pubDate>Sun, 12 Jun 2022 14:39:14 +0800</pubDate>
+                <link>https://one.vg/blog/reduce-pdf-size-with-quartz-filter</link>
+                <guid isPermaLink="true">https://one.vg/blog/reduce-pdf-size-with-quartz-filter</guid>
+                
+                <category>Mac</category>
+                
+                
+            </item>
         
             <item>
                 <title>在 Apple Silicon Mac 上運行 macOS Ventura 預覽版虛擬機</title>
