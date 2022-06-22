@@ -4,6 +4,9 @@ document.addEventListener("DOMContentLoaded", function() {
   var menuOpenIcon = document.querySelector(".icon__menu"),
     menuCloseIcon = document.querySelector(".nav__icon-close"),
     menuList = document.querySelector(".main-nav"),
+    localeMenuOpenIcon = document.querySelector(".icon__locale"),
+    localeMenuCloseIcon = document.querySelector(".locale__icon-close"),
+    localeMenuList = document.querySelector(".locale-nav"),
     searchOpenIcon = document.querySelector(".icon__search"),
     searchCloseIcon = document.querySelector(".search__close"),
     searchInput = document.querySelector(".search__text"),
@@ -30,6 +33,22 @@ document.addEventListener("DOMContentLoaded", function() {
   
   function menuClose() {
     menuList.classList.remove("is-open");
+  }
+
+  localeMenuOpenIcon.addEventListener("click", () => {
+    localeMenuOpen();
+  });
+
+  localeMenuCloseIcon.addEventListener("click", () => {
+    localeMenuClose();
+  });
+
+  function localeMenuOpen() {
+    localeMenuList.classList.add("is-open");
+  }
+  
+  function localeMenuClose() {
+    localeMenuList.classList.remove("is-open");
   }
 
   searchOpenIcon.addEventListener("click", () => {
