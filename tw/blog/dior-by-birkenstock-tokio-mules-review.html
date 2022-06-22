@@ -36,6 +36,11 @@
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Philosopher:ital,wght@0,400;0,700;1,700&family=Rubik:wght@400;500&display=swap" as="style">
   <link href="https://fonts.googleapis.com/css2?family=Philosopher:ital,wght@0,400;0,700;1,700&family=Rubik:wght@400;500&display=swap" rel="stylesheet">
 
+  
+  <!-- Comments -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://giscus.app/client.js;">
+  
+
   <style>
   
   /*!------------------------------------------------------------------
@@ -390,7 +395,6 @@
       var e = document.createElement("script");
       e.type = "text/javascript";
       e.async = true;
-      e.crossOrigin = 'anonymous';
       e.src = "//giscus.app/client.js";
       e.setAttribute("data-repo", "x43x61x69/blog-comments");
       e.setAttribute("data-repo-id", "R_kgDOHis8ng");
@@ -404,6 +408,7 @@
       e.setAttribute("data-theme", "transparent_dark");
       e.setAttribute("data-lang", "zh-TW");
       e.setAttribute("data-loading", "lazy");
+      e.setAttribute("crossOrigin", "anonymous");
       document.getElementById("comments_thread").appendChild(e);
       // Hide the button after opening
       document.getElementById("show-comments-button").style.display = "none";
