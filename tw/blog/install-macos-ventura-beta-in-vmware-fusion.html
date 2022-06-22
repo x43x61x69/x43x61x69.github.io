@@ -417,6 +417,7 @@ smbios.reflectHost = "TRUE"
       var e = document.createElement("script");
       e.type = "text/javascript";
       e.async = true;
+      e.crossOrigin = 'anonymous';
       e.src = "//giscus.app/client.js";
       e.setAttribute("data-repo", "x43x61x69/blog-comments");
       e.setAttribute("data-repo-id", "R_kgDOHis8ng");
@@ -430,7 +431,6 @@ smbios.reflectHost = "TRUE"
       e.setAttribute("data-theme", "transparent_dark");
       e.setAttribute("data-lang", "zh-TW");
       e.setAttribute("data-loading", "lazy");
-      e.setAttribute("crossorigin", "anonymous");
       document.getElementById("comments_thread").appendChild(e);
       // Hide the button after opening
       document.getElementById("show-comments-button").style.display = "none";
