@@ -85,6 +85,9 @@ main {
   --color-social-reaction-bg-reacted-hover: var(--color-scale-blue-8);
 
   color-scheme: dark;
+}
+
+*:focus {
   outline: none;
 }
 
