@@ -123,8 +123,8 @@ main .gsc-loading-image {
   background-image: url("https://github.githubassets.com/images/mona-loading-dark.gif");
 }
 
-.gsc-header:first-child .gsc-left-header:first-child em.text-sm.color-text-secondary {
-  display: none;
+.gsc-header .gsc-left-header em.text-sm.color-text-secondary {
+  display: none !important;
 }
 
 .gsc-comment-box-textarea:focus {
