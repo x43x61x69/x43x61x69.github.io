@@ -127,10 +127,6 @@ main .gsc-loading-image {
   display: none;
 }
 
-.gsc-comment-box-textarea {
-  background-color: rgba(#333, 0.06);
-}
-
 .gsc-comment-box-textarea:focus {
-  border-color: #333;
+  outline: none;
 }
