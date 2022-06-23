@@ -85,6 +85,7 @@ main {
   --color-social-reaction-bg-reacted-hover: var(--color-scale-blue-8);
 
   color-scheme: dark;
+  outline: none;
 }
 
 main .pagination-loader-container {
@@ -117,4 +118,16 @@ main .pagination-loader-container {
 
 main .gsc-loading-image {
   background-image: url("https://github.githubassets.com/images/mona-loading-dark.gif");
+}
+
+.gsc-header:first-child .gsc-left-header:first-child em.text-sm.color-text-secondary {
+  display: none;
+}
+
+.gsc-comment-box-textarea {
+  background-color: rgba(#333, 0.06);
+}
+
+.gsc-comment-box-textarea:focus {
+  border-color: #333;
 }
