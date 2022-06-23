@@ -366,23 +366,30 @@
 <!-- end post -->
 
 
-  <div class="container">
-    <div class="row">
-      <div class="col col-12">
-        <!-- begin comments -->
+
+<div class="container">
+  <div class="row">
+    <div class="col col-12">
+    
+    <!-- begin comments -->
 <div class="show-comments animate">
   <button class="button button--middle button--rounded" id="show-comments-button" onclick="load_comments();return false;">Comments</button>
 </div>
 
-<div id="comments_thread" class="post__comments">
+<div id="comments" class="post__comments">
 </div>
+
 
 <script>
   var comments_loaded = false;
-  var comments_container = document.getElementById("comments_thread");
+  var comments_container = document.getElementById("comments");
+  if (window.location.hash == '#comments'){
+    load_comments();
+  }
   function load_comments() {
     if (!comments_loaded) {
       comments_loaded = true;
+      window.location.hash = '#comments';
       var e = document.createElement("script");
       e.type = "text/javascript";
       e.async = true;
@@ -396,11 +403,11 @@
       e.setAttribute("data-reactions-enabled", "0");
       e.setAttribute("data-emit-metadata", "0");
       e.setAttribute("data-input-position", "top");
-      e.setAttribute("data-theme", "transparent_dark");
+      e.setAttribute("data-theme", "{{ site.baseurl }}/css/transparent_dark.css");
       e.setAttribute("data-lang", "en");
       e.setAttribute("data-loading", "lazy");
       e.setAttribute("crossOrigin", "anonymous");
-      document.getElementById("comments_thread").appendChild(e);
+      document.getElementById("comments").appendChild(e);
       // Hide the button after opening
       document.getElementById("show-comments-button").style.display = "none";
       // Show comments
@@ -411,11 +418,10 @@
 
 <noscript>Please enable JavaScript to view the comments.</noscript>
 <!-- end comments -->
-      </div>
+    
     </div>
   </div>
-
-
+</div>
 
 
 
