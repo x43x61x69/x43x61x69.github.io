@@ -1,3 +1,12 @@
 {
-  "defaultCommentOrder": "newest"
+    "origins": [
+        "https://one.vg",
+        "https://oxo.ooo"
+    ],
+    "originsRegex": [
+        "https://*\\.one\\.vg",
+        "http://0\\.0\\.0\\.0:[0-9]+",
+        "http://localhost:[0-9]+"
+    ],
+    "defaultCommentOrder": "newest"
 }
