@@ -1,7 +1,9 @@
 {
     "origins": [
         "https://one.vg",
-        "https://oxo.ooo"
+        "https://oxo.ooo",
+        "http://0.0.0.0",
+        "http://localhost"
     ],
     "originsRegex": [
         "https://*\\.one\\.vg",
