@@ -6,10 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Page Not Found | One</title>
-  <meta name='description' content='The requested page could not be found.'>
+  <title>找不到網頁 | One</title>
+  <meta name='description' content='您所尋找的網頁目前無法顯示。'>
 
-  <link rel="canonical" href="https://one.vg/404.html">
+  <link rel="canonical" href="https://one.vg/tw/404.html">
   <link rel="alternate" type="application/rss+xml" title="One" href="/feed.xml">
   
   
@@ -18,13 +18,13 @@
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Page Not Found | One">
-  <meta name="twitter:description" content="The requested page could not be found.">
+  <meta name="twitter:title" content="找不到網頁 | One">
+  <meta name="twitter:description" content="您所尋找的網頁目前無法顯示。">
   <meta name="twitter:image:src" content="https://one.vg/images/cover.jpg">
 
   <!-- Facebook OpenGraph -->
-  <meta property="og:title" content="Page Not Found | One">
-  <meta property="og:description" content="The requested page could not be found.">
+  <meta property="og:title" content="找不到網頁 | One">
+  <meta property="og:description" content="您所尋找的網頁目前無法顯示。">
   <meta property="og:image" content="https://one.vg/images/cover.jpg">
 
   <!-- Fonts -->
@@ -64,7 +64,7 @@
       <div class="header__inner col col-12">
 
         <div class="logo">
-          <a class="logo__link" href="/">
+          <a class="logo__link" href="/tw/">
           
             One
           
@@ -76,41 +76,41 @@
             <div class="nav__icon-close">
               <ion-icon class="ion-md-close" name="close-sharp"></ion-icon>
             </div>
-            <div class="nav__title">Menu</div>
+            <div class="nav__title">目錄</div>
             <ul class="nav__list list-reset">
               
                 
                 <li class="nav__item">
-                  <a href="/" class="nav__link">Home</a>
+                  <a href="/tw/" class="nav__link">首頁</a>
                 </li>
                 
               
                 
                 <li class="nav__item">
-                  <a href="/about/" class="nav__link">About</a>
+                  <a href="/tw/about/" class="nav__link">關於</a>
                 </li>
                 
               
                 
                 <li class="nav__item">
-                  <a href="/guestbook/" class="nav__link">Guestbook</a>
+                  <a href="/tw/guestbook/" class="nav__link">訪客留言</a>
                 </li>
                 
               
                 
                 <li class="nav__item">
-                  <a href="/privacy-policy/" class="nav__link">Privacy Policy</a>
+                  <a href="/tw/privacy-policy/" class="nav__link">隱私政策</a>
                 </li>
                 
               
                 
                 <li class="nav__item dropdown">
-                  <span class="nav__link dropdown-toggle">Pages<ion-icon size="small" name="chevron-down-sharp"></ion-icon></span>
+                  <span class="nav__link dropdown-toggle">其他頁面<ion-icon size="small" name="chevron-down-sharp"></ion-icon></span>
                   <div class="dropdown-menu">
                     
-                    <a href="/tags/" class="nav__link"><ion-icon name="pricetags-outline"></ion-icon>  Tags</a>
+                    <a href="/tw/tags/" class="nav__link"><ion-icon name="pricetags-outline"></ion-icon>  文章標籤</a>
                     
-                    <a href="/contact/" class="nav__link"><ion-icon name="mail-outline"></ion-icon>  Contact</a>
+                    <a href="/tw/contact/" class="nav__link"><ion-icon name="mail-outline"></ion-icon>  與我聯絡</a>
                     
                   </div>
                 </li>
@@ -128,20 +128,20 @@
             <div class="locale__icon-close">
               <ion-icon class="ion-md-close" name="close-sharp"></ion-icon>
             </div>
-            <div class="locale__title">Language</div>
+            <div class="locale__title">選擇語言</div>
             <ul class="nav__list list-reset">
               
                 
                 <li class="nav__item dropdown">
-                  <a href="/tw/404.html" class="nav__link"><span class="nav__link dropdown-toggle"><ion-icon name="globe-sharp"></ion-icon> 中文<ion-icon size="small" name="chevron-down-sharp"></ion-icon></span></a>
+                  <a href="/404.html" class="nav__link"><span class="nav__link dropdown-toggle"><ion-icon name="globe-sharp"></ion-icon> English<ion-icon size="small" name="chevron-down-sharp"></ion-icon></span></a>
                   <div class="dropdown-menu">
                     
                     
-                    <a href="#" class="nav__link active-link"><ion-icon size="small" name="checkmark-circle-outline"></ion-icon> English</a>
+                    <a href="/404.html" class="nav__link"><ion-icon size="small" name="radio-button-off-outline"></ion-icon> English</a>
                     
                     
                     
-                    <a href="/tw/404.html" class="nav__link"><ion-icon size="small" name="radio-button-off-outline"></ion-icon> 中文</a>
+                    <a href="#" class="nav__link active-link"><ion-icon size="small" name="checkmark-circle-outline"></ion-icon> 中文</a>
                     
                     
                   </div>
@@ -177,8 +177,8 @@
           </div>
 
           <div class="search__group">
-            <label for="js-search-input" class="screen-reader-text">Search for Blog</label>
-            <input type="text" id="js-search-input" class="search__text" autocomplete="off" placeholder="Type to search...">
+            <label for="js-search-input" class="screen-reader-text">搜尋文章</label>
+            <input type="text" id="js-search-input" class="search__text" autocomplete="off" placeholder="輸入搜尋關鍵字……">
           </div>
 
           <div class="search-results-list" id="js-results-container"></div>
@@ -202,11 +202,11 @@
   <main class="content" aria-label="Content">
     <script>
   window.onload = function() {
-    const locale = location.pathname.split('/')[1];
-    const locale_list = ["en", "tw"];
-    if ( locale_list.includes(locale) ) {
-      const redirect = encodeURI(location.href);
-      location.href = location.origin + '/' + locale + '/404.html?redirect=' + redirect;
+    if ( window.location.search ) {
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+      const redirect = decodeURI(urlParams.get('redirect'));
+      window.history.pushState("", "", redirect);
     }
   }
 </script>
@@ -215,8 +215,8 @@
   <div class="row">
     <div class="col col-12">
       <div class="error">
-        <h2 class="error__title"><ion-icon name="warning-outline"></ion-icon> Page Not Found</h2>
-        <p class="error__text">The requested page could not be found.</p>
+        <h2 class="error__title"><ion-icon name="warning-outline"></ion-icon> 找不到網頁</h2>
+        <p class="error__text">您所尋找的網頁目前無法顯示。</p>
       </div>
     </div>
   </div>
@@ -224,7 +224,7 @@
   </main>
   <!-- end content -->
 
-  <div class="top" title="Top"><ion-icon name="arrow-up-sharp"></ion-icon></div>
+  <div class="top" title="頁首"><ion-icon name="arrow-up-sharp"></ion-icon></div>
   <!-- begin footer-widgets -->
 <section class="footer-widgets">
   <div class="container">
@@ -238,7 +238,7 @@
       <h3 class="widget__title">Cai</h3>
     </div>
 
-    <p class="widget-info__desc">A firm believer of multipotentiality. Currently working as a full-time engineer in the semiconductor industry.</p>
+    <p class="widget-info__desc">多向分化潜能（Multipotentiality）的堅定信仰者。目前於半導體產業擔任全職工程師。</p>
 
     
     <div class="social">
@@ -281,14 +281,14 @@
   <div class="widget widget-recent">
 
     <div class="widget__head">
-      <h3 class="widget__title">Latest Posts</h3>
+      <h3 class="widget__title">最新文章</h3>
     </div>
 
     
     
     <div class="recent-posts">
       
-        <a class="recent-posts__image" href="/blog/dior-by-birkenstock-tokio-mules-review" style="background-color: #123a2a;"><img class="lazy" data-src="/images/2b5fad04-c2fe-410d-8750-556b18899ad8_cover.jpg" alt="Dior by Birkenstock: Tokio Mules Review"></a>
+        <a class="recent-posts__image" href="/tw/blog/dior-by-birkenstock-tokio-mules-review" style="background-color: #123a2a;"><img class="lazy" data-src="/images/2b5fad04-c2fe-410d-8750-556b18899ad8_cover.jpg" alt="Dior by Birkenstock：Tokio 涼鞋心得"></a>
       
       <div class="recent-posts__content">
         <div class="article__meta">
@@ -296,12 +296,12 @@
           <div class="article__tags">
             
               
-              <a href="/tags#fashion" class="article__tag" style="background-color: #123a2a;">Fashion</a>
+              <a href="/tw/tags#fashion" class="article__tag" style="background-color: #123a2a;">時尚</a>
             
           </div>
           
         </div>
-        <h4 class="recent-posts__title"><a href="/blog/dior-by-birkenstock-tokio-mules-review">Dior by Birkenstock: Tokio Mules Review</a></h4>
+        <h4 class="recent-posts__title"><a href="/tw/blog/dior-by-birkenstock-tokio-mules-review">Dior by Birkenstock：Tokio 涼鞋心得</a></h4>
         <div class="article__bottom">
           <div class="article__meta">
             
@@ -315,7 +315,7 @@
     
     <div class="recent-posts">
       
-        <a class="recent-posts__image" href="/blog/reduce-pdf-size-with-quartz-filter" style="background-color: #15346e;"><img class="lazy" data-src="/images/200e4c26-c102-432f-9c4d-626274db5702_cover.jpg" alt="Reduce PDF Size with Quartz Filter"></a>
+        <a class="recent-posts__image" href="/tw/blog/reduce-pdf-size-with-quartz-filter" style="background-color: #15346e;"><img class="lazy" data-src="/images/200e4c26-c102-432f-9c4d-626274db5702_cover.jpg" alt="透過 Quartz 濾鏡減少 PDF 檔案大小"></a>
       
       <div class="recent-posts__content">
         <div class="article__meta">
@@ -323,12 +323,12 @@
           <div class="article__tags">
             
               
-              <a href="/tags#mac" class="article__tag" style="background-color: #15346e;">Mac</a>
+              <a href="/tw/tags#mac" class="article__tag" style="background-color: #15346e;">Mac</a>
             
           </div>
           
         </div>
-        <h4 class="recent-posts__title"><a href="/blog/reduce-pdf-size-with-quartz-filter">Reduce PDF Size with Quartz Filter</a></h4>
+        <h4 class="recent-posts__title"><a href="/tw/blog/reduce-pdf-size-with-quartz-filter">透過 Quartz 濾鏡減少 PDF 檔案大小</a></h4>
         <div class="article__bottom">
           <div class="article__meta">
             
@@ -360,7 +360,7 @@
     <div class="row">
       <div class="col col-12">
         <div class="footer__inner">
-          <div class="copyright">Copyright &copy; 2022 Cai. All rights reserved.</div>
+          <div class="copyright">版權所有 &copy; 2022 Cai。保留一切權利。</div>
         </div>
       </div>
     </div>
