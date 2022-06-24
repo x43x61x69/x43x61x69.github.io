@@ -202,28 +202,28 @@
 
   <!-- begin content -->
   <main class="content" aria-label="Content">
-    <script>
-  window.onload = function() {
-    if ( window.location.search ) {
-      const queryString = window.location.search;
-      const urlParams = new URLSearchParams(queryString);
-      const redirect = decodeURI(urlParams.get('redirect'));
-      window.history.pushState("", "", redirect);
-    }
-  }
-</script>
-
-<div class="container">
+    <div class="container">
   <div class="row">
     <div class="col col-12">
       <div class="error">
         <h2 class="error__title"><ion-icon name="thunderstorm-outline"></ion-icon></h2>
         <p class="error__text">我們找不到您所尋找的頁面。</p>
-        <p class="error__text">請再次嘗試連線此頁面或返回<a href="/tw/">首頁</a>。</p>
+        <p class="error__text">請嘗試重新輸入網址或返回<a href="/tw/">首頁</a>。</p>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+  window.onload = function() {
+    if ( window.location.search ) {
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+      const redirect = decodeURI(urlParams.get('redirect'));
+      window.history.pushState("", "", "https://one.vg" + redirect);
+    }
+  }
+</script>
   </main>
   <!-- end content -->
 

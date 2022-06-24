@@ -202,18 +202,7 @@
 
   <!-- begin content -->
   <main class="content" aria-label="Content">
-    <script>
-  window.onload = function() {
-    const locale = location.pathname.split('/')[1];
-    const locale_list = ["en", "tw"];
-    if ( locale_list.includes(locale) ) {
-      const redirect = encodeURI(location.href);
-      location.href = location.origin + '/' + locale + '/404.html?redirect=' + redirect;
-    }
-  }
-</script>
-
-<div class="container">
+    <div class="container">
   <div class="row">
     <div class="col col-12">
       <div class="error">
@@ -224,6 +213,17 @@
     </div>
   </div>
 </div>
+
+<script>
+  window.onload = function() {
+    const locale = location.pathname.split('/')[1];
+    const locale_list = ["en", "tw"];
+    if ( locale_list.includes(locale) ) {
+      const redirect = encodeURI(location.pathname);
+      location.href = location.origin + '/' + locale + '/404.html?redirect=' + redirect;
+    }
+  }
+</script>
   </main>
   <!-- end content -->
 
