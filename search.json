@@ -1,6 +1,16 @@
 [
   
     {
+      "title"    : "Multilingual 404 Page for GitHub Pages",
+      "url"      : "/blog/multilingual-404-page-for-github-pages",
+      "date"     : "Jun 27, 2022",
+      "tags"     : "<div class='article__tags'><a href='/tags#coding' class='article__tag'style='background-color:#010101;'>Coding</a></div>",
+      "meta"     : "<div class='article__meta'><a href='/about/' class='article__author'>Cai</a><time datetime='2022-06-27T15:09:03+08:00' class='article__date' >27 Jun 2022</time> </div>",
+      "image": "/images/ea3cea65-7115-4862-a404-c7af7a23abe8_cover.jpg",
+      "image__cover": "<div class='search-results__image__cover' style='background-color:#010101;'></div>"
+    } ,
+  
+    {
       "title"    : "Dior by Birkenstock：Tokio 涼鞋心得",
       "url"      : "/tw/blog/dior-by-birkenstock-tokio-mules-review",
       "date"     : "Jun 18, 2022",
