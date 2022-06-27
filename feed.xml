@@ -5,9 +5,114 @@
         <description></description>
         <link>https://one.vg/</link>
         <atom:link href="https://one.vg/feed.xml" rel="self" type="application/rss+xml"/>
-        <pubDate>Mon, 27 Jun 2022 18:13:36 +0800</pubDate>
-        <lastBuildDate>Mon, 27 Jun 2022 18:13:36 +0800</lastBuildDate>
+        <pubDate>Tue, 28 Jun 2022 04:26:51 +0800</pubDate>
+        <lastBuildDate>Tue, 28 Jun 2022 04:26:51 +0800</lastBuildDate>
         <generator>Jekyll v4.2.2</generator>
+        
+            <item>
+                <title>GitHub Pages 的多語言 404 頁面</title>
+                <description>&lt;p&gt;許多具備程式語言能力的人（包含我自己）偏好靜態網站：它們相對快速、更加安全且幾乎可以被託管於任何地方（甚至免費）。雖然靜態網站仍有許多缺點（例如：缺乏互動性），但大多數可以透過第三方服務來達成與動態網站相近的功能。總體而言它仍是多數個人網站的不錯選擇。&lt;/p&gt;
+
+&lt;h2 id=&quot;github-pages&quot;&gt;GitHub Pages&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://pages.github.com/&quot;&gt;GitHub Pages&lt;/a&gt; 是目前最受歡迎的靜態網站託管平台之一：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;它的服務是免費的。&lt;/li&gt;
+  &lt;li&gt;它原生支援部落格軟體 &lt;a href=&quot;https://jekyllrb.com/&quot;&gt;Jekyll&lt;/a&gt;。&lt;/li&gt;
+  &lt;li&gt;它支援&lt;a href=&quot;https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/about-custom-domains-and-github-pages&quot;&gt;自訂網域&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;它可透過 &lt;a href=&quot;https://letsencrypt.org/&quot;&gt;Let’s Encrypt&lt;/a&gt; 支援 &lt;a href=&quot;https://docs.github.com/en/pages/getting-started-with-github-pages/securing-your-github-pages-site-with-https&quot;&gt;HTTPS&lt;/a&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;多年來我使用此服務且認為它相當優秀。只是接著便是「雖然…可是…」的部分了。&lt;/p&gt;
+
+&lt;h2 id=&quot;多語言-404-頁面&quot;&gt;多語言 404 頁面&lt;/h2&gt;
+
+&lt;p&gt;雖然 GitHub &lt;a href=&quot;https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-custom-404-page-for-your-github-pages-site&quot;&gt;允許&lt;/a&gt;在人們嘗試存取網站不存在的頁面時顯示客製化的 404 錯誤頁面且對多數人而言它沒有什麼大問題，但如果打算將你的網站多國語言化便會是個問題：因為它只允許單一版本的錯誤頁面。舉例來說，當檢視此部落格的中文版本時，如果你不知何故點選了一個應為中文頁面的不存在網址，像是：「&lt;a href=&quot;https://one.vg/tw/nonexistent&quot;&gt;https://one.vg/tw/nonexistent&lt;/a&gt;」將會被 GitHub 導向英文版的「&lt;a href=&quot;https://one.vg/404.html&quot;&gt;https://one.vg/404.html&lt;/a&gt;」。此行為可能會導致不黯英文的使用者混亂且無法由此繼續。&lt;/p&gt;
+
+&lt;p&gt;其中一個解決方式為利用 JavaScript 基於網誌路徑來顯示對應的語系字串。然而，這種做法可能使經常變動佈局（layout）或動態網址生成的網站難以維護。我的做法是建立一個 404 頁面範本來讓各語系能擁有自己的對應頁面：&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
+├── _data/
+│   └── settings.yml &lt;span class=&quot;c&quot;&gt;# 定義語系清單&lt;/span&gt;
+├── _includes/
+│   └── 404.html     &lt;span class=&quot;c&quot;&gt;# 頁面範本&lt;/span&gt;
+├── tw/
+│   └── _pages/
+│       └── 404.html &lt;span class=&quot;c&quot;&gt;# 中文（台灣）&lt;/span&gt;
+└── 404.html         &lt;span class=&quot;c&quot;&gt;# 英文&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;當使用者抵達英文版的頁面時，他們將會被轉而導向對應的語言版本頁面（如本站的情況）。如此我們可以保持更清楚的網站程式碼架構且更易於依照各語言的需求客製化對應頁面。&lt;/p&gt;
+
+&lt;p&gt;範本的部分，可以直接使用原先的 404 頁面並移除前綴的 Front Matter 區域；位於根目錄下的 404 頁面，我們可以將其修改為類似下面的狀態：&lt;/p&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;---
+layout: default
+title: &apos;Page Not Found&apos;
+permalink: /404.html
+---
+{% include 404.html %}
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;script&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nb&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;onload&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;locale&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;location&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pathname&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;locale_list&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;site&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;settings&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;locale&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;locale_list&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}};&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;locale_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;includes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;locale&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;redirect&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;encodeURI&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;location&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pathname&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+      &lt;span class=&quot;nx&quot;&gt;location&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;href&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;location&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;origin&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;locale&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;/404.html?redirect=&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;redirect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;以上這段語法會讀取定義於 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_data/settings.yml&lt;/code&gt; 內的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;locale_list&lt;/code&gt; 陣列，作為路徑導向判斷的允許清單：&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;locale_list&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;[&quot;en&quot;,&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;tw&quot;]&apos;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;接著它會檢查網址路徑，嘗試判斷對應的語系並進行重新導向，同時將目前的路徑作為請求參數一併傳送，以便重新導向後可以將網址列恢復為原先用戶輸入的內容。請留意我們只使用路徑部分而非整個 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;href&lt;/code&gt; 值，以避免&lt;a href=&quot;https://cwe.mitre.org/data/definitions/601.html&quot;&gt;開放式重導向&lt;/a&gt;漏洞。&lt;/p&gt;
+
+&lt;p&gt;其他語系的頁面，我們可以採用類似下方的做法：&lt;/p&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;---
+layout: default
+title: &apos;找不到網頁&apos;
+permalink: /tw/404.html
+locale: tw
+---
+{% include 404.html %}
+
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;script&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nb&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;onload&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;location&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;search&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;queryString&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;location&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;search&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;urlParams&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;URLSearchParams&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;queryString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+      &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;redirect&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;decodeURI&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;urlParams&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;redirect&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+      &lt;span class=&quot;nb&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;history&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pushState&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;{{ site.url }}&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;redirect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;此頁面會顯示必要的內容並在不重新載入頁面的情況下還原網址列內容。你可以透過下面的連結來檢視相關效果：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://one.vg/nonexistent&quot;&gt;https://one.vg/nonexistent&lt;/a&gt;（英文）&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://one.vg/tw/nonexistent&quot;&gt;https://one.vg/tw/nonexistent&lt;/a&gt;（中文）&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+                <pubDate>Mon, 27 Jun 2022 15:09:03 +0800</pubDate>
+                <link>https://one.vg/tw/blog/multilingual-404-page-for-github-pages</link>
+                <guid isPermaLink="true">https://one.vg/tw/blog/multilingual-404-page-for-github-pages</guid>
+                
+                <category>Coding</category>
+                
+                <category>Jekyll</category>
+                
+                
+                <category>tw</category>
+                
+            </item>
         
             <item>
                 <title>Multilingual 404 Page for GitHub Pages</title>
@@ -30,7 +135,7 @@
 
 &lt;p&gt;Although GitHub &lt;a href=&quot;https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-custom-404-page-for-your-github-pages-site&quot;&gt;does allow you&lt;/a&gt; to display a custom 404 error page when people try to access nonexistent pages on your site and it works fine for most people, it would become a problem if you are trying to make you website multilingual as it only allows a single version of it. For example, when viewing this blog in Chinese, if somehow you clicked on a nonexistent URL path that should’ve been in Chinese localization, e.g. “&lt;a href=&quot;https://one.vg/tw/nonexistent&quot;&gt;https://one.vg/tw/nonexistent&lt;/a&gt;” will be redirect to “&lt;a href=&quot;https://one.vg/404.html&quot;&gt;https://one.vg/404.html&lt;/a&gt;” by GitHub, which is in English. This behavior could be confusing as the users might not be familiar with English and unable to continue from there.&lt;/p&gt;
 
-&lt;p&gt;One way of solving this is using JavaScript to display the designated localization strings based on the pathname of the URL. However, this would be difficult to maintain especially if you change your website layouts frequently. My approach is creating a template of 404 page so each localization can have its own version of the page:&lt;/p&gt;
+&lt;p&gt;One way of solving this is using JavaScript to display the designated localization strings based on the pathname of the URL. However, this would be difficult to maintain especially if you change your website layouts frequently or have dynamic URL generation mechanism. My approach is creating a template of 404 page so each localization can have its own version of the page:&lt;/p&gt;
 
 &lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
 ├── _data/
@@ -71,7 +176,7 @@ permalink: /404.html
 &lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;locale_list&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;[&quot;en&quot;,&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;tw&quot;]&apos;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;It will then check the URL pathname and try to determine the corresponding localization, then redirect to it with the current path as query string so we can change the URL back to the user-entered one once redirected. Note that we only took the pathname instead of the whole &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;href&lt;/code&gt; value to prevent &lt;a href=&quot;https://cwe.mitre.org/data/definitions/601.html&quot;&gt;open redirect&lt;/a&gt; vulnerability.&lt;/p&gt;
+&lt;p&gt;It will then check the URL pathname and try to determine the corresponding localization, then redirect to it with the current path as query string so we can restore the user-entered one once redirected. Note that we only took the pathname instead of the whole &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;href&lt;/code&gt; value to prevent &lt;a href=&quot;https://cwe.mitre.org/data/definitions/601.html&quot;&gt;open redirect&lt;/a&gt; vulnerability.&lt;/p&gt;
 
 &lt;p&gt;For localized pages, we can do something like below:&lt;/p&gt;
 
@@ -94,7 +199,7 @@ locale: tw
   &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;The page will display the necessary contents and change the URL of the browser back to its origin with the  query value without reloading the page. You can check out the results with the following links:&lt;/p&gt;
+&lt;p&gt;The page will display the necessary contents and change the URL of the browser back to its origin with the query value without reloading the page. You can check out the results with the following links:&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://one.vg/nonexistent&quot;&gt;https://one.vg/nonexistent&lt;/a&gt; (English)&lt;/li&gt;
@@ -106,6 +211,8 @@ locale: tw
                 <guid isPermaLink="true">https://one.vg/blog/multilingual-404-page-for-github-pages</guid>
                 
                 <category>Coding</category>
+                
+                <category>Jekyll</category>
                 
                 
             </item>
@@ -190,6 +297,8 @@ locale: tw
                 <guid isPermaLink="true">https://one.vg/tw/blog/dior-by-birkenstock-tokio-mules-review</guid>
                 
                 <category>Fashion</category>
+                
+                <category>Dior</category>
                 
                 
                 <category>tw</category>
@@ -277,6 +386,8 @@ locale: tw
                 
                 <category>Fashion</category>
                 
+                <category>Dior</category>
+                
                 
             </item>
         
@@ -325,6 +436,8 @@ locale: tw
                 <guid isPermaLink="true">https://one.vg/tw/blog/reduce-pdf-size-with-quartz-filter</guid>
                 
                 <category>Mac</category>
+                
+                <category>macOS</category>
                 
                 
                 <category>tw</category>
@@ -376,6 +489,8 @@ locale: tw
                 <guid isPermaLink="true">https://one.vg/blog/reduce-pdf-size-with-quartz-filter</guid>
                 
                 <category>Mac</category>
+                
+                <category>macOS</category>
                 
                 
             </item>
@@ -512,6 +627,8 @@ locale: tw
                 <guid isPermaLink="true">https://one.vg/tw/blog/running-macos-ventura-in-a-virtual-machine-on-apple-silicon-macs</guid>
                 
                 <category>Mac</category>
+                
+                <category>Apple Silicon</category>
                 
                 
                 <category>tw</category>
@@ -651,6 +768,8 @@ locale: tw
                 
                 <category>Mac</category>
                 
+                <category>Apple Silicon</category>
+                
                 
             </item>
         
@@ -761,6 +880,8 @@ smbios.reflectHost = &quot;TRUE&quot;
                 <guid isPermaLink="true">https://one.vg/tw/blog/install-macos-ventura-beta-in-vmware-fusion</guid>
                 
                 <category>Mac</category>
+                
+                <category>macOS</category>
                 
                 
                 <category>tw</category>
@@ -874,6 +995,8 @@ smbios.reflectHost = &quot;TRUE&quot;
                 <guid isPermaLink="true">https://one.vg/blog/install-macos-ventura-beta-in-vmware-fusion</guid>
                 
                 <category>Mac</category>
+                
+                <category>macOS</category>
                 
                 
             </item>
