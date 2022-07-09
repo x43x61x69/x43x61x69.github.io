@@ -1,33 +1,35 @@
 <!DOCTYPE html>
-<html lang="zh-Hant-TW">
+<html lang="en">
 
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>文章標籤 | One</title>
-  <meta name='description' content='Been there. Done that.'>
+  <title>HID Passthrough in VMware Fusion | One</title>
+  <meta name='description' content='Update your firmware in Windows virtual machines.'>
 
-  <link rel="canonical" href="https://one.vg/tw/tags/">
+  <link rel="canonical" href="https://one.vg/blog/hid-passthrough-in-vmware-fusion">
   <link rel="alternate" type="application/rss+xml" title="One" href="/feed.xml">
+  <link rel="alternate" hreflang="en" href="/blog/hid-passthrough-in-vmware-fusion">
+  <link rel="alternate" hreflang="zh" href="/tw/blog/hid-passthrough-in-vmware-fusion">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="icon" type="image/png" href="/favicon.png">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="文章標籤 | One">
-  <meta name="twitter:description" content="Been there. Done that.">
-  <meta name="twitter:image:src" content="https://one.vg/images/cover.jpg">
+  <meta name="twitter:title" content="HID Passthrough in VMware Fusion | One">
+  <meta name="twitter:description" content="Update your firmware in Windows virtual machines.">
+  <meta name="twitter:image:src" content="https://one.vg/images/3ed4ac9f-a471-4024-a70c-6ebfc40bdb8b_cover.jpg">
   <meta name="twitter:site" content="@x43x61x69">
   <meta name="twitter:creator" content="@x43x61x69">
 
   <!-- Facebook OpenGraph -->
-  <meta property="og:url" content="https://one.vg/tw/tags/">
-  <meta property="og:title" content="文章標籤 | One">
-  <meta property="og:description" content="Been there. Done that.">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="https://one.vg/images/cover.jpg">
+  <meta property="og:url" content="https://one.vg/blog/hid-passthrough-in-vmware-fusion">
+  <meta property="og:title" content="HID Passthrough in VMware Fusion | One">
+  <meta property="og:description" content="Update your firmware in Windows virtual machines.">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://one.vg/images/3ed4ac9f-a471-4024-a70c-6ebfc40bdb8b_cover.jpg">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -66,7 +68,7 @@
       <div class="header__inner col col-12">
 
         <div class="logo">
-          <a class="logo__link" href="/tw/">
+          <a class="logo__link" href="/">
           
             <img class="logo__image" src="/images/logo.png" alt="One">
           
@@ -78,37 +80,37 @@
             <div class="nav__icon-close">
               <ion-icon class="ion-md-close" name="close-sharp"></ion-icon>
             </div>
-            <div class="nav__title">目錄</div>
+            <div class="nav__title">Menu</div>
             <ul class="nav__list list-reset">
               
                 
                 <li class="nav__item">
-                  <a href="/tw/" class="nav__link">首頁</a>
+                  <a href="/" class="nav__link">Home</a>
                 </li>
                 
               
                 
                 <li class="nav__item">
-                  <a href="/tw/about/" class="nav__link">關於</a>
+                  <a href="/about/" class="nav__link">About</a>
                 </li>
                 
               
                 
                 <li class="nav__item">
-                  <a href="/tw/guestbook/" class="nav__link">訪客留言</a>
+                  <a href="/guestbook/" class="nav__link">Guestbook</a>
                 </li>
                 
               
                 
                 <li class="nav__item dropdown">
-                  <span class="nav__link dropdown-toggle">其他功能<ion-icon size="small" name="chevron-down-sharp"></ion-icon></span>
+                  <span class="nav__link dropdown-toggle">More<ion-icon size="small" name="chevron-down-sharp"></ion-icon></span>
                   <div class="dropdown-menu">
                     
-                    <a href="/tw/tags/" class="nav__link active-link"><ion-icon name="pricetags-outline"></ion-icon>  文章標籤</a>
+                    <a href="/tags/" class="nav__link"><ion-icon name="pricetags-outline"></ion-icon>  Tags</a>
                     
-                    <a href="/tw/contact/" class="nav__link"><ion-icon name="mail-outline"></ion-icon>  與我聯絡</a>
+                    <a href="/contact/" class="nav__link"><ion-icon name="mail-outline"></ion-icon>  Contact</a>
                     
-                    <a href="/tw/privacy-policy/" class="nav__link"><ion-icon name="shield-checkmark-outline"></ion-icon>  隱私政策</a>
+                    <a href="/privacy-policy/" class="nav__link"><ion-icon name="shield-checkmark-outline"></ion-icon>  Privacy</a>
                     
                   </div>
                 </li>
@@ -126,20 +128,20 @@
             <div class="locale__icon-close">
               <ion-icon class="ion-md-close" name="close-sharp"></ion-icon>
             </div>
-            <div class="locale__title">選擇語言</div>
+            <div class="locale__title">Language</div>
             <ul class="nav__list list-reset">
               
                 
                 <li class="nav__item dropdown">
-                  <a href="/tags/" class="nav__link"><span class="nav__link dropdown-toggle"><ion-icon name="globe-sharp"></ion-icon> English<ion-icon size="small" name="chevron-down-sharp"></ion-icon></span></a>
+                  <a href="/tw/blog/hid-passthrough-in-vmware-fusion" class="nav__link"><span class="nav__link dropdown-toggle"><ion-icon name="globe-sharp"></ion-icon> 中文<ion-icon size="small" name="chevron-down-sharp"></ion-icon></span></a>
                   <div class="dropdown-menu">
                     
                     
-                    <a href="/tags/" class="nav__link"><ion-icon size="small" name="radio-button-off-outline"></ion-icon> English</a>
+                    <a href="#" class="nav__link active-link"><ion-icon size="small" name="checkmark-circle-outline"></ion-icon> English</a>
                     
                     
                     
-                    <a href="#" class="nav__link active-link"><ion-icon size="small" name="checkmark-circle-outline"></ion-icon> 中文</a>
+                    <a href="/tw/blog/hid-passthrough-in-vmware-fusion" class="nav__link"><ion-icon size="small" name="radio-button-off-outline"></ion-icon> 中文</a>
                     
                     
                   </div>
@@ -175,8 +177,8 @@
           </div>
 
           <div class="search__group">
-            <label for="js-search-input" class="screen-reader-text">搜尋文章</label>
-            <input type="text" id="js-search-input" class="search__text" autocomplete="off" placeholder="輸入搜尋關鍵字……">
+            <label for="js-search-input" class="screen-reader-text">Search for Blog</label>
+            <input type="text" id="js-search-input" class="search__text" autocomplete="off" placeholder="Type to search...">
           </div>
 
           <div class="search-results-list" id="js-results-container"></div>
@@ -198,531 +200,220 @@
 
   <!-- begin content -->
   <main class="content" aria-label="Content">
-    
+    <div class="post-head post-image-right">
+  <div class="container">
+    <div class="row">
 
+      <div class="col col-6 col-d-12 post-head__info">
+        <div class="post__info">
 
-<!-- begin tags -->
-<section class="tags">
-
-  <div class="tag__head">
-
-    <div class="container">
-      <div class="row">
-        <div class="col col-12">
-
-          <h1 class="tag__title">文章標籤</h1>
-        
-          <ul class="tag__list list-reset">
+          
+          <div class="post__tags">
             
               
-                
-                
-                <li class="tag__item"><a href="#apple+silicon" class="tag__link">Apple Silicon</a></li>
-              
+              <a href="/tags#vmware" class="post__tag" style="background-color: #421b00;" >VMWare</a>
             
               
-                
-                
-                <li class="tag__item"><a href="#coding" class="tag__link">程式語言</a></li>
-              
+              <a href="/tags#macos" class="post__tag" style="background-color: #421b00;" >macOS</a>
             
-              
-                
-                
-                <li class="tag__item"><a href="#dior" class="tag__link">Dior</a></li>
-              
-            
-              
-                
-                
-                <li class="tag__item"><a href="#fashion" class="tag__link">時尚</a></li>
-              
-            
-              
-                
-                
-                <li class="tag__item"><a href="#jekyll" class="tag__link">Jekyll</a></li>
-              
-            
-              
-                
-                
-                <li class="tag__item"><a href="#mac" class="tag__link">Mac</a></li>
-              
-            
-              
-                
-                
-                <li class="tag__item"><a href="#vmware" class="tag__link">VMWare</a></li>
-              
-            
-              
-                
-                
-                <li class="tag__item"><a href="#macos" class="tag__link">macOS</a></li>
-              
-            
-              
-            
-          </ul>
-
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-
-  
-  
-
-    
-    
-      
-
-      <div class="tags__inner">
-      
-        <div class="container">
-          <div class="row">
-            <div class="col col-12">
-              <div class="tag__info">
-                <div class="tag__info-box">
-                  <div class="tag__counter">
-                    <span>1</span>
-                    <small>篇文章</small>
-                  </div>
-                  <h2 class="tag__name" id="apple+silicon">Apple Silicon</h2>
-                </div>
-                <a class="top__link" href="#top">回到頁首</a>
-              </div>
-            </div>
           </div>
+          
+
+          <h1 class="post__title">HID Passthrough in VMware Fusion</h1>
+
+          <div class="post__meta">
+            
+              <a href="/about/" class="post__author">Cai</a>
+            
+            <time datetime="2022-07-10T04:31:32+08:00" class="post__date">10 Jul 2022</time>
+          </div>
+
         </div>
-
-        <div class="container">
-          <div class="row">
-            <div class="col col-12">
-              <div class="row">
-              
-                
-                  <div class="article col  col-4 col-d-6 col-t-12">
-  <div class="article__inner">
-
-
-    <a class="article__image" href="/tw/blog/running-macos-ventura-in-a-virtual-machine-on-apple-silicon-macs" style="background-color: #4d1573;">
-      
-      <div class="article__image__cover image-cover-js" data-accent="#4d1573"></div>
-      <img class="lazy" data-src="/images/71ac2589-ded9-4fd0-8fdc-6a8fd1d93948_cover.jpg" alt="在 Apple Silicon Mac 上運行 macOS Ventura 預覽版虛擬機">
-      
-    </a>
-
-    <div class="article__content">
+      </div>
 
       
-      <div class="article__tags">
-        
-          
-          <a href="/tw/tags#mac" class="article__tag" style="background-color: #4d1573;">Mac</a>
-        
-          
-          <a href="/tw/tags#apple+silicon" class="article__tag" style="background-color: #4d1573;">Apple Silicon</a>
-        
+      <div class="col col-6 col-d-12 post-head__image">
+        <div class="post-image">
+          <img class="lazy" data-src="/images/3ed4ac9f-a471-4024-a70c-6ebfc40bdb8b_cover.jpg" alt="HID Passthrough in VMware Fusion">
+        </div>
       </div>
       
-
-      <h2 class="article__title">
-        <a href="/tw/blog/running-macos-ventura-in-a-virtual-machine-on-apple-silicon-macs">在 Apple Silicon Mac 上運行 macOS Ventura 預覽版虛擬機</a>
-      </h2>
-
-      <div class="article__meta">
-        
-        <a href="/tw/about/" class="article__author">Cai</a>
-        
-        <time datetime="2022-06-09T10:43:14+08:00" class="article__date" >09 Jun 2022</time>
-      </div>
 
     </div>
   </div>
 </div>
-                
+
+<!-- begin post -->
+<div class="container animate">
+
+  <article class="post">
+
+    <div class="post__content">
+      
+        
+        
+        <div class="post__locale">
+          <p>
+            <ion-icon name="language-outline"></ion-icon> This article is also available in:
+            
               
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      
-    
-  
-  
-
-    
-    
-      
-
-      <div class="tags__inner">
-      
-        <div class="container">
-          <div class="row">
-            <div class="col col-12">
-              <div class="tag__info">
-                <div class="tag__info-box">
-                  <div class="tag__counter">
-                    <span>1</span>
-                    <small>篇文章</small>
-                  </div>
-                  <h2 class="tag__name" id="coding">程式語言</h2>
-                </div>
-                <a class="top__link" href="#top">回到頁首</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="container">
-          <div class="row">
-            <div class="col col-12">
-              <div class="row">
+                <a href="/tw/blog/hid-passthrough-in-vmware-fusion" class="locale tw" title="閱讀中文版本">中文</a>
               
-                
-                  <div class="article col  col-4 col-d-6 col-t-12">
-  <div class="article__inner">
-
-
-    <a class="article__image" href="/tw/blog/multilingual-404-page-for-github-pages" style="background-color: #010101;">
+            
+          </p>
+        </div>
+        <hr />
+        
       
-      <div class="article__image__cover image-cover-js" data-accent="#010101"></div>
-      <img class="lazy" data-src="/images/ea3cea65-7115-4862-a404-c7af7a23abe8_cover.jpg" alt="GitHub Pages 的多語言 404 頁面">
+      <p>I recently bought a keyboard, which is all nice except that it requires a Windows environment to update the firmware. If you try connecting the keyboard directly to a Windows VM in VMware Fusion via USB, you’d be disappointed to find out that they were not even shown in the device list.</p>
+
+<p>The reason behind it is actually valid: since human interface devices (HID) being assigned directly to the VM could result in losing control to the host OS, thus HID passthrough was disabled by default. VMware does provide a <a href="https://kb.vmware.com/s/article/1003418">KB article</a> to guide you on how to enable it. But after some testing, seems in the latest version of VMware Fusion (12.2.3 and Public Tech Preview 21H1), doing so not only won’t get you the result you want, it will actually prevent it.</p>
+
+<h2 id="how-to-enable-hid-passthrough">How to Enable HID Passthrough</h2>
+
+<ol>
+  <li>Quit Fusion completely.</li>
+  <li>Edit the file <code class="language-plaintext highlighter-rouge">/Library/Preferences/VMware Fusion/config</code> (requires admin privileges). Create one if it wasn’t existed already.</li>
+  <li>Add the following lines to the <code class="language-plaintext highlighter-rouge">config</code> file:
+    <div class="language-config highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">usb</span>.<span class="n">generic</span>.<span class="n">allowHID</span> = <span class="s2">"TRUE"</span>
+<span class="n">usb</span>.<span class="n">generic</span>.<span class="n">allowLastHID</span> = <span class="s2">"TRUE"</span>
+</code></pre></div>    </div>
+    <p>If you wish to passthrough USB cameras, you can also add the following line:</p>
+    <div class="language-config highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vusbcamera</span>.<span class="n">passthrough</span> = <span class="s2">"TRUE"</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Save the file and relaunch Fusion.</li>
+</ol>
+
+<p>This will essentially enable USB HID passthrough for all your VM. If the HID devices still are not there, check the <code class="language-plaintext highlighter-rouge">.vmx</code> file if the above lines were there and remove them.</p>
+
+<p><img src="/images/3ed4ac9f-a471-4024-a70c-6ebfc40bdb8b_001.png" alt="Screenshot" />
+<em>HID devices can now be connect to VM directly.</em></p>
+
+<p>Note that once you did, you will have to disconnect them physically in order to disconnect them from the VM.</p>
+
+    </div>
+
+    <div class="post__share">
+      <ul class="share__list list-reset">
+        <li class="share__item">
+          <a class="share__link share__twitter"
+            href="https://twitter.com/intent/tweet?text=HID%20Passthrough%20in%20VMware%20Fusion&url=https://one.vg/blog/hid-passthrough-in-vmware-fusion"
+            onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"
+            title="Share on Twitter" rel="nofollow"><ion-icon size="small" name="logo-twitter"></ion-icon></a>
+        </li>
+        <li class="share__item">
+          <a class="share__link share__facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://one.vg/blog/hid-passthrough-in-vmware-fusion"
+            onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"
+            title="Share on Facebook" rel="nofollow"><ion-icon name="logo-facebook"></ion-icon></a>
+        </li>
+      </ul>
+    </div>
+
+    
+    
+    
+
+    
+
+    <div class="post__navigation">
       
-    </a>
-
-    <div class="article__content">
 
       
-      <div class="article__tags">
-        
-          
-          <a href="/tw/tags#coding" class="article__tag" style="background-color: #010101;">程式語言</a>
-        
-          
-          <a href="/tw/tags#jekyll" class="article__tag" style="background-color: #010101;">Jekyll</a>
-        
-      </div>
+      <a class="next" href="/blog/multilingual-404-page-for-github-pages" style="background-color: #010101;">
+        <img class="post__nav-image lazy" data-src="/images/ea3cea65-7115-4862-a404-c7af7a23abe8_cover.jpg" alt="Multilingual 404 Page for GitHub Pages">
+        <div class="post__image__cover image-cover-js" data-accent="#010101"></div>
+        <div class="post__nav-box">
+          <div class="post__nav post__nav__next">Next Post</div>
+          <h4 class="post__nav__title">Multilingual 404 Page for GitHub Pages</h4>
+        </div>
+      </a>
       
+    </div>
 
-      <h2 class="article__title">
-        <a href="/tw/blog/multilingual-404-page-for-github-pages">GitHub Pages 的多語言 404 頁面</a>
-      </h2>
+  </article>
+</div>
+<!-- end post -->
 
-      <div class="article__meta">
-        
-        <a href="/tw/about/" class="article__author">Cai</a>
-        
-        <time datetime="2022-06-27T15:09:03+08:00" class="article__date" >27 Jun 2022</time>
-      </div>
 
+
+<div class="container">
+  <div class="row">
+    <div class="col col-12">
+    
+    <!-- begin comments -->
+<div class="show-comments animate" id="show-comments" style="display: none;">
+  <button class="button button--middle button--rounded" id="show-comments-button" onclick="load_comments();return false;">Comments</button>
+</div>
+
+<div id="comments" class="post__comments">
+  <noscript>Please enable JavaScript to view the comments.</noscript>
+</div>
+
+<script>
+  var comments_loaded = false;
+  var comments_container = document.getElementById("comments");
+  document.getElementById("show-comments").style.display = "block";
+  if (window.location.hash == '#comments'){
+    load_comments();
+  }
+  function load_comments() {
+    if (!comments_loaded) {
+      comments_loaded = true;
+      window.location.hash = '#comments';
+      var e = document.createElement("script");
+      e.type = "text/javascript";
+      e.async = true;
+      e.src = "https://giscus.app/client.js";
+      e.setAttribute("data-repo", "x43x61x69/blog-comments");
+      e.setAttribute("data-repo-id", "R_kgDOHjXgmw");
+      e.setAttribute("data-category", "General");
+      e.setAttribute("data-category-id", "DIC_kwDOHjXgm84CP2Zd");
+      e.setAttribute("data-mapping", "specific");
+      e.setAttribute("data-term", "3ed4ac9f-a471-4024-a70c-6ebfc40bdb8b");
+      e.setAttribute("data-reactions-enabled", "0");
+      e.setAttribute("data-emit-metadata", "0");
+      e.setAttribute("data-input-position", "top");
+      e.setAttribute("data-theme", "https://one.vg/css/transparent_dark.css");
+      e.setAttribute("data-lang", "en");
+      e.setAttribute("data-loading", "lazy");
+      e.setAttribute("crossOrigin", "anonymous");
+      document.getElementById("comments").appendChild(e);
+      // Hide the button after opening
+      document.getElementById("show-comments-button").style.display = "none";
+      // Show comments
+      comments_container.classList.add("is-open");
+    }
+  }
+</script>
+<!-- end comments -->
+    
     </div>
   </div>
 </div>
-                
-              
-              </div>
-            </div>
-          </div>
-        </div>
 
-      </div>
 
-      
-    
-  
-  
-
-    
-    
-      
-
-      <div class="tags__inner">
-      
-        <div class="container">
-          <div class="row">
-            <div class="col col-12">
-              <div class="tag__info">
-                <div class="tag__info-box">
-                  <div class="tag__counter">
-                    <span>1</span>
-                    <small>篇文章</small>
+<!-- begin related posts -->
+<div class="container">
+  <section class="related-posts is-related animate">
+    <div class="row">
+      <div class="col col-12">
+        <div class="container__inner">
+          <div class="section__info">
+            <div class="section__head">
+              <h2 class="section__title">You may also like</h2>
+                <a href="/tags#vmware" class="section__link related-tag">See all <span>VMWare</span></a>
                   </div>
-                  <h2 class="tag__name" id="dior">Dior</h2>
-                </div>
-                <a class="top__link" href="#top">回到頁首</a>
-              </div>
-            </div>
           </div>
-        </div>
-
-        <div class="container">
           <div class="row">
-            <div class="col col-12">
-              <div class="row">
-              
-                
-                  <div class="article col  col-4 col-d-6 col-t-12">
+          <div class="article col  col-4 col-d-6 col-t-12">
   <div class="article__inner">
 
 
-    <a class="article__image" href="/tw/blog/dior-by-birkenstock-tokio-mules-review" style="background-color: #123a2a;">
-      
-      <div class="article__image__cover image-cover-js" data-accent="#123a2a"></div>
-      <img class="lazy" data-src="/images/2b5fad04-c2fe-410d-8750-556b18899ad8_cover.jpg" alt="Dior by Birkenstock：Tokio 涼鞋心得">
-      
-    </a>
-
-    <div class="article__content">
-
-      
-      <div class="article__tags">
-        
-          
-          <a href="/tw/tags#fashion" class="article__tag" style="background-color: #123a2a;">時尚</a>
-        
-          
-          <a href="/tw/tags#dior" class="article__tag" style="background-color: #123a2a;">Dior</a>
-        
-      </div>
-      
-
-      <h2 class="article__title">
-        <a href="/tw/blog/dior-by-birkenstock-tokio-mules-review">Dior by Birkenstock：Tokio 涼鞋心得</a>
-      </h2>
-
-      <div class="article__meta">
-        
-        <a href="/tw/about/" class="article__author">Cai</a>
-        
-        <time datetime="2022-06-18T19:46:59+08:00" class="article__date" >18 Jun 2022</time>
-      </div>
-
-    </div>
-  </div>
-</div>
-                
-              
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      
-    
-  
-  
-
-    
-    
-      
-
-      <div class="tags__inner">
-      
-        <div class="container">
-          <div class="row">
-            <div class="col col-12">
-              <div class="tag__info">
-                <div class="tag__info-box">
-                  <div class="tag__counter">
-                    <span>1</span>
-                    <small>篇文章</small>
-                  </div>
-                  <h2 class="tag__name" id="fashion">時尚</h2>
-                </div>
-                <a class="top__link" href="#top">回到頁首</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="container">
-          <div class="row">
-            <div class="col col-12">
-              <div class="row">
-              
-                
-                  <div class="article col  col-4 col-d-6 col-t-12">
-  <div class="article__inner">
-
-
-    <a class="article__image" href="/tw/blog/dior-by-birkenstock-tokio-mules-review" style="background-color: #123a2a;">
-      
-      <div class="article__image__cover image-cover-js" data-accent="#123a2a"></div>
-      <img class="lazy" data-src="/images/2b5fad04-c2fe-410d-8750-556b18899ad8_cover.jpg" alt="Dior by Birkenstock：Tokio 涼鞋心得">
-      
-    </a>
-
-    <div class="article__content">
-
-      
-      <div class="article__tags">
-        
-          
-          <a href="/tw/tags#fashion" class="article__tag" style="background-color: #123a2a;">時尚</a>
-        
-          
-          <a href="/tw/tags#dior" class="article__tag" style="background-color: #123a2a;">Dior</a>
-        
-      </div>
-      
-
-      <h2 class="article__title">
-        <a href="/tw/blog/dior-by-birkenstock-tokio-mules-review">Dior by Birkenstock：Tokio 涼鞋心得</a>
-      </h2>
-
-      <div class="article__meta">
-        
-        <a href="/tw/about/" class="article__author">Cai</a>
-        
-        <time datetime="2022-06-18T19:46:59+08:00" class="article__date" >18 Jun 2022</time>
-      </div>
-
-    </div>
-  </div>
-</div>
-                
-              
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      
-    
-  
-  
-
-    
-    
-      
-
-      <div class="tags__inner">
-      
-        <div class="container">
-          <div class="row">
-            <div class="col col-12">
-              <div class="tag__info">
-                <div class="tag__info-box">
-                  <div class="tag__counter">
-                    <span>1</span>
-                    <small>篇文章</small>
-                  </div>
-                  <h2 class="tag__name" id="jekyll">Jekyll</h2>
-                </div>
-                <a class="top__link" href="#top">回到頁首</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="container">
-          <div class="row">
-            <div class="col col-12">
-              <div class="row">
-              
-                
-                  <div class="article col  col-4 col-d-6 col-t-12">
-  <div class="article__inner">
-
-
-    <a class="article__image" href="/tw/blog/multilingual-404-page-for-github-pages" style="background-color: #010101;">
-      
-      <div class="article__image__cover image-cover-js" data-accent="#010101"></div>
-      <img class="lazy" data-src="/images/ea3cea65-7115-4862-a404-c7af7a23abe8_cover.jpg" alt="GitHub Pages 的多語言 404 頁面">
-      
-    </a>
-
-    <div class="article__content">
-
-      
-      <div class="article__tags">
-        
-          
-          <a href="/tw/tags#coding" class="article__tag" style="background-color: #010101;">程式語言</a>
-        
-          
-          <a href="/tw/tags#jekyll" class="article__tag" style="background-color: #010101;">Jekyll</a>
-        
-      </div>
-      
-
-      <h2 class="article__title">
-        <a href="/tw/blog/multilingual-404-page-for-github-pages">GitHub Pages 的多語言 404 頁面</a>
-      </h2>
-
-      <div class="article__meta">
-        
-        <a href="/tw/about/" class="article__author">Cai</a>
-        
-        <time datetime="2022-06-27T15:09:03+08:00" class="article__date" >27 Jun 2022</time>
-      </div>
-
-    </div>
-  </div>
-</div>
-                
-              
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      
-    
-  
-  
-
-    
-    
-      
-
-      <div class="tags__inner">
-      
-        <div class="container">
-          <div class="row">
-            <div class="col col-12">
-              <div class="tag__info">
-                <div class="tag__info-box">
-                  <div class="tag__counter">
-                    <span>3</span>
-                    <small>篇文章</small>
-                  </div>
-                  <h2 class="tag__name" id="mac">Mac</h2>
-                </div>
-                <a class="top__link" href="#top">回到頁首</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="container">
-          <div class="row">
-            <div class="col col-12">
-              <div class="row">
-              
-                
-                  <div class="article col  col-4 col-d-6 col-t-12">
-  <div class="article__inner">
-
-
-    <a class="article__image" href="/tw/blog/reduce-pdf-size-with-quartz-filter" style="background-color: #15346e;">
+    <a class="article__image" href="/blog/reduce-pdf-size-with-quartz-filter" style="background-color: #15346e;">
       
       <div class="article__image__cover image-cover-js" data-accent="#15346e"></div>
-      <img class="lazy" data-src="/images/200e4c26-c102-432f-9c4d-626274db5702_cover.jpg" alt="透過 Quartz 濾鏡減少 PDF 檔案大小">
+      <img class="lazy" data-src="/images/200e4c26-c102-432f-9c4d-626274db5702_cover.jpg" alt="Reduce PDF Size with Quartz Filter">
       
     </a>
 
@@ -732,21 +423,21 @@
       <div class="article__tags">
         
           
-          <a href="/tw/tags#mac" class="article__tag" style="background-color: #15346e;">Mac</a>
+          <a href="/tags#mac" class="article__tag" style="background-color: #15346e;">Mac</a>
         
           
-          <a href="/tw/tags#macos" class="article__tag" style="background-color: #15346e;">macOS</a>
+          <a href="/tags#macos" class="article__tag" style="background-color: #15346e;">macOS</a>
         
       </div>
       
 
       <h2 class="article__title">
-        <a href="/tw/blog/reduce-pdf-size-with-quartz-filter">透過 Quartz 濾鏡減少 PDF 檔案大小</a>
+        <a href="/blog/reduce-pdf-size-with-quartz-filter">Reduce PDF Size with Quartz Filter</a>
       </h2>
 
       <div class="article__meta">
         
-        <a href="/tw/about/" class="article__author">Cai</a>
+        <a href="/about/" class="article__author">Cai</a>
         
         <time datetime="2022-06-12T14:39:14+08:00" class="article__date" >12 Jun 2022</time>
       </div>
@@ -754,59 +445,14 @@
     </div>
   </div>
 </div>
-                
-              
-                
-                  <div class="article col  col-4 col-d-6 col-t-12">
+            <div class="article col  col-4 col-d-6 col-t-12">
   <div class="article__inner">
 
 
-    <a class="article__image" href="/tw/blog/running-macos-ventura-in-a-virtual-machine-on-apple-silicon-macs" style="background-color: #4d1573;">
-      
-      <div class="article__image__cover image-cover-js" data-accent="#4d1573"></div>
-      <img class="lazy" data-src="/images/71ac2589-ded9-4fd0-8fdc-6a8fd1d93948_cover.jpg" alt="在 Apple Silicon Mac 上運行 macOS Ventura 預覽版虛擬機">
-      
-    </a>
-
-    <div class="article__content">
-
-      
-      <div class="article__tags">
-        
-          
-          <a href="/tw/tags#mac" class="article__tag" style="background-color: #4d1573;">Mac</a>
-        
-          
-          <a href="/tw/tags#apple+silicon" class="article__tag" style="background-color: #4d1573;">Apple Silicon</a>
-        
-      </div>
-      
-
-      <h2 class="article__title">
-        <a href="/tw/blog/running-macos-ventura-in-a-virtual-machine-on-apple-silicon-macs">在 Apple Silicon Mac 上運行 macOS Ventura 預覽版虛擬機</a>
-      </h2>
-
-      <div class="article__meta">
-        
-        <a href="/tw/about/" class="article__author">Cai</a>
-        
-        <time datetime="2022-06-09T10:43:14+08:00" class="article__date" >09 Jun 2022</time>
-      </div>
-
-    </div>
-  </div>
-</div>
-                
-              
-                
-                  <div class="article col  col-4 col-d-6 col-t-12">
-  <div class="article__inner">
-
-
-    <a class="article__image" href="/tw/blog/install-macos-ventura-beta-in-vmware-fusion" style="background-color: #f73535;">
+    <a class="article__image" href="/blog/install-macos-ventura-beta-in-vmware-fusion" style="background-color: #f73535;">
       
       <div class="article__image__cover image-cover-js" data-accent="#f73535"></div>
-      <img class="lazy" data-src="/images/8187bc26-3fab-4947-be03-2fac6c048001_cover.jpg" alt="在 VMware Fusion 中安裝 macOS Ventura 預覽版">
+      <img class="lazy" data-src="/images/8187bc26-3fab-4947-be03-2fac6c048001_cover.jpg" alt="Install macOS Ventura Beta in VMware Fusion">
       
     </a>
 
@@ -816,21 +462,21 @@
       <div class="article__tags">
         
           
-          <a href="/tw/tags#mac" class="article__tag" style="background-color: #f73535;">Mac</a>
+          <a href="/tags#mac" class="article__tag" style="background-color: #f73535;">Mac</a>
         
           
-          <a href="/tw/tags#macos" class="article__tag" style="background-color: #f73535;">macOS</a>
+          <a href="/tags#macos" class="article__tag" style="background-color: #f73535;">macOS</a>
         
       </div>
       
 
       <h2 class="article__title">
-        <a href="/tw/blog/install-macos-ventura-beta-in-vmware-fusion">在 VMware Fusion 中安裝 macOS Ventura 預覽版</a>
+        <a href="/blog/install-macos-ventura-beta-in-vmware-fusion">Install macOS Ventura Beta in VMware Fusion</a>
       </h2>
 
       <div class="article__meta">
         
-        <a href="/tw/about/" class="article__author">Cai</a>
+        <a href="/about/" class="article__author">Cai</a>
         
         <time datetime="2022-06-08T14:54:24+08:00" class="article__date" >08 Jun 2022</time>
       </div>
@@ -838,274 +484,20 @@
     </div>
   </div>
 </div>
-                
-              
-              </div>
-            </div>
+            
           </div>
         </div>
-
       </div>
-
-      
-    
-  
-  
-
-    
-    
-      
-
-      <div class="tags__inner">
-      
-        <div class="container">
-          <div class="row">
-            <div class="col col-12">
-              <div class="tag__info">
-                <div class="tag__info-box">
-                  <div class="tag__counter">
-                    <span>1</span>
-                    <small>篇文章</small>
-                  </div>
-                  <h2 class="tag__name" id="vmware">VMWare</h2>
-                </div>
-                <a class="top__link" href="#top">回到頁首</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="container">
-          <div class="row">
-            <div class="col col-12">
-              <div class="row">
-              
-                
-                  <div class="article col  col-4 col-d-6 col-t-12">
-  <div class="article__inner">
-
-
-    <a class="article__image" href="/tw/blog/hid-passthrough-in-vmware-fusion" style="background-color: #421b00;">
-      
-      <div class="article__image__cover image-cover-js" data-accent="#421b00"></div>
-      <img class="lazy" data-src="/images/3ed4ac9f-a471-4024-a70c-6ebfc40bdb8b_cover.jpg" alt="在 VMware Fusion 中啟用 HID Passthrough">
-      
-    </a>
-
-    <div class="article__content">
-
-      
-      <div class="article__tags">
-        
-          
-          <a href="/tw/tags#vmware" class="article__tag" style="background-color: #421b00;">VMWare</a>
-        
-          
-          <a href="/tw/tags#macos" class="article__tag" style="background-color: #421b00;">macOS</a>
-        
-      </div>
-      
-
-      <h2 class="article__title">
-        <a href="/tw/blog/hid-passthrough-in-vmware-fusion">在 VMware Fusion 中啟用 HID Passthrough</a>
-      </h2>
-
-      <div class="article__meta">
-        
-        <a href="/tw/about/" class="article__author">Cai</a>
-        
-        <time datetime="2022-07-10T04:31:32+08:00" class="article__date" >10 Jul 2022</time>
-      </div>
-
     </div>
-  </div>
+  </section>
 </div>
-                
-              
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      
-    
-  
-  
-
-    
-    
-      
-
-      <div class="tags__inner">
-      
-        <div class="container">
-          <div class="row">
-            <div class="col col-12">
-              <div class="tag__info">
-                <div class="tag__info-box">
-                  <div class="tag__counter">
-                    <span>3</span>
-                    <small>篇文章</small>
-                  </div>
-                  <h2 class="tag__name" id="macos">macOS</h2>
-                </div>
-                <a class="top__link" href="#top">回到頁首</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="container">
-          <div class="row">
-            <div class="col col-12">
-              <div class="row">
-              
-                
-                  <div class="article col  col-4 col-d-6 col-t-12">
-  <div class="article__inner">
+<!-- end related posts -->
 
 
-    <a class="article__image" href="/tw/blog/hid-passthrough-in-vmware-fusion" style="background-color: #421b00;">
-      
-      <div class="article__image__cover image-cover-js" data-accent="#421b00"></div>
-      <img class="lazy" data-src="/images/3ed4ac9f-a471-4024-a70c-6ebfc40bdb8b_cover.jpg" alt="在 VMware Fusion 中啟用 HID Passthrough">
-      
-    </a>
-
-    <div class="article__content">
-
-      
-      <div class="article__tags">
-        
-          
-          <a href="/tw/tags#vmware" class="article__tag" style="background-color: #421b00;">VMWare</a>
-        
-          
-          <a href="/tw/tags#macos" class="article__tag" style="background-color: #421b00;">macOS</a>
-        
-      </div>
-      
-
-      <h2 class="article__title">
-        <a href="/tw/blog/hid-passthrough-in-vmware-fusion">在 VMware Fusion 中啟用 HID Passthrough</a>
-      </h2>
-
-      <div class="article__meta">
-        
-        <a href="/tw/about/" class="article__author">Cai</a>
-        
-        <time datetime="2022-07-10T04:31:32+08:00" class="article__date" >10 Jul 2022</time>
-      </div>
-
-    </div>
-  </div>
-</div>
-                
-              
-                
-                  <div class="article col  col-4 col-d-6 col-t-12">
-  <div class="article__inner">
-
-
-    <a class="article__image" href="/tw/blog/reduce-pdf-size-with-quartz-filter" style="background-color: #15346e;">
-      
-      <div class="article__image__cover image-cover-js" data-accent="#15346e"></div>
-      <img class="lazy" data-src="/images/200e4c26-c102-432f-9c4d-626274db5702_cover.jpg" alt="透過 Quartz 濾鏡減少 PDF 檔案大小">
-      
-    </a>
-
-    <div class="article__content">
-
-      
-      <div class="article__tags">
-        
-          
-          <a href="/tw/tags#mac" class="article__tag" style="background-color: #15346e;">Mac</a>
-        
-          
-          <a href="/tw/tags#macos" class="article__tag" style="background-color: #15346e;">macOS</a>
-        
-      </div>
-      
-
-      <h2 class="article__title">
-        <a href="/tw/blog/reduce-pdf-size-with-quartz-filter">透過 Quartz 濾鏡減少 PDF 檔案大小</a>
-      </h2>
-
-      <div class="article__meta">
-        
-        <a href="/tw/about/" class="article__author">Cai</a>
-        
-        <time datetime="2022-06-12T14:39:14+08:00" class="article__date" >12 Jun 2022</time>
-      </div>
-
-    </div>
-  </div>
-</div>
-                
-              
-                
-                  <div class="article col  col-4 col-d-6 col-t-12">
-  <div class="article__inner">
-
-
-    <a class="article__image" href="/tw/blog/install-macos-ventura-beta-in-vmware-fusion" style="background-color: #f73535;">
-      
-      <div class="article__image__cover image-cover-js" data-accent="#f73535"></div>
-      <img class="lazy" data-src="/images/8187bc26-3fab-4947-be03-2fac6c048001_cover.jpg" alt="在 VMware Fusion 中安裝 macOS Ventura 預覽版">
-      
-    </a>
-
-    <div class="article__content">
-
-      
-      <div class="article__tags">
-        
-          
-          <a href="/tw/tags#mac" class="article__tag" style="background-color: #f73535;">Mac</a>
-        
-          
-          <a href="/tw/tags#macos" class="article__tag" style="background-color: #f73535;">macOS</a>
-        
-      </div>
-      
-
-      <h2 class="article__title">
-        <a href="/tw/blog/install-macos-ventura-beta-in-vmware-fusion">在 VMware Fusion 中安裝 macOS Ventura 預覽版</a>
-      </h2>
-
-      <div class="article__meta">
-        
-        <a href="/tw/about/" class="article__author">Cai</a>
-        
-        <time datetime="2022-06-08T14:54:24+08:00" class="article__date" >08 Jun 2022</time>
-      </div>
-
-    </div>
-  </div>
-</div>
-                
-              
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      
-    
-  
-  
-
-</section>
-<!-- end tags -->
   </main>
   <!-- end content -->
 
-  <div class="top" title="頁首"><ion-icon name="arrow-up-sharp"></ion-icon></div>
+  <div class="top" title="Top"><ion-icon name="arrow-up-sharp"></ion-icon></div>
   <!-- begin footer-widgets -->
 <section class="footer-widgets">
   <div class="container">
@@ -1119,7 +511,7 @@
       <h3 class="widget__title">Cai</h3>
     </div>
 
-    <p class="widget-info__desc">多向分化潜能（Multipotentiality）的堅定信仰者。目前於半導體產業擔任全職工程師。</p>
+    <p class="widget-info__desc">A firm believer of multipotentiality. Currently working as a full-time engineer in the semiconductor industry.</p>
 
     
     <div class="social">
@@ -1162,14 +554,14 @@
   <div class="widget widget-recent">
 
     <div class="widget__head">
-      <h3 class="widget__title">最新文章</h3>
+      <h3 class="widget__title">Latest Posts</h3>
     </div>
 
     
     
     <div class="recent-posts">
       
-        <a class="recent-posts__image" href="/tw/blog/hid-passthrough-in-vmware-fusion" style="background-color: #421b00;"><img class="lazy" data-src="/images/3ed4ac9f-a471-4024-a70c-6ebfc40bdb8b_cover.jpg" alt="在 VMware Fusion 中啟用 HID Passthrough"></a>
+        <a class="recent-posts__image" href="/blog/hid-passthrough-in-vmware-fusion" style="background-color: #421b00;"><img class="lazy" data-src="/images/3ed4ac9f-a471-4024-a70c-6ebfc40bdb8b_cover.jpg" alt="HID Passthrough in VMware Fusion"></a>
       
       <div class="recent-posts__content">
         <div class="article__meta">
@@ -1177,15 +569,15 @@
           <div class="article__tags">
             
               
-              <a href="/tw/tags#vmware" class="article__tag" style="background-color: #421b00;">VMWare</a>
+              <a href="/tags#vmware" class="article__tag" style="background-color: #421b00;">VMWare</a>
             
               
-              <a href="/tw/tags#macos" class="article__tag" style="background-color: #421b00;">macOS</a>
+              <a href="/tags#macos" class="article__tag" style="background-color: #421b00;">macOS</a>
             
           </div>
           
         </div>
-        <h4 class="recent-posts__title"><a href="/tw/blog/hid-passthrough-in-vmware-fusion">在 VMware Fusion 中啟用 HID Passthrough</a></h4>
+        <h4 class="recent-posts__title"><a href="/blog/hid-passthrough-in-vmware-fusion">HID Passthrough in VMware Fusion</a></h4>
         <div class="article__bottom">
           <div class="article__meta">
             
@@ -1199,7 +591,7 @@
     
     <div class="recent-posts">
       
-        <a class="recent-posts__image" href="/tw/blog/multilingual-404-page-for-github-pages" style="background-color: #010101;"><img class="lazy" data-src="/images/ea3cea65-7115-4862-a404-c7af7a23abe8_cover.jpg" alt="GitHub Pages 的多語言 404 頁面"></a>
+        <a class="recent-posts__image" href="/blog/multilingual-404-page-for-github-pages" style="background-color: #010101;"><img class="lazy" data-src="/images/ea3cea65-7115-4862-a404-c7af7a23abe8_cover.jpg" alt="Multilingual 404 Page for GitHub Pages"></a>
       
       <div class="recent-posts__content">
         <div class="article__meta">
@@ -1207,15 +599,15 @@
           <div class="article__tags">
             
               
-              <a href="/tw/tags#coding" class="article__tag" style="background-color: #010101;">程式語言</a>
+              <a href="/tags#coding" class="article__tag" style="background-color: #010101;">Coding</a>
             
               
-              <a href="/tw/tags#jekyll" class="article__tag" style="background-color: #010101;">Jekyll</a>
+              <a href="/tags#jekyll" class="article__tag" style="background-color: #010101;">Jekyll</a>
             
           </div>
           
         </div>
-        <h4 class="recent-posts__title"><a href="/tw/blog/multilingual-404-page-for-github-pages">GitHub Pages 的多語言 404 頁面</a></h4>
+        <h4 class="recent-posts__title"><a href="/blog/multilingual-404-page-for-github-pages">Multilingual 404 Page for GitHub Pages</a></h4>
         <div class="article__bottom">
           <div class="article__meta">
             
@@ -1247,7 +639,7 @@
     <div class="row">
       <div class="col col-12">
         <div class="footer__inner">
-          <div class="copyright">版權所有 &copy; 2022 Cai。保留一切權利。</div>
+          <div class="copyright">Copyright &copy; 2022 Cai. All rights reserved.</div>
         </div>
       </div>
     </div>
