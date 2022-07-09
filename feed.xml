@@ -5,8 +5,8 @@
         <description></description>
         <link>https://one.vg/</link>
         <atom:link href="https://one.vg/feed.xml" rel="self" type="application/rss+xml"/>
-        <pubDate>Sun, 10 Jul 2022 04:58:27 +0800</pubDate>
-        <lastBuildDate>Sun, 10 Jul 2022 04:58:27 +0800</lastBuildDate>
+        <pubDate>Sun, 10 Jul 2022 05:13:11 +0800</pubDate>
+        <lastBuildDate>Sun, 10 Jul 2022 05:13:11 +0800</lastBuildDate>
         <generator>Jekyll v4.2.2</generator>
         
             <item>
@@ -37,6 +37,10 @@
 &lt;em&gt;輸入裝置現在可以直接與虛擬機進行連接。&lt;/em&gt;&lt;/p&gt;
 
 &lt;p&gt;請留意，一旦裝置以此方式連接，必須實體與電腦中斷連線方能與該虛擬機解除連線。&lt;/p&gt;
+
+&lt;h2 id=&quot;其他用途&quot;&gt;其他用途&lt;/h2&gt;
+
+&lt;p&gt;因為輸入裝置處於直通輸入模式，USB 安全金鑰（Security Key）可用於虛擬機的 Windows Hello 功能。&lt;/p&gt;
 </description>
                 <pubDate>Sun, 10 Jul 2022 04:31:32 +0800</pubDate>
                 <link>https://one.vg/tw/blog/hid-passthrough-in-vmware-fusion</link>
@@ -79,6 +83,10 @@
 &lt;em&gt;HID devices can now be connect to VM directly.&lt;/em&gt;&lt;/p&gt;
 
 &lt;p&gt;Note that once you did, you will have to disconnect them physically in order to disconnect them from the VM.&lt;/p&gt;
+
+&lt;h2 id=&quot;other-usage&quot;&gt;Other Usage&lt;/h2&gt;
+
+&lt;p&gt;Since the HID device is in passthrough mode, USB security key devices can now be used for Windows Hello in the VM.&lt;/p&gt;
 </description>
                 <pubDate>Sun, 10 Jul 2022 04:31:32 +0800</pubDate>
                 <link>https://one.vg/blog/hid-passthrough-in-vmware-fusion</link>
