@@ -6,28 +6,30 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>One</title>
-  <meta name='description' content='Been there. Done that.'>
+  <title>調整 VMware 中 Windows 11 on ARM 顯示器解析度 | One</title>
+  <meta name='description' content='透過 GRUB 的協助。'>
 
-  <link rel="canonical" href="https://one.vg/tw/">
+  <link rel="canonical" href="https://one.vg/tw/blog/change-windows-on-arm-display-resolution-in-vmware">
   <link rel="alternate" type="application/rss+xml" title="One" href="/feed.xml">
+  <link rel="alternate" hreflang="en" href="/blog/change-windows-on-arm-display-resolution-in-vmware">
+  <link rel="alternate" hreflang="zh" href="/tw/blog/change-windows-on-arm-display-resolution-in-vmware">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="icon" type="image/png" href="/favicon.png">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="One">
-  <meta name="twitter:description" content="Been there. Done that.">
-  <meta name="twitter:image:src" content="https://one.vg/images/cover.jpg">
+  <meta name="twitter:title" content="調整 VMware 中 Windows 11 on ARM 顯示器解析度 | One">
+  <meta name="twitter:description" content="透過 GRUB 的協助。">
+  <meta name="twitter:image:src" content="https://one.vg/images/c8175a71-7b27-47fa-9de6-d6c41f3b2509_cover.jpg">
   <meta name="twitter:site" content="@x43x61x69">
   <meta name="twitter:creator" content="@x43x61x69">
 
   <!-- Facebook OpenGraph -->
-  <meta property="og:url" content="https://one.vg/tw/">
-  <meta property="og:title" content="One">
-  <meta property="og:description" content="Been there. Done that.">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="https://one.vg/images/cover.jpg">
+  <meta property="og:url" content="https://one.vg/tw/blog/change-windows-on-arm-display-resolution-in-vmware">
+  <meta property="og:title" content="調整 VMware 中 Windows 11 on ARM 顯示器解析度 | One">
+  <meta property="og:description" content="透過 GRUB 的協助。">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://one.vg/images/c8175a71-7b27-47fa-9de6-d6c41f3b2509_cover.jpg">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -131,11 +133,11 @@
               
                 
                 <li class="nav__item dropdown">
-                  <a href="/" class="nav__link"><span class="nav__link dropdown-toggle"><ion-icon name="globe-sharp"></ion-icon> English<ion-icon size="small" name="chevron-down-sharp"></ion-icon></span></a>
+                  <a href="/blog/change-windows-on-arm-display-resolution-in-vmware" class="nav__link"><span class="nav__link dropdown-toggle"><ion-icon name="globe-sharp"></ion-icon> English<ion-icon size="small" name="chevron-down-sharp"></ion-icon></span></a>
                   <div class="dropdown-menu">
                     
                     
-                    <a href="/" class="nav__link"><ion-icon size="small" name="radio-button-off-outline"></ion-icon> English</a>
+                    <a href="/blog/change-windows-on-arm-display-resolution-in-vmware" class="nav__link"><ion-icon size="small" name="radio-button-off-outline"></ion-icon> English</a>
                     
                     
                     
@@ -198,326 +200,266 @@
 
   <!-- begin content -->
   <main class="content" aria-label="Content">
-    
-  <!-- begin hero -->
-<section class="hero">
+    <div class="post-head post-image-right">
   <div class="container">
-    <div class="hero__inner">
-      <h1 class="hero__title">感謝造訪 One。</h1>
-      <p class="hero__description">這是我的個人部落格，於此分享我的所見所聞。希望你會感興趣。</p>
+    <div class="row">
+
+      <div class="col col-6 col-d-12 post-head__info">
+        <div class="post__info">
+
+          
+          <div class="post__tags">
+            
+              
+              <a href="/tw/tags#vmware" class="post__tag" style="background-color: #b89987;" >VMware</a>
+            
+              
+              <a href="/tw/tags#windows" class="post__tag" style="background-color: #b89987;" >Windows</a>
+            
+          </div>
+          
+
+          <h1 class="post__title">調整 VMware 中 Windows 11 on ARM 顯示器解析度</h1>
+
+          <div class="post__meta">
+            
+              <a href="/tw/about/" class="post__author">Cai</a>
+            
+            <time datetime="2022-07-12T16:35:50+08:00" class="post__date">12 Jul 2022</time>
+          </div>
+
+        </div>
+      </div>
+
+      
+      <div class="col col-6 col-d-12 post-head__image">
+        <div class="post-image">
+          <img class="lazy" data-src="/images/c8175a71-7b27-47fa-9de6-d6c41f3b2509_cover.jpg" alt="調整 VMware 中 Windows 11 on ARM 顯示器解析度">
+        </div>
+      </div>
+      
+
     </div>
   </div>
-</section>
-<!-- end hero -->
-  
+</div>
 
+<!-- begin post -->
+<div class="container animate">
 
+  <article class="post">
+
+    <div class="post__content">
+      
+        
+        
+        <div class="post__locale">
+          <p>
+            <ion-icon name="language-outline"></ion-icon> 本文亦提供以下語言版本：
+            
+              
+              
+                <a href="/blog/change-windows-on-arm-display-resolution-in-vmware" class="locale en" title="View in English">English</a>
+              
+              
+              
+              
+            
+          </p>
+        </div>
+        <hr />
+        
+      
+      <p>Windows on ARM 因微軟授權的因素目前尚未被 VMware Fusion 所支援。當 Parallel 決定採取全然不同的策略並提供一定程度的支援時，VMware 與微軟的緊密合作關係迫使他們只能照規定走。不過廣大的網友們依然找到了在搭載了 Apple Silicon 的 Mac 上安裝的方法且解決了大部分會遇到的小問題，但目前仍因為缺乏 VMware 官方顯示驅動程式的緣故無法調整虛擬機顯示器解析度。由於顯示器解析度繼承自 EFI 設定，我們可以透過例如像 <a href="https://en.wikipedia.org/wiki/GNU_GRUB">GNU GRUB</a> 這類可調整參數的開機程式（Bootloader）來進行變更。</p>
+
+<h2 id="取得-grub-執行檔供-efi-使用">取得 GRUB 執行檔供 EFI 使用</h2>
+
+<p>與其為了 GRUB 下載整個 Linux 映像檔案，我們可以只下載<a href="https://deb.debian.org/debian/pool/main/g/grub2/">這裡</a>的執行檔。尋找「<code class="language-plaintext highlighter-rouge">grub-efi-arm64-bin_2.##-#_arm64.deb</code>」這種檔名的檔案並下載。對 <code class="language-plaintext highlighter-rouge">.deb</code> 進行解壓縮，並在再次解壓縮裡面的 <code class="language-plaintext highlighter-rouge">data.tar.xz</code>。你可以使用像是 <a href="https://www.keka.io/">Keka</a> 這類的圖形化工具程式，又或者使用 macOS 內建的 <code class="language-plaintext highlighter-rouge">tar</code> 指令：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-s</span> <span class="nt">-O</span> https://deb.debian.org/debian/pool/main/g/grub2/grub-efi-arm64-bin_2.06-3_arm64.deb
+<span class="nb">tar</span> <span class="nt">-f</span> grub-efi-arm64-bin_2.06-3_arm64.deb <span class="nt">-zxv</span> data.tar.xz
+<span class="nb">mkdir </span>debian
+<span class="nb">tar</span> <span class="nt">-f</span> data.tar.xz <span class="nt">--to-stdout</span> <span class="nt">-zxv</span> usr/lib/grub/arm64-efi/monolithic/grubaa64.efi <span class="o">&gt;</span> debian/grubaa64.efi
+<span class="nb">rm</span> <span class="nt">-f</span> grub-efi-arm64-bin_2.06-3_arm64.deb data.tar.xz
+</code></pre></div></div>
+
+<h2 id="建立-grub-選單設定檔案">建立 GRUB 選單設定檔案</h2>
+
+<p>建立一個名為 <code class="language-plaintext highlighter-rouge">grub.cfg</code> 的新檔案並將其放置於 <code class="language-plaintext highlighter-rouge">grubaa64.efi</code> 相同的的 <code class="language-plaintext highlighter-rouge">debian</code> 資料夾內：</p>
+
+<div class="language-config highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">set</span> <span class="n">timeout</span>=<span class="m">5</span>
+<span class="n">set</span> <span class="n">default</span>=<span class="m">0</span>
+
+<span class="n">set</span> <span class="n">gfxmode</span>=<span class="m">1920</span><span class="n">x1200</span>
+
+<span class="n">menuentry</span> <span class="s2">"Windows 11"</span> {
+	<span class="n">insmod</span> <span class="n">gfxterm</span>
+	<span class="n">terminal_output</span> <span class="n">gfxterm</span>
+	<span class="n">chainloader</span> /<span class="n">efi</span>/<span class="n">microsoft</span>/<span class="n">boot</span>/<span class="n">bootmgfw</span>.<span class="n">efi</span>
+	<span class="n">boot</span>
+}
+</code></pre></div></div>
+
+<p>這份設定檔會鏈鎖載入 Windows Boot Manager 前將解析度設定為 1920x1200。你可以將解析度修改為任何 VM 支援的解析度數值。錯誤的數值將以預設值處理。</p>
+
+<h2 id="設定-grub">設定 GRUB</h2>
+
+<p>在 VMware Fusion 中啟動 Windows 11 虛擬機。找個方法將先前建立的 <code class="language-plaintext highlighter-rouge">debian</code> 複製進虛擬機當中。選取「開始 &gt; 搜尋 <code class="language-plaintext highlighter-rouge">cmd.exe</code> &gt; 以系統管理員身分執行」。執行下列指令來掛載 EFI 啟動磁區並將 <code class="language-plaintext highlighter-rouge">debian</code> 中的內容放置於 <code class="language-plaintext highlighter-rouge">EFI/debian</code> 中。假設你的 <code class="language-plaintext highlighter-rouge">debian</code> 資料夾位於「<code class="language-plaintext highlighter-rouge">C:\</code>」之下：</p>
+
+<pre><code class="language-cmd">mountvol a: /s
+a:
+cd EFI
+mdkir debian
+cd debian
+xcopy c:\debian .
+</code></pre>
+
+<p>關閉 Windows 虛擬機。在 Fusion 的虛擬機設定當中，選擇「Startup Disk」，按住 Option 鍵並選取「Restart to firmware…」開機進入 BIOS：</p>
+
+<p><img src="/images/c8175a71-7b27-47fa-9de6-d6c41f3b2509_001.png" alt="Startup Disk" /></p>
+
+<p>在 BIOS 中，依下列步驟為 GRUB 建立新的項目：</p>
+
+<ul>
+  <li>選取「Boot Maintenance Manager &gt; Boot Options &gt; Add Boot Option」。</li>
+  <li>選取包含「<code class="language-plaintext highlighter-rouge">.../HD(...</code>」字串的項目，接著依序選擇「<code class="language-plaintext highlighter-rouge">&lt;EFI&gt;</code>」、「<code class="language-plaintext highlighter-rouge">&lt;debian&gt;</code>」和「<code class="language-plaintext highlighter-rouge">grubaa64.efi</code>」。</li>
+  <li>填寫新建立的開機選項的描述，接著選取「Commit Changes and Exit」。</li>
+  <li>選取「Boot Options &gt; Change Boot Order &gt; Change the Order」。</li>
+  <li>將新建立的選項移至最上方。</li>
+  <li>選取「Go Back To Main Page」接著按下 ESC 鍵，輸入 <code class="language-plaintext highlighter-rouge">y</code> 儲存變更。</li>
+  <li>選取「Continue」。</li>
+</ul>
+
+<p>現在虛擬機將開機制 GRUB 而非 Windows Boot Manager：</p>
+
+<p><img src="/images/c8175a71-7b27-47fa-9de6-d6c41f3b2509_002.jpg" alt="GRUB" /></p>
+
+<p>進入系統後顯示器解析度為 1920x1200：</p>
+
+<p><img src="/images/c8175a71-7b27-47fa-9de6-d6c41f3b2509_003.jpg" alt="Windows on ARM" /></p>
+
+    </div>
+
+    <div class="post__share">
+      <ul class="share__list list-reset">
+        <li class="share__item">
+          <a class="share__link share__twitter"
+            href="https://twitter.com/intent/tweet?text=%E8%AA%BF%E6%95%B4%20VMware%20%E4%B8%AD%20Windows%2011%20on%20ARM%20%E9%A1%AF%E7%A4%BA%E5%99%A8%E8%A7%A3%E6%9E%90%E5%BA%A6&url=https://one.vg/tw/blog/change-windows-on-arm-display-resolution-in-vmware"
+            onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"
+            title="在 Twitter 上分享此文章" rel="nofollow"><ion-icon size="small" name="logo-twitter"></ion-icon></a>
+        </li>
+        <li class="share__item">
+          <a class="share__link share__facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://one.vg/tw/blog/change-windows-on-arm-display-resolution-in-vmware"
+            onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"
+            title="在 Facebook 上分享此文章" rel="nofollow"><ion-icon name="logo-facebook"></ion-icon></a>
+        </li>
+      </ul>
+    </div>
+
+    
+    
+    
+
+    
+
+    <div class="post__navigation">
+      
+
+      
+      <a class="next" href="/tw/blog/hid-passthrough-in-vmware-fusion" style="background-color: #421b00;">
+        <img class="post__nav-image lazy" data-src="/images/3ed4ac9f-a471-4024-a70c-6ebfc40bdb8b_cover.jpg" alt="在 VMware Fusion 中啟用 HID Passthrough">
+        <div class="post__image__cover image-cover-js" data-accent="#421b00"></div>
+        <div class="post__nav-box">
+          <div class="post__nav post__nav__next">下一篇文章</div>
+          <h4 class="post__nav__title">在 VMware Fusion 中啟用 HID Passthrough</h4>
+        </div>
+      </a>
+      
+    </div>
+
+  </article>
+</div>
+<!-- end post -->
 
 
 
 <div class="container">
-  <div class="row animate">
+  <div class="row">
+    <div class="col col-12">
     
-      <div class="article col col-12 article--first">
-  <div class="article__inner">
+    <!-- begin comments -->
+<div class="show-comments animate" id="show-comments" style="display: none;">
+  <button class="button button--middle button--rounded" id="show-comments-button" onclick="load_comments();return false;">載入留言</button>
+</div>
 
+<div id="comments" class="post__comments">
+  <noscript>請開啟 JavaScript 功能以檢視留言。</noscript>
+</div>
 
-    <a class="article__image" href="/tw/blog/change-windows-on-arm-display-resolution-in-vmware" style="background-color: #b89987;">
-      
-      <div class="article__image__cover image-cover-js" data-accent="#b89987"></div>
-      <img class="lazy" data-src="/images/c8175a71-7b27-47fa-9de6-d6c41f3b2509_cover.jpg" alt="調整 VMware 中 Windows 11 on ARM 顯示器解析度">
-      
-    </a>
-
-    <div class="article__content">
-
-      
-      <div class="article__tags">
-        
-          
-          <a href="/tw/tags#vmware" class="article__tag" style="background-color: #b89987;">VMware</a>
-        
-          
-          <a href="/tw/tags#windows" class="article__tag" style="background-color: #b89987;">Windows</a>
-        
-      </div>
-      
-
-      <h2 class="article__title">
-        <a href="/tw/blog/change-windows-on-arm-display-resolution-in-vmware">調整 VMware 中 Windows 11 on ARM 顯示器解析度</a>
-      </h2>
-
-      <div class="article__meta">
-        
-        <a href="/tw/about/" class="article__author">Cai</a>
-        
-        <time datetime="2022-07-12T16:35:50+08:00" class="article__date" >12 Jul 2022</time>
-      </div>
-
+<script>
+  var comments_loaded = false;
+  var comments_container = document.getElementById("comments");
+  document.getElementById("show-comments").style.display = "block";
+  if (window.location.hash == '#comments'){
+    load_comments();
+  }
+  function load_comments() {
+    if (!comments_loaded) {
+      comments_loaded = true;
+      window.location.hash = '#comments';
+      var e = document.createElement("script");
+      e.type = "text/javascript";
+      e.async = true;
+      e.src = "https://giscus.app/client.js";
+      e.setAttribute("data-repo", "x43x61x69/blog-comments");
+      e.setAttribute("data-repo-id", "R_kgDOHjXgmw");
+      e.setAttribute("data-category", "General");
+      e.setAttribute("data-category-id", "DIC_kwDOHjXgm84CP2Zd");
+      e.setAttribute("data-mapping", "specific");
+      e.setAttribute("data-term", "c8175a71-7b27-47fa-9de6-d6c41f3b2509");
+      e.setAttribute("data-reactions-enabled", "0");
+      e.setAttribute("data-emit-metadata", "0");
+      e.setAttribute("data-input-position", "top");
+      e.setAttribute("data-theme", "https://one.vg/css/transparent_dark.css");
+      e.setAttribute("data-lang", "zh-TW");
+      e.setAttribute("data-loading", "lazy");
+      e.setAttribute("crossOrigin", "anonymous");
+      document.getElementById("comments").appendChild(e);
+      // Hide the button after opening
+      document.getElementById("show-comments-button").style.display = "none";
+      // Show comments
+      comments_container.classList.add("is-open");
+    }
+  }
+</script>
+<!-- end comments -->
+    
     </div>
   </div>
 </div>
-    
-      <div class="article col  col-4 col-d-6 col-t-12">
-  <div class="article__inner">
 
 
-    <a class="article__image" href="/tw/blog/hid-passthrough-in-vmware-fusion" style="background-color: #421b00;">
-      
-      <div class="article__image__cover image-cover-js" data-accent="#421b00"></div>
-      <img class="lazy" data-src="/images/3ed4ac9f-a471-4024-a70c-6ebfc40bdb8b_cover.jpg" alt="在 VMware Fusion 中啟用 HID Passthrough">
-      
-    </a>
-
-    <div class="article__content">
-
-      
-      <div class="article__tags">
-        
+<!-- begin related posts -->
+<div class="container">
+  <section class="related-posts  animate">
+    <div class="row">
+      <div class="col col-12">
+        <div class="container__inner">
+          <div class="section__info">
+            <div class="section__head">
+              <h2 class="section__title">您可能也喜歡</h2>
+                <a href="/tw/tags#vmware" class="section__link related-tag">檢視所有 <span>VMware</span></a>
+                  </div>
+          </div>
+          <div class="row">
           
-          <a href="/tw/tags#vmware" class="article__tag" style="background-color: #421b00;">VMWare</a>
-        
-          
-          <a href="/tw/tags#macos" class="article__tag" style="background-color: #421b00;">macOS</a>
-        
+          </div>
+        </div>
       </div>
-      
-
-      <h2 class="article__title">
-        <a href="/tw/blog/hid-passthrough-in-vmware-fusion">在 VMware Fusion 中啟用 HID Passthrough</a>
-      </h2>
-
-      <div class="article__meta">
-        
-        <a href="/tw/about/" class="article__author">Cai</a>
-        
-        <time datetime="2022-07-10T04:31:32+08:00" class="article__date" >10 Jul 2022</time>
-      </div>
-
     </div>
-  </div>
+  </section>
 </div>
-    
-      <div class="article col  col-4 col-d-6 col-t-12">
-  <div class="article__inner">
+<!-- end related posts -->
 
-
-    <a class="article__image" href="/tw/blog/multilingual-404-page-for-github-pages" style="background-color: #010101;">
-      
-      <div class="article__image__cover image-cover-js" data-accent="#010101"></div>
-      <img class="lazy" data-src="/images/ea3cea65-7115-4862-a404-c7af7a23abe8_cover.jpg" alt="GitHub Pages 的多語言 404 頁面">
-      
-    </a>
-
-    <div class="article__content">
-
-      
-      <div class="article__tags">
-        
-          
-          <a href="/tw/tags#coding" class="article__tag" style="background-color: #010101;">程式語言</a>
-        
-          
-          <a href="/tw/tags#jekyll" class="article__tag" style="background-color: #010101;">Jekyll</a>
-        
-      </div>
-      
-
-      <h2 class="article__title">
-        <a href="/tw/blog/multilingual-404-page-for-github-pages">GitHub Pages 的多語言 404 頁面</a>
-      </h2>
-
-      <div class="article__meta">
-        
-        <a href="/tw/about/" class="article__author">Cai</a>
-        
-        <time datetime="2022-06-27T15:09:03+08:00" class="article__date" >27 Jun 2022</time>
-      </div>
-
-    </div>
-  </div>
-</div>
-    
-      <div class="article col  col-4 col-d-6 col-t-12">
-  <div class="article__inner">
-
-
-    <a class="article__image" href="/tw/blog/dior-by-birkenstock-tokio-mules-review" style="background-color: #123a2a;">
-      
-      <div class="article__image__cover image-cover-js" data-accent="#123a2a"></div>
-      <img class="lazy" data-src="/images/2b5fad04-c2fe-410d-8750-556b18899ad8_cover.jpg" alt="Dior by Birkenstock：Tokio 涼鞋心得">
-      
-    </a>
-
-    <div class="article__content">
-
-      
-      <div class="article__tags">
-        
-          
-          <a href="/tw/tags#fashion" class="article__tag" style="background-color: #123a2a;">時尚</a>
-        
-          
-          <a href="/tw/tags#dior" class="article__tag" style="background-color: #123a2a;">Dior</a>
-        
-      </div>
-      
-
-      <h2 class="article__title">
-        <a href="/tw/blog/dior-by-birkenstock-tokio-mules-review">Dior by Birkenstock：Tokio 涼鞋心得</a>
-      </h2>
-
-      <div class="article__meta">
-        
-        <a href="/tw/about/" class="article__author">Cai</a>
-        
-        <time datetime="2022-06-18T19:46:59+08:00" class="article__date" >18 Jun 2022</time>
-      </div>
-
-    </div>
-  </div>
-</div>
-    
-      <div class="article col  col-4 col-d-6 col-t-12">
-  <div class="article__inner">
-
-
-    <a class="article__image" href="/tw/blog/reduce-pdf-size-with-quartz-filter" style="background-color: #15346e;">
-      
-      <div class="article__image__cover image-cover-js" data-accent="#15346e"></div>
-      <img class="lazy" data-src="/images/200e4c26-c102-432f-9c4d-626274db5702_cover.jpg" alt="透過 Quartz 濾鏡減少 PDF 檔案大小">
-      
-    </a>
-
-    <div class="article__content">
-
-      
-      <div class="article__tags">
-        
-          
-          <a href="/tw/tags#mac" class="article__tag" style="background-color: #15346e;">Mac</a>
-        
-          
-          <a href="/tw/tags#macos" class="article__tag" style="background-color: #15346e;">macOS</a>
-        
-      </div>
-      
-
-      <h2 class="article__title">
-        <a href="/tw/blog/reduce-pdf-size-with-quartz-filter">透過 Quartz 濾鏡減少 PDF 檔案大小</a>
-      </h2>
-
-      <div class="article__meta">
-        
-        <a href="/tw/about/" class="article__author">Cai</a>
-        
-        <time datetime="2022-06-12T14:39:14+08:00" class="article__date" >12 Jun 2022</time>
-      </div>
-
-    </div>
-  </div>
-</div>
-    
-      <div class="article col  col-4 col-d-6 col-t-12">
-  <div class="article__inner">
-
-
-    <a class="article__image" href="/tw/blog/running-macos-ventura-in-a-virtual-machine-on-apple-silicon-macs" style="background-color: #4d1573;">
-      
-      <div class="article__image__cover image-cover-js" data-accent="#4d1573"></div>
-      <img class="lazy" data-src="/images/71ac2589-ded9-4fd0-8fdc-6a8fd1d93948_cover.jpg" alt="在 Apple Silicon Mac 上運行 macOS Ventura 預覽版虛擬機">
-      
-    </a>
-
-    <div class="article__content">
-
-      
-      <div class="article__tags">
-        
-          
-          <a href="/tw/tags#mac" class="article__tag" style="background-color: #4d1573;">Mac</a>
-        
-          
-          <a href="/tw/tags#apple+silicon" class="article__tag" style="background-color: #4d1573;">Apple Silicon</a>
-        
-      </div>
-      
-
-      <h2 class="article__title">
-        <a href="/tw/blog/running-macos-ventura-in-a-virtual-machine-on-apple-silicon-macs">在 Apple Silicon Mac 上運行 macOS Ventura 預覽版虛擬機</a>
-      </h2>
-
-      <div class="article__meta">
-        
-        <a href="/tw/about/" class="article__author">Cai</a>
-        
-        <time datetime="2022-06-09T10:43:14+08:00" class="article__date" >09 Jun 2022</time>
-      </div>
-
-    </div>
-  </div>
-</div>
-    
-      <div class="article col  col-4 col-d-6 col-t-12">
-  <div class="article__inner">
-
-
-    <a class="article__image" href="/tw/blog/install-macos-ventura-beta-in-vmware-fusion" style="background-color: #f73535;">
-      
-      <div class="article__image__cover image-cover-js" data-accent="#f73535"></div>
-      <img class="lazy" data-src="/images/8187bc26-3fab-4947-be03-2fac6c048001_cover.jpg" alt="在 VMware Fusion 中安裝 macOS Ventura 預覽版">
-      
-    </a>
-
-    <div class="article__content">
-
-      
-      <div class="article__tags">
-        
-          
-          <a href="/tw/tags#mac" class="article__tag" style="background-color: #f73535;">Mac</a>
-        
-          
-          <a href="/tw/tags#macos" class="article__tag" style="background-color: #f73535;">macOS</a>
-        
-      </div>
-      
-
-      <h2 class="article__title">
-        <a href="/tw/blog/install-macos-ventura-beta-in-vmware-fusion">在 VMware Fusion 中安裝 macOS Ventura 預覽版</a>
-      </h2>
-
-      <div class="article__meta">
-        
-        <a href="/tw/about/" class="article__author">Cai</a>
-        
-        <time datetime="2022-06-08T14:54:24+08:00" class="article__date" >08 Jun 2022</time>
-      </div>
-
-    </div>
-  </div>
-</div>
-    
-  </div>
-</div>
-
-<!-- begin pagination -->
-<nav class="pagination animate">
-  <div class="container">
-    <div class="pagination__list">
-
-      
-
-      <div class="counter-box">
-        
-      </div>
-
-      
-
-    </div>
-  </div>
-</nav>
-<!-- end pagination -->
 
   </main>
   <!-- end content -->
@@ -574,6 +516,80 @@
 </div>
 
         
+        
+          <div class="col col-4 col-d-6 col-t-12">
+  <div class="widget widget-recent">
+
+    <div class="widget__head">
+      <h3 class="widget__title">最新文章</h3>
+    </div>
+
+    
+    
+    <div class="recent-posts">
+      
+        <a class="recent-posts__image" href="/tw/blog/change-windows-on-arm-display-resolution-in-vmware" style="background-color: #b89987;"><img class="lazy" data-src="/images/c8175a71-7b27-47fa-9de6-d6c41f3b2509_cover.jpg" alt="調整 VMware 中 Windows 11 on ARM 顯示器解析度"></a>
+      
+      <div class="recent-posts__content">
+        <div class="article__meta">
+          
+          <div class="article__tags">
+            
+              
+              <a href="/tw/tags#vmware" class="article__tag" style="background-color: #b89987;">VMware</a>
+            
+              
+              <a href="/tw/tags#windows" class="article__tag" style="background-color: #b89987;">Windows</a>
+            
+          </div>
+          
+        </div>
+        <h4 class="recent-posts__title"><a href="/tw/blog/change-windows-on-arm-display-resolution-in-vmware">調整 VMware 中 Windows 11 on ARM 顯示器解析度</a></h4>
+        <div class="article__bottom">
+          <div class="article__meta">
+            
+            <a href="/about/" class="article__author">Cai</a>
+            
+            <time datetime="2022-07-12T16:35:50+08:00" class="article__date">12 Jul 2022</time>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="recent-posts">
+      
+        <a class="recent-posts__image" href="/tw/blog/hid-passthrough-in-vmware-fusion" style="background-color: #421b00;"><img class="lazy" data-src="/images/3ed4ac9f-a471-4024-a70c-6ebfc40bdb8b_cover.jpg" alt="在 VMware Fusion 中啟用 HID Passthrough"></a>
+      
+      <div class="recent-posts__content">
+        <div class="article__meta">
+          
+          <div class="article__tags">
+            
+              
+              <a href="/tw/tags#vmware" class="article__tag" style="background-color: #421b00;">VMWare</a>
+            
+              
+              <a href="/tw/tags#macos" class="article__tag" style="background-color: #421b00;">macOS</a>
+            
+          </div>
+          
+        </div>
+        <h4 class="recent-posts__title"><a href="/tw/blog/hid-passthrough-in-vmware-fusion">在 VMware Fusion 中啟用 HID Passthrough</a></h4>
+        <div class="article__bottom">
+          <div class="article__meta">
+            
+            <a href="/about/" class="article__author">Cai</a>
+            
+            <time datetime="2022-07-10T04:31:32+08:00" class="article__date">10 Jul 2022</time>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+  </div>
+</div>
+
         
         
           
