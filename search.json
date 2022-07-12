@@ -24,7 +24,7 @@
       "title"    : "在 VMware Fusion 中啟用 HID Passthrough",
       "url"      : "/tw/blog/hid-passthrough-in-vmware-fusion",
       "date"     : "Jul 10, 2022",
-      "tags"     : "<div class='article__tags'><a href='/tags#vmware' class='article__tag'style='background-color:#421b00;'>VMWare</a><a href='/tags#macos' class='article__tag'style='background-color:#421b00;'>macOS</a></div>",
+      "tags"     : "<div class='article__tags'><a href='/tags#vmware' class='article__tag'style='background-color:#421b00;'>VMware</a><a href='/tags#macos' class='article__tag'style='background-color:#421b00;'>macOS</a></div>",
       "meta"     : "<div class='article__meta'><a href='/about/' class='article__author'>Cai</a><time datetime='2022-07-10T04:31:32+08:00' class='article__date' >10 Jul 2022</time> </div>",
       "image": "/images/3ed4ac9f-a471-4024-a70c-6ebfc40bdb8b_cover.jpg",
       "image__cover": "<div class='search-results__image__cover' style='background-color:#421b00;'></div>"
@@ -34,7 +34,7 @@
       "title"    : "HID Passthrough in VMware Fusion",
       "url"      : "/blog/hid-passthrough-in-vmware-fusion",
       "date"     : "Jul 10, 2022",
-      "tags"     : "<div class='article__tags'><a href='/tags#vmware' class='article__tag'style='background-color:#421b00;'>VMWare</a><a href='/tags#macos' class='article__tag'style='background-color:#421b00;'>macOS</a></div>",
+      "tags"     : "<div class='article__tags'><a href='/tags#vmware' class='article__tag'style='background-color:#421b00;'>VMware</a><a href='/tags#macos' class='article__tag'style='background-color:#421b00;'>macOS</a></div>",
       "meta"     : "<div class='article__meta'><a href='/about/' class='article__author'>Cai</a><time datetime='2022-07-10T04:31:32+08:00' class='article__date' >10 Jul 2022</time> </div>",
       "image": "/images/3ed4ac9f-a471-4024-a70c-6ebfc40bdb8b_cover.jpg",
       "image__cover": "<div class='search-results__image__cover' style='background-color:#421b00;'></div>"

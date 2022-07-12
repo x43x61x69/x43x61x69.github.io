@@ -5,8 +5,8 @@
         <description></description>
         <link>https://one.vg/</link>
         <atom:link href="https://one.vg/feed.xml" rel="self" type="application/rss+xml"/>
-        <pubDate>Tue, 12 Jul 2022 20:47:23 +0800</pubDate>
-        <lastBuildDate>Tue, 12 Jul 2022 20:47:23 +0800</lastBuildDate>
+        <pubDate>Tue, 12 Jul 2022 20:55:58 +0800</pubDate>
+        <lastBuildDate>Tue, 12 Jul 2022 20:55:58 +0800</lastBuildDate>
         <generator>Jekyll v4.2.2</generator>
         
             <item>
@@ -210,7 +210,7 @@ xcopy c:\debian .
                 <link>https://one.vg/tw/blog/hid-passthrough-in-vmware-fusion</link>
                 <guid isPermaLink="true">https://one.vg/tw/blog/hid-passthrough-in-vmware-fusion</guid>
                 
-                <category>VMWare</category>
+                <category>VMware</category>
                 
                 <category>macOS</category>
                 
@@ -256,7 +256,7 @@ xcopy c:\debian .
                 <link>https://one.vg/blog/hid-passthrough-in-vmware-fusion</link>
                 <guid isPermaLink="true">https://one.vg/blog/hid-passthrough-in-vmware-fusion</guid>
                 
-                <category>VMWare</category>
+                <category>VMware</category>
                 
                 <category>macOS</category>
                 
