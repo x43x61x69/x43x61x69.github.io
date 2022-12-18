@@ -5,9 +5,213 @@
         <description></description>
         <link>https://one.vg/</link>
         <atom:link href="https://one.vg/feed.xml" rel="self" type="application/rss+xml"/>
-        <pubDate>Thu, 08 Dec 2022 12:08:57 +0800</pubDate>
-        <lastBuildDate>Thu, 08 Dec 2022 12:08:57 +0800</lastBuildDate>
+        <pubDate>Sun, 18 Dec 2022 18:21:37 +0800</pubDate>
+        <lastBuildDate>Sun, 18 Dec 2022 18:21:37 +0800</lastBuildDate>
         <generator>Jekyll v4.2.2</generator>
+        
+            <item>
+                <title>Apple 檔案系統（APFS）的 Firmlink 黑魔法</title>
+                <description>&lt;p&gt;Apple 自 macOS Catalina 起引入了一個新的檔案階層系統，用以區隔同一個 Apple 檔案系統（&lt;a href=&quot;https://developer.apple.com/documentation/foundation/file_system/about_apple_file_system&quot;&gt;APFS&lt;/a&gt;）容器（Container）內的系統以及使用者資料：&lt;strong&gt;Macintosh HD&lt;/strong&gt; 作為系統檔案使用並以唯讀形式掛載；&lt;strong&gt;Macintosh HD - Data&lt;/strong&gt; 作為使用者互動檔案（例如：應用程式、偏好設定檔案）使用並以可讀寫形式掛載。容器中亦包含了其他像是 &lt;strong&gt;Recovery&lt;/strong&gt; 這種用於系統還原（RecoveryOS）使用的磁區（Volume）：&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;diskutil list
+/dev/disk0 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;internal, physical&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:
+   &lt;span class=&quot;c&quot;&gt;#:                       TYPE NAME                    SIZE       IDENTIFIER&lt;/span&gt;
+   0:      GUID_partition_scheme                        &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;1.0 TB     disk0
+   1:             Apple_APFS_ISC Container disk2         524.3 MB   disk0s1
+   2:                 Apple_APFS Container disk3         994.7 GB   disk0s2
+   3:        Apple_APFS_Recovery Container disk1         5.4 GB     disk0s3
+
+/dev/disk3 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;synthesized&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:
+   &lt;span class=&quot;c&quot;&gt;#:                       TYPE NAME                    SIZE       IDENTIFIER&lt;/span&gt;
+   0:      APFS Container Scheme -                      +994.7 GB   disk3
+                                 Physical Store disk0s2
+   1:                APFS Volume Macintosh HD - Data     410.4 GB   disk3s1
+   2:                APFS Volume Macintosh HD            8.9 GB     disk3s3
+   3:              APFS Snapshot com.apple.os.update-... 8.9 GB     disk3s3s1
+   4:                APFS Volume Preboot                 4.7 GB     disk3s4
+   5:                APFS Volume Recovery                769.9 MB   disk3s5
+   6:                APFS Volume VM                      2.1 GB     disk3s6
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;每個磁區的角色（Role）於它們的 Superblock 架構（&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;apfs_superblock_t&lt;/code&gt;）中指派，相關定義可在 Apple 官方的 &lt;a href=&quot;https://developer.apple.com/support/downloads/Apple-File-System-Reference.pdf&quot;&gt;APFS 參考資料&lt;/a&gt;中找到：&lt;/p&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#define APFS_VOL_ROLE_NONE      0x0000
+#define APFS_VOL_ROLE_SYSTEM    0x0001
+#define APFS_VOL_ROLE_USER      0x0002
+#define APFS_VOL_ROLE_RECOVERY  0x0004
+#define APFS_VOL_ROLE_VM        0x0008
+#define APFS_VOL_ROLE_PREBOOT   0x0010
+#define APFS_VOL_ROLE_INSTALLER 0x0020
+#define APFS_VOL_ROLE_DATA      0x0040
+#define APFS_VOL_ROLE_BASEBAND  0x0080
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;雖然當時對於 macOS 來說這是全新的概念，但這項措施其實已經用於 iOS 一段時間。當系統啟動時，&lt;strong&gt;Macintosh HD&lt;/strong&gt;（&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;APFS_VOL_ROLE_SYSTEM&lt;/code&gt;）和 &lt;strong&gt;Macintosh HD - Data&lt;/strong&gt;（&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;APFS_VOL_ROLE_DATA&lt;/code&gt;）兩個磁區會顯示為單一邏輯磁區，且兩者的內容將透過 Firmlink 合併為一。&lt;/p&gt;
+
+&lt;h2 id=&quot;firmlinks&quot;&gt;Firmlinks&lt;/h2&gt;
+
+&lt;p&gt;Firmlink 類似於 Symbolic Link 但允許雙向移動且僅適用於目錄。這有效的使 macOS 能夠整併 &lt;strong&gt;Macintosh HD&lt;/strong&gt; 及 &lt;strong&gt;Macintosh HD - Data&lt;/strong&gt; 的內容，例如：位於唯讀磁區 &lt;strong&gt;Macintosh HD&lt;/strong&gt; 的目錄 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/Users&lt;/code&gt; 實際上為 &lt;strong&gt;Macintosh HD - Data&lt;/strong&gt; 這個可讀寫磁區上 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/Shared&lt;/code&gt; 目錄的 Firmlink。此項設計同時也讓 Apple’s 系統完整性保護（System Integrity Protection，SIP）能更加完美的銜接，例如：受 SIP 保護的系統應用程式安裝於唯讀目錄 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/System/Applications&lt;/code&gt;，而使用者應用程式則可被安裝於 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/Applications&lt;/code&gt;，然而使用者僅會看到兩者內容合併顯示於根目錄下的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/Applications&lt;/code&gt;。&lt;/p&gt;
+
+&lt;p&gt;系統預設的 Firmlink 可於 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/usr/share/firmlinks&lt;/code&gt; 中查詢：&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; /usr/share/firmlinks
+/AppleInternal	AppleInternal
+/Applications	Applications
+/Library	Library
+/System/Library/Caches	System/Library/Caches
+/System/Library/Assets	System/Library/Assets
+/System/Library/PreinstalledAssets	System/Library/PreinstalledAssets
+/System/Library/AssetsV2	System/Library/AssetsV2
+/System/Library/PreinstalledAssetsV2	System/Library/PreinstalledAssetsV2
+/System/Library/CoreServices/CoreTypes.bundle/Contents/Library	System/Library/CoreServices/CoreTypes.bundle/Contents/Library
+/System/Library/Speech	System/Library/Speech
+/Users	Users
+/Volumes	Volumes
+/cores	cores
+/opt	opt
+/private	private
+/usr/local	usr/local
+/usr/libexec/cups	usr/libexec/cups
+/usr/share/snmp	usr/share/snmp
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;建立你自己的合成-firmlink&quot;&gt;建立你自己的合成 Firmlink&lt;/h2&gt;
+
+&lt;p&gt;自 Catalina 起要於根目錄下建立目錄，我們必須仰賴合成 Firmlink（Synthetic Firmlink）：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;在 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc&lt;/code&gt; 目錄下新增一個名為 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;synthetic.conf&lt;/code&gt; 的檔案。&lt;/li&gt;
+  &lt;li&gt;確保該檔案的權限設定如下：&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-config highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;：讀，寫
+&lt;span class=&quot;n&quot;&gt;wheel&lt;/span&gt;：讀
+&lt;span class=&quot;n&quot;&gt;everyone&lt;/span&gt;：讀
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;（通常只要透過指令「&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sudo touch /etc/synthetic.conf&lt;/code&gt;」即可完成上述設定。）&lt;/p&gt;
+
+&lt;p&gt;要將目錄 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/Users/foo/bar&lt;/code&gt; 連結至 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/baz&lt;/code&gt;，我們可以新增一個新的條目至剛剛建立的檔案：&lt;/p&gt;
+
+&lt;div class=&quot;language-config highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# create a firmlink named &quot;baz&quot; at / which points to &quot;Users/foo/bar&quot;
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;baz&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Users&lt;/span&gt;/&lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt;/&lt;span class=&quot;n&quot;&gt;bar&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;你也可以檢視 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;man synthetic.conf&lt;/code&gt; 來查詢所有可用的選項。請注意，兩個路徑中間必須使用一個「&lt;strong&gt;tab&lt;/strong&gt;」做分隔，使用空白符號將不會產生作用。同時路徑的開頭不包含反斜線（&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/&lt;/code&gt;）。重新啟動系統後剛剛的變更即會生效。&lt;/p&gt;
+</description>
+                <pubDate>Sun, 18 Dec 2022 17:35:35 +0800</pubDate>
+                <link>https://one.vg/tw/blog/apple-file-system-firmlink-black-magic</link>
+                <guid isPermaLink="true">https://one.vg/tw/blog/apple-file-system-firmlink-black-magic</guid>
+                
+                <category>Mac</category>
+                
+                <category>macOS</category>
+                
+                
+                <category>tw</category>
+                
+            </item>
+        
+            <item>
+                <title>Apple File System (APFS) Firmlink Black Magic</title>
+                <description>&lt;p&gt;Apple introduced a new way of file system hierarchy that can separate the system and user data within an &lt;a href=&quot;https://developer.apple.com/documentation/foundation/file_system/about_apple_file_system&quot;&gt;APFS&lt;/a&gt;  system container since macOS Catalina: &lt;strong&gt;Macintosh HD&lt;/strong&gt;, a volume which is mounted as read-only for system files; and &lt;strong&gt;Macintosh HD - Data&lt;/strong&gt;, a volume which is mounted as writable and for all user intractable files such as applications and preferences. There are also other volumes such as &lt;strong&gt;Recovery&lt;/strong&gt; that is used for RecoveryOS:&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;diskutil list
+/dev/disk0 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;internal, physical&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:
+   &lt;span class=&quot;c&quot;&gt;#:                       TYPE NAME                    SIZE       IDENTIFIER&lt;/span&gt;
+   0:      GUID_partition_scheme                        &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;1.0 TB     disk0
+   1:             Apple_APFS_ISC Container disk2         524.3 MB   disk0s1
+   2:                 Apple_APFS Container disk3         994.7 GB   disk0s2
+   3:        Apple_APFS_Recovery Container disk1         5.4 GB     disk0s3
+
+/dev/disk3 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;synthesized&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:
+   &lt;span class=&quot;c&quot;&gt;#:                       TYPE NAME                    SIZE       IDENTIFIER&lt;/span&gt;
+   0:      APFS Container Scheme -                      +994.7 GB   disk3
+                                 Physical Store disk0s2
+   1:                APFS Volume Macintosh HD - Data     410.4 GB   disk3s1
+   2:                APFS Volume Macintosh HD            8.9 GB     disk3s3
+   3:              APFS Snapshot com.apple.os.update-... 8.9 GB     disk3s3s1
+   4:                APFS Volume Preboot                 4.7 GB     disk3s4
+   5:                APFS Volume Recovery                769.9 MB   disk3s5
+   6:                APFS Volume VM                      2.1 GB     disk3s6
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The role of each volume was assigned in its superblock structure (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;apfs_superblock_t&lt;/code&gt;), which can be found in Apple’s &lt;a href=&quot;https://developer.apple.com/support/downloads/Apple-File-System-Reference.pdf&quot;&gt;APFS Reference&lt;/a&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-cpp highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#define APFS_VOL_ROLE_NONE      0x0000
+#define APFS_VOL_ROLE_SYSTEM    0x0001
+#define APFS_VOL_ROLE_USER      0x0002
+#define APFS_VOL_ROLE_RECOVERY  0x0004
+#define APFS_VOL_ROLE_VM        0x0008
+#define APFS_VOL_ROLE_PREBOOT   0x0010
+#define APFS_VOL_ROLE_INSTALLER 0x0020
+#define APFS_VOL_ROLE_DATA      0x0040
+#define APFS_VOL_ROLE_BASEBAND  0x0080
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Although this is new to macOS at the time, the scheme was already used in iOS for a while. When the system booted, both &lt;strong&gt;Macintosh HD&lt;/strong&gt; (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;APFS_VOL_ROLE_SYSTEM&lt;/code&gt;) and &lt;strong&gt;Macintosh HD - Data&lt;/strong&gt; (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;APFS_VOL_ROLE_DATA&lt;/code&gt;) will be presented as a single logical volume with both their contents combined with the magic of firmlinks.&lt;/p&gt;
+
+&lt;h2 id=&quot;firmlinks&quot;&gt;Firmlinks&lt;/h2&gt;
+
+&lt;p&gt;Firmlinks are similar to symbolic links but allows bi-directional travel and only for directories. This effectively allow macOS to merge the contents of &lt;strong&gt;Macintosh HD&lt;/strong&gt; and &lt;strong&gt;Macintosh HD - Data&lt;/strong&gt;, e.g. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/Users&lt;/code&gt; on the read-only &lt;strong&gt;Macintosh HD&lt;/strong&gt; is essentially a firmlink of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/Shared&lt;/code&gt; on the writable &lt;strong&gt;Macintosh HD - Data&lt;/strong&gt;. This would also make Apple’s System Integrity Protection (SIP) more seamless, e.g. SIP-protected system applications resides in read-only &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/System/Applications&lt;/code&gt; and user applications can be installed in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/Applications&lt;/code&gt;, while the user see the combination of both in the root &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/Applications&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;The system firmlinks can be found at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/usr/share/firmlinks&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; /usr/share/firmlinks
+/AppleInternal	AppleInternal
+/Applications	Applications
+/Library	Library
+/System/Library/Caches	System/Library/Caches
+/System/Library/Assets	System/Library/Assets
+/System/Library/PreinstalledAssets	System/Library/PreinstalledAssets
+/System/Library/AssetsV2	System/Library/AssetsV2
+/System/Library/PreinstalledAssetsV2	System/Library/PreinstalledAssetsV2
+/System/Library/CoreServices/CoreTypes.bundle/Contents/Library	System/Library/CoreServices/CoreTypes.bundle/Contents/Library
+/System/Library/Speech	System/Library/Speech
+/Users	Users
+/Volumes	Volumes
+/cores	cores
+/opt	opt
+/private	private
+/usr/local	usr/local
+/usr/libexec/cups	usr/libexec/cups
+/usr/share/snmp	usr/share/snmp
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;create-your-own-synthetic-firmlinks&quot;&gt;Create Your Own Synthetic Firmlinks&lt;/h2&gt;
+
+&lt;p&gt;To create root-level directories since Catalina, we need to rely on synthetic firmlinks:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Create a file in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc&lt;/code&gt; named &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;synthetic.conf&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Make sure its permissions were set to:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-config highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;: &lt;span class=&quot;n&quot;&gt;read&lt;/span&gt;, &lt;span class=&quot;n&quot;&gt;write&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;wheel&lt;/span&gt;: &lt;span class=&quot;n&quot;&gt;read&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;everyone&lt;/span&gt;: &lt;span class=&quot;n&quot;&gt;read&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;(Usually command “&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sudo touch /etc/synthetic.conf&lt;/code&gt;” would do all the above.)&lt;/p&gt;
+
+&lt;p&gt;In order to link directory &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/Users/foo/bar&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/baz&lt;/code&gt;, we can add a new entry to the file we just created as following:&lt;/p&gt;
+
+&lt;div class=&quot;language-config highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# create a firmlink named &quot;baz&quot; at / which points to &quot;Users/foo/bar&quot;
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;baz&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Users&lt;/span&gt;/&lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt;/&lt;span class=&quot;n&quot;&gt;bar&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;You can also check &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;man synthetic.conf&lt;/code&gt; for all available options. Note that the two should be separate with a &lt;strong&gt;tab&lt;/strong&gt; instead of spaces or it won’t work. Also the paths are not started with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/&lt;/code&gt;. Now reboot the system and see the changes we just made.&lt;/p&gt;
+</description>
+                <pubDate>Sun, 18 Dec 2022 17:35:35 +0800</pubDate>
+                <link>https://one.vg/blog/apple-file-system-firmlink-black-magic</link>
+                <guid isPermaLink="true">https://one.vg/blog/apple-file-system-firmlink-black-magic</guid>
+                
+                <category>Mac</category>
+                
+                <category>macOS</category>
+                
+                
+            </item>
         
             <item>
                 <title>調整 VMware 中 Windows 11 on ARM 顯示器解析度</title>
@@ -641,110 +845,6 @@ locale: tw
                 <category>Fashion</category>
                 
                 <category>Dior</category>
-                
-                
-            </item>
-        
-            <item>
-                <title>透過 Quartz 濾鏡減少 PDF 檔案大小</title>
-                <description>&lt;p&gt;macOS 內建 Quartz 濾鏡「減少檔案大小」，可透過重新壓縮圖形來減少檔案的大小。對於需要降低高品質的 PDF 檔案來發送電子郵件附件或上傳至有檔案大小限制的網站時它相當的方便相當的方便。&lt;/p&gt;
-
-&lt;p&gt;不過這個濾鏡有個小問題：預設它會將圖片解析度縮小至一半，且有著 512 像素的長寬上限。這將使得壓縮後的圖片內容過於模糊而難以閱讀。幸運的是，我們有方法可以客製化濾鏡壓縮參數以符合特定的需求。&lt;/p&gt;
-
-&lt;h2 id=&quot;透過色彩同步工具程式修改-quartz-濾鏡&quot;&gt;透過「色彩同步工具程式」修改 Quartz 濾鏡&lt;/h2&gt;
-
-&lt;p&gt;「色彩同步工具程式」位於「應用程式 &amp;gt; 工具程式」中（也可以透過 Spotlight 開啟）：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/200e4c26-c102-432f-9c4d-626274db5702_001.jpg&quot; alt=&quot;色彩同步工具程式路徑&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;首先，點擊「複製」按鈕來建立一個可編輯的「減少檔案大小」濾鏡副本：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/200e4c26-c102-432f-9c4d-626274db5702_002.jpg&quot; alt=&quot;複製濾鏡&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;接著重新命名以及修改新建立的濾鏡來調整目標影像品質：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/200e4c26-c102-432f-9c4d-626274db5702_003.jpg&quot; alt=&quot;編輯濾鏡&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;直接修改-quartz-濾鏡檔案&quot;&gt;直接修改 Quartz 濾鏡檔案&lt;/h2&gt;
-
-&lt;p&gt;雖然圖形介面可以調整影像的壓縮率，但因為滑桿未顯示百分比數值導致我們無法精確的調整畫質參數。想直接編輯參數，開啟 Finder，找到位於「&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/Library/Filters&lt;/code&gt;」（簡單的方法為在 Finder 選單「前往 &amp;gt; 移至資料夾…」中貼上該路徑）的濾鏡檔案：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/200e4c26-c102-432f-9c4d-626274db5702_004.jpg&quot; alt=&quot;找出濾鏡位置&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;透過文字編輯器開啟與剛才建立的濾鏡名稱相符的「&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.qfilter&lt;/code&gt;」檔案：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/200e4c26-c102-432f-9c4d-626274db5702_005.jpg&quot; alt=&quot;編輯濾鏡&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;即可指定相關的數值。其中「Compression Quality」介於 0.0 和 1.0 之間，數值越高品質越佳。&lt;/p&gt;
-
-&lt;h2 id=&quot;套用-quartz-濾鏡&quot;&gt;套用 Quartz 濾鏡&lt;/h2&gt;
-
-&lt;p&gt;建立好的濾鏡可以透過預覽程式於儲存或匯出 PDF 檔案時套用：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/200e4c26-c102-432f-9c4d-626274db5702_006.jpg&quot; alt=&quot;套用濾鏡&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;測試相關的參數以找出最符合使用情境的組合。你也可以建立多個客製化的濾鏡。&lt;/p&gt;
-</description>
-                <pubDate>Sun, 12 Jun 2022 14:39:14 +0800</pubDate>
-                <link>https://one.vg/tw/blog/reduce-pdf-size-with-quartz-filter</link>
-                <guid isPermaLink="true">https://one.vg/tw/blog/reduce-pdf-size-with-quartz-filter</guid>
-                
-                <category>Mac</category>
-                
-                <category>macOS</category>
-                
-                
-                <category>tw</category>
-                
-            </item>
-        
-            <item>
-                <title>Reduce PDF Size with Quartz Filter</title>
-                <description>&lt;p&gt;macOS has a built-in Quartz filter named “Reduce File Size”, which can be used to reducing the size of the file by recompressing graphics. It’s useful when you need to reduce the size of a high quality PDF for emailing or uploading to a website that has file size limitations.&lt;/p&gt;
-
-&lt;p&gt;But there’s a small issue: by default, this filter scales the image resolution by 50% and has a maximum width or height of 512 pixels, render most of the images way too blur to be readable. Fortunately, there’s a way to customize it to your needs.&lt;/p&gt;
-
-&lt;h2 id=&quot;modify-quartz-filters-in-colorsync-utility&quot;&gt;Modify Quartz filters in ColorSync Utility&lt;/h2&gt;
-
-&lt;p&gt;ColorSync Utility can be found in “Applications &amp;gt; Utilities” (or simply use Spotlight):&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/200e4c26-c102-432f-9c4d-626274db5702_001.jpg&quot; alt=&quot;ColorSync Utility Path&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;First, duplicate the existing “Reduce File Size” filter by clicking the duplicate button so we can have a modifiable copy:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/200e4c26-c102-432f-9c4d-626274db5702_002.jpg&quot; alt=&quot;Duplicate Filter&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Then rename and modify the newly created filter to adjust the target image quality:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/200e4c26-c102-432f-9c4d-626274db5702_003.jpg&quot; alt=&quot;Edit Filter&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;modify-quartz-filters-directly&quot;&gt;Modify Quartz Filters Directly&lt;/h2&gt;
-
-&lt;p&gt;Although the image compression is adjustable, we are unable to specify the quality factor/recompressing ratio as it’s set by a slider without percentage value. To edit the values directly, open Finder, locate the filter file at “&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/Library/Filters&lt;/code&gt;” (an easier way is via “Finder &amp;gt; Go &amp;gt; Go to Folder…” and paste the path):&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/200e4c26-c102-432f-9c4d-626274db5702_004.jpg&quot; alt=&quot;Locate Filter&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Open the “&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.qfilter&lt;/code&gt;” file with text editor that matched the one you created:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/200e4c26-c102-432f-9c4d-626274db5702_005.jpg&quot; alt=&quot;Edit Filter&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;You can then specify the values. The “Compression Quality” is between 0.0 and 1.0, higher means better quality.&lt;/p&gt;
-
-&lt;h2 id=&quot;apply-quartz-filters&quot;&gt;Apply Quartz Filters&lt;/h2&gt;
-
-&lt;p&gt;The created filter is accessible in Preview app when saving or exporting:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/200e4c26-c102-432f-9c4d-626274db5702_006.jpg&quot; alt=&quot;Apply Filter&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Test the values to find what works best for you. You can also have multiple customized filter.&lt;/p&gt;
-</description>
-                <pubDate>Sun, 12 Jun 2022 14:39:14 +0800</pubDate>
-                <link>https://one.vg/blog/reduce-pdf-size-with-quartz-filter</link>
-                <guid isPermaLink="true">https://one.vg/blog/reduce-pdf-size-with-quartz-filter</guid>
-                
-                <category>Mac</category>
-                
-                <category>macOS</category>
                 
                 
             </item>
