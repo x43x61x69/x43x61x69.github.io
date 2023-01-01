@@ -5,9 +5,236 @@
         <description></description>
         <link>https://one.vg/</link>
         <atom:link href="https://one.vg/feed.xml" rel="self" type="application/rss+xml"/>
-        <pubDate>Sun, 18 Dec 2022 18:21:37 +0800</pubDate>
-        <lastBuildDate>Sun, 18 Dec 2022 18:21:37 +0800</lastBuildDate>
+        <pubDate>Mon, 02 Jan 2023 06:18:49 +0800</pubDate>
+        <lastBuildDate>Mon, 02 Jan 2023 06:18:49 +0800</lastBuildDate>
         <generator>Jekyll v4.2.2</generator>
+        
+            <item>
+                <title>透過 VNC 遠端管理 Steam Deck</title>
+                <description>&lt;p&gt;Steam Deck 實際上就是一台內建了遊戲控制器的小型遊戲用個人電腦，搭載了類似遊戲主機介面的「遊戲模式」（Gaming Mode）來取代傳統電腦的「桌面模式」（Desktop Mode）。不過很難想像玩家們會願意為了它放棄自己的非 Steam 遊戲收藏，亦或那些目前不相容於 Steam 官方 Proton 轉譯層的遊戲。更多時候你會發現你需要經常性的在兩個模式間切換，但在 7 吋大的螢幕上使用桌面模式實在不是一個理想的方式；如果不想要被虛擬鍵盤佔據一半的螢幕，你還會需要一副額外的實體鍵盤。這些聽起來對於「玩遊戲」這件事而言實在有些繁瑣。&lt;/p&gt;
+
+&lt;p&gt;幸運的是，SteamOS 3.x 本質上就是一個客製化版本的 Arch Linux，我們可以利用既有的 Linux 工具來讓我們的生活更容易一些：在你的電腦上遠端管理 Steam Deck 的桌面模式。&lt;/p&gt;
+
+&lt;h2 id=&quot;切換至桌面模式&quot;&gt;切換至桌面模式&lt;/h2&gt;
+
+&lt;p&gt;為了要安裝非 Steam 官方的軟體，我們需要先將主機切換至桌面模式。在 Steam Deck 上按一下 &lt;img src=&quot;/images/dd78a6cb-ae31-4b93-9e0a-962e5c7988de_steam.svg&quot; title=&quot;[Steam]&quot; style=&quot;height: 1em !important&quot; /&gt; 鍵，接著於選單中選擇「&lt;i&gt;電源 &amp;gt; 切換至桌面&lt;/i&gt;」。桌面模式目前僅有英文介面。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/dd78a6cb-ae31-4b93-9e0a-962e5c7988de_001_tw.png&quot; alt=&quot;切換至桌面模式&quot; /&gt;
+&lt;em&gt;按一下 &lt;img src=&quot;/images/dd78a6cb-ae31-4b93-9e0a-962e5c7988de_steam.svg&quot; title=&quot;[Steam]&quot; style=&quot;height: 1em !important&quot; /&gt; 鍵 &amp;gt; 電源 &amp;gt; 切換至桌面。&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;設定使用者密碼&quot;&gt;設定使用者密碼&lt;/h2&gt;
+
+&lt;p&gt;桌面模式中預設的使用者帳號 (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;deck&lt;/code&gt;) 並沒有設定密碼。不過為了之後要進行的操作所需我們必須先為它設置一個密碼。我們可以透過 SteamOS 的圖形介面（GUI）進行設定。這項操作建議使用外接鍵盤，但你也可以透過遊戲控制器上的 &lt;img src=&quot;/images/dd78a6cb-ae31-4b93-9e0a-962e5c7988de_steam.svg&quot; title=&quot;[Steam]&quot; style=&quot;height: 1em !important&quot; /&gt; + &lt;img src=&quot;/images/dd78a6cb-ae31-4b93-9e0a-962e5c7988de_x.svg&quot; title=&quot;[X]&quot; style=&quot;height: 1em !important&quot; /&gt; 組合鍵叫出虛擬鍵盤來使用。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/dd78a6cb-ae31-4b93-9e0a-962e5c7988de_002.png&quot; alt=&quot;變更密碼&quot; /&gt;
+&lt;em&gt;透過「Application Launcher &amp;gt; Settings &amp;gt; System Settings &amp;gt; Users &amp;gt; Your Account &amp;gt; Change Password」來設定密碼。&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;如果你偏好使用指令介面（CLI），也可以在 &lt;em&gt;Konsole&lt;/em&gt; （位於「”&lt;em&gt;Application Launcher &amp;gt; System &amp;gt; Konsole&lt;/em&gt;“」）中透過 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;passwd&lt;/code&gt; 指令來變更密碼。請注意指令介面下輸入的密碼不會顯示，輸入完後只要按下 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[Enter]&lt;/code&gt; 鍵完成設定即可：&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;deck@steamdeck ~&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;passwd
+New password:
+Retype new password:
+passwd: password updated successfully
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;開啟-secure-shellssh&quot;&gt;開啟 Secure Shell（SSH）&lt;/h2&gt;
+
+&lt;p&gt;取自維基百科：&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Secure Shell （簡稱 SSH）是一種加密的網路傳輸協定，可在不安全的網路中為網路服務提供安全的傳輸環境。常見的用途是遠端登入系統和遠端執行命令。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;SteamOS 內建了 SSH 服務但基於安全原因預設為停用。如果想要透過指令模式在電腦上遠端操作 Steam Deck，你可以選擇將它開啟。此步驟為選擇性。&lt;/p&gt;
+
+&lt;p&gt;開啟的方式為在 &lt;em&gt;Konsole&lt;/em&gt; 內使用下列指令，並依照提示輸入上一步中我們設定好的使用這密碼：&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;deck@steamdeck ~&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;systemctl &lt;span class=&quot;nb&quot;&gt;enable &lt;/span&gt;sshd.service
+Created symlink /etc/systemd/system/multi-user.target.wants/sshd.service → /usr/lib/systemd/system/sshd.service.
+&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;deck@steamdeck ~&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;systemctl start sshd.service
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;「Enable」表示服務將會在下次開機起隨系統自動啟動，而「Start」表示會在目前的工作階段啟用服務。要停用或停止運行中的 SSH 服務，只需要將指令中的對應參數改為 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;disable&lt;/code&gt; 或 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;stop&lt;/code&gt; 即可。基於安全因素，建議在不使用時將此服務關閉。&lt;/p&gt;
+
+&lt;h4 id=&quot;decky-loader&quot;&gt;Decky Loader&lt;/h4&gt;
+
+&lt;p&gt;SteamOS 在系統更新時會將 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/home&lt;/code&gt;（使用者個人目錄，包含系統本身以外的使用者相關的資料和設定值）之外的系統檔案全部還原回初始狀態，上述的變更在每次系統更新後都需要再次執行。如果不想要每次更新後都重複這些步驟（記錄顯示，SteamOS 在首年內推出了 90 次系統更新），可以考慮安裝「&lt;a href=&quot;https://github.com/SteamDeckHomebrew/decky-loader&quot;&gt;Decky Loader&lt;/a&gt;」和其中的「System Toolbox」套件以便直接在遊戲模式下開啟或關閉 SSH 服務，且不用擔心系統更新後需要重新手動設定。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/dd78a6cb-ae31-4b93-9e0a-962e5c7988de_003.png&quot; alt=&quot;Decky Loader&quot; /&gt;
+&lt;em&gt;Decky Loader 和 System Toolbox 套件。&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;設置-virtual-network-computingvnc&quot;&gt;設置 Virtual Network Computing（VNC）&lt;/h2&gt;
+
+&lt;p&gt;取自維基百科：&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Virtual Network Computing（簡稱 VNC），為一種使用 RFB 協定的圖形化桌面分享及遠端操作軟體。此軟體藉由網路，可傳送鍵盤與滑鼠的動作及即時的螢幕畫面。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;簡而言之，它可以讓你在電腦上遠端操作你的 Steam Deck 桌面模式。SteamOS 目前無任何內建的 VNC 伺服器，也未在 Flathub（系統內建的 App Store）內提供，所以我們必須要透過 Arch Linux 的套件管理工具 &lt;a href=&quot;https://wiki.archlinux.org/title/pacman&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pacman&lt;/code&gt;&lt;/a&gt; 來安裝。&lt;/p&gt;
+
+&lt;p&gt;有鑒於這個流程及其冗長乏味且每次系統更新後都需要重新執行，這裡提供一個自動化&lt;a href=&quot;https://gist.github.com/x43x61x69/9a5a231a25426e8a2cc0f7c24cfdaed9&quot;&gt;指令代碼&lt;/a&gt;。只要將下方的指令貼在 &lt;em&gt;Konsole&lt;/em&gt; 內執行（需要網路連線。另外，由於 GitHub 網址路徑很長，你可以選擇直接於 Steam Deck 桌面模式中的瀏覽器內瀏覽本文章來複製貼上這行指令，或者透過 SSH 來執行）：&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sh &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;curl &lt;span class=&quot;nt&quot;&gt;-fsSL&lt;/span&gt; https://gist.githubusercontent.com/x43x61x69/9a5a231a25426e8a2cc0f7c24cfdaed9/raw/vnc_install.sh?&lt;span class=&quot;nv&quot;&gt;$RANDOM&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;這個指令代碼會為再次安裝建立快捷方式，往後將不會再需要複製此指令。一旦執行完成，桌面上將會出現一個新的「VNC」資料夾，其中包含所有你需要的功能快捷方式，需要時只要雙擊圖示即可。例如：雙擊「&lt;em&gt;Start VNC&lt;/em&gt;」將會啟動 VNC 服務（螢幕上不會顯示任何東西，但實際上有在運行）。現在你可以透過 VNC 檢視程式來遠端連線至 Steam Deck 的 IP 位置。在 macOS 中，內建了一個名為「&lt;em&gt;螢幕共享&lt;/em&gt;」的 VNC 檢視程式：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/dd78a6cb-ae31-4b93-9e0a-962e5c7988de_004.png&quot; alt=&quot;螢幕共享&quot; /&gt;
+&lt;em&gt;透過 macOS 內建的「螢幕共享」來遠端存取 Steam Deck。&lt;/em&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;這個指令代碼包含什麼功能&quot;&gt;這個指令代碼包含什麼功能？&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;自動開啟與關閉 SteamOS 系統的唯讀保護。&lt;/li&gt;
+  &lt;li&gt;初始化 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pacman&lt;/code&gt; 的金鑰。&lt;/li&gt;
+  &lt;li&gt;安裝 x11vnc 伺服器。&lt;/li&gt;
+  &lt;li&gt;建立啟動與停用 VNC 服務的快捷方式。&lt;/li&gt;
+  &lt;li&gt;建立重設 VNC 密碼的快捷方式。&lt;/li&gt;
+  &lt;li&gt;建立系統更新後重新安裝 VNC 快捷方式。&lt;/li&gt;
+  &lt;li&gt;建立登入後自動啟動 VNC 服務的指令代碼。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;只個指令代碼可以安全地重複執行，所以不必擔心初期操作失敗。&lt;/p&gt;
+
+&lt;h4 id=&quot;啟動後自動執行&quot;&gt;啟動後自動執行&lt;/h4&gt;
+
+&lt;p&gt;部分的人會建議設置一個系統服務來讓 VNC 服務自動啟動。但為求簡潔起見，這裡建議透過圖形介面來設定：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;em&gt;Application Launcher &amp;gt; System &amp;gt; System Settings &amp;gt; Startup and Shutdown &amp;gt; + Add… &amp;gt; Login Script&lt;/em&gt;.&lt;/li&gt;
+  &lt;li&gt;選擇桌面「VNC」資料夾中的「&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;vnc_startup.sh&lt;/code&gt;」。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/dd78a6cb-ae31-4b93-9e0a-962e5c7988de_005.png&quot; alt=&quot;啟動指令代碼&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;當然，這個步驟是選擇性的。你也可以選擇透過快捷方式手動啟用或停用 VNC 服務。&lt;/p&gt;
+</description>
+                <pubDate>Mon, 02 Jan 2023 04:37:17 +0800</pubDate>
+                <link>https://one.vg/tw/blog/remote-control-your-steam-deck</link>
+                <guid isPermaLink="true">https://one.vg/tw/blog/remote-control-your-steam-deck</guid>
+                
+                <category>Steam Deck</category>
+                
+                <category>Gaming</category>
+                
+                
+                <category>tw</category>
+                
+            </item>
+        
+            <item>
+                <title>Remote Control Your Steam Deck with VNC</title>
+                <description>&lt;p&gt;Steam Deck is by nature a tiny gaming PC with a gamepad built-in, featuring a “Gaming Mode” for people who want a console-like experience instead of the traditional PC “Desktop Mode”. But it’s hard to imagine people can live without their non-Steam game collection, or games that were not yet compatible with SteamOS’s default Proton layer. More often than not, you would find yourself regularly switch back and forth between the two modes, and working in Desktop Mode on that tiny 7-inch display is anything but ideal. It would also require you to have a physical keyboard if you don’t want to use the virtual one that takes up 50% of the screen. That sounds a lot of work for gaming.&lt;/p&gt;
+
+&lt;p&gt;Luckily, since SteamOS 3.x is just a customized version of Arch Linux, we can use existing Linux tools to make our lives a bit easier by doing everything remotely on your computers.&lt;/p&gt;
+
+&lt;h2 id=&quot;switch-to-desktop-mode&quot;&gt;Switch to Desktop Mode&lt;/h2&gt;
+
+&lt;p&gt;In order to install any non-Steam software, we would need to switch to Desktop Mode. On your Steam Deck press the &lt;img src=&quot;/images/dd78a6cb-ae31-4b93-9e0a-962e5c7988de_steam.svg&quot; title=&quot;[Steam]&quot; style=&quot;height: 1em !important&quot; /&gt; button, then select “&lt;i&gt;Power &amp;gt; Switch to Desktop&lt;/i&gt;” from the menu.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/dd78a6cb-ae31-4b93-9e0a-962e5c7988de_001.png&quot; alt=&quot;Switch to Desktop Mode&quot; /&gt;
+&lt;em&gt;Press the &lt;img src=&quot;/images/dd78a6cb-ae31-4b93-9e0a-962e5c7988de_steam.svg&quot; title=&quot;[Steam]&quot; style=&quot;height: 1em !important&quot; /&gt; Button &amp;gt; Power &amp;gt; Switch to Desktop.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;set-an-user-password&quot;&gt;Set an user password&lt;/h2&gt;
+
+&lt;p&gt;The default user account (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;deck&lt;/code&gt;) of the Desktop Mode does not have its password set. But it would be required later so we’d have to set one first. This can be done with the SteamOS graphical interface (GUI). It’s preferably to have an external keyboard for this process, but you can always use &lt;img src=&quot;/images/dd78a6cb-ae31-4b93-9e0a-962e5c7988de_steam.svg&quot; title=&quot;[Steam]&quot; style=&quot;height: 1em !important&quot; /&gt; + &lt;img src=&quot;/images/dd78a6cb-ae31-4b93-9e0a-962e5c7988de_x.svg&quot; title=&quot;[X]&quot; style=&quot;height: 1em !important&quot; /&gt; button on the gamepad to bring up the on-screen keyboard if you don’t.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/dd78a6cb-ae31-4b93-9e0a-962e5c7988de_002.png&quot; alt=&quot;Change Password&quot; /&gt;
+&lt;em&gt;Set the password via “Application Launcher &amp;gt; Settings &amp;gt; System Settings &amp;gt; Users &amp;gt; Your Account &amp;gt; Change Password”.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;If you prefer the CLI, it could also be done with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;passwd&lt;/code&gt; command via &lt;em&gt;Konsole&lt;/em&gt; (can be found at “&lt;em&gt;Application Launcher &amp;gt; System &amp;gt; Konsole&lt;/em&gt;”). Note that the entered password will not show, just type in your password and hit &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[Enter]&lt;/code&gt; on your keyboard when you finished:&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;deck@steamdeck ~&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;passwd
+New password:
+Retype new password:
+passwd: password updated successfully
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;enable-secure-shell-ssh&quot;&gt;Enable Secure Shell (SSH)&lt;/h2&gt;
+
+&lt;p&gt;From Wikipedia:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;The Secure Shell (SSH) Protocol is a cryptographic network protocol for operating network services securely over an unsecured network. Its most notable applications are remote login and command-line execution.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;SteamOS has SSH service built-in but disabled for security reasons, you can choose to enable it if you want to remote access your Deck via CLI from your computer. This step is optional.&lt;/p&gt;
+
+&lt;p&gt;To enable it, use the following command in the &lt;em&gt;Konsole&lt;/em&gt; and enter the password we set in the previous step when prompted:&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;deck@steamdeck ~&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;systemctl &lt;span class=&quot;nb&quot;&gt;enable &lt;/span&gt;sshd.service
+Created symlink /etc/systemd/system/multi-user.target.wants/sshd.service → /usr/lib/systemd/system/sshd.service.
+&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;deck@steamdeck ~&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;systemctl start sshd.service
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;“Enable” means the service will start automatically on next boot, while “start” means it will start for the current session. To disable or stop the service, just change the enable/start in the commands accordingly. For security reasons, it’s recommended to have it turned off when not using it.&lt;/p&gt;
+
+&lt;h4 id=&quot;decky-loader&quot;&gt;Decky Loader&lt;/h4&gt;
+
+&lt;p&gt;Since SteamOS update will restore any system changes except &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/home&lt;/code&gt;, those changes will need to be re-applied after each system update. If you don’t want to do this repeatedly (for the record, SteamOS has 90 updates during the first year), consider install “&lt;a href=&quot;https://github.com/SteamDeckHomebrew/decky-loader&quot;&gt;Decky Loader&lt;/a&gt;” and the “System Toolbox” plug-in so you can control SSH on/off directly from the Gaming Mode and not have to worry about system updates.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/dd78a6cb-ae31-4b93-9e0a-962e5c7988de_003.png&quot; alt=&quot;Decky Loader&quot; /&gt;
+&lt;em&gt;System Toolbox plug-in of Decky Loader.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;setup-virtual-network-computing-vnc&quot;&gt;Setup Virtual Network Computing (VNC)&lt;/h2&gt;
+
+&lt;p&gt;From Wikipedia:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Virtual Network Computing is a graphical desktop-sharing system that uses the Remote Frame Buffer protocol to remotely control another computer. It transmits the keyboard and mouse input from one computer to another, relaying the graphical-screen updates, over a network.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;In short, it let you remote access your Steam Deck’s Desktop Mode graphical interface remotely with your computer. SteamOS currently does not have any VNC server built-in or available via its Flathub app store, so we would have to install it via &lt;a href=&quot;https://wiki.archlinux.org/title/pacman&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pacman&lt;/code&gt;&lt;/a&gt; - Arch Linux’s package manager.&lt;/p&gt;
+
+&lt;p&gt;Since this process is tedious and has to be done repeatedly after each system update, here’s a &lt;a href=&quot;https://gist.github.com/x43x61x69/9a5a231a25426e8a2cc0f7c24cfdaed9&quot;&gt;script&lt;/a&gt; for just that. Simply copy and paste the command below into &lt;em&gt;Konsole&lt;/em&gt; and run it (Internet connection is required. Also the GitHub URL to the script is lengthy, you can open this blog post with your Steam Deck’s browser to copy it instead of typing, or run it via SSH):&lt;/p&gt;
+
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sh &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;curl &lt;span class=&quot;nt&quot;&gt;-fsSL&lt;/span&gt; https://gist.githubusercontent.com/x43x61x69/9a5a231a25426e8a2cc0f7c24cfdaed9/raw/vnc_install.sh?&lt;span class=&quot;nv&quot;&gt;$RANDOM&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The script will create a shortcut for reinstallation, you don’t have to copy paste this command in the future. Once done, a new “VNC” folder will appear on your desktop and contains all the necessary features that you might need. You can double click on each shortcut when needed, e.g. double click the “&lt;em&gt;Start VNC&lt;/em&gt;” will start the VNC server (nothing will show up but it’s indeed running). Now use a VNC client on your computer to connect to it via IP address. For macOS, there’s built-in VNC viewer named “&lt;em&gt;Screen Sharing&lt;/em&gt;”:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/dd78a6cb-ae31-4b93-9e0a-962e5c7988de_004.png&quot; alt=&quot;Screen Sharing&quot; /&gt;
+&lt;em&gt;Remote access Steam Deck with macOS Screen Sharing.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;what-this-script-does&quot;&gt;What this script does?&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Automatically enable/disable SteamOS system read-only protection for you.&lt;/li&gt;
+  &lt;li&gt;Initialize &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pacman&lt;/code&gt; keys.&lt;/li&gt;
+  &lt;li&gt;Install x11vnc server.&lt;/li&gt;
+  &lt;li&gt;Create shortcuts for enabling/disabling VNC.&lt;/li&gt;
+  &lt;li&gt;Create a shortcut for VNC password resetting.&lt;/li&gt;
+  &lt;li&gt;Create a shortcut for easy reinstalling x11vnc after system updates.&lt;/li&gt;
+  &lt;li&gt;Create script for auto start VNC server on login.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;It’s safe for re-running, so don’t worry if not succeeded during initial attempts.&lt;/p&gt;
+
+&lt;h4 id=&quot;auto-start-on-startup&quot;&gt;Auto start on startup&lt;/h4&gt;
+
+&lt;p&gt;Some people would recommend you to setup a system service to have VNC server start on startup automatically. But for the sake of simplicity, I would suggest set it up with the GUI:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;em&gt;Application Launcher &amp;gt; System &amp;gt; System Settings &amp;gt; Startup and Shutdown &amp;gt; + Add… &amp;gt; Login Script&lt;/em&gt;.&lt;/li&gt;
+  &lt;li&gt;Select the “&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;vnc_startup.sh&lt;/code&gt;” within the VNC folder on your desktop.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/dd78a6cb-ae31-4b93-9e0a-962e5c7988de_005.png&quot; alt=&quot;Startup Script&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Of course, this is complete optional. You can always use the shortcuts to start/stop the VNC server manually.&lt;/p&gt;
+
+</description>
+                <pubDate>Mon, 02 Jan 2023 04:37:17 +0800</pubDate>
+                <link>https://one.vg/blog/remote-control-your-steam-deck</link>
+                <guid isPermaLink="true">https://one.vg/blog/remote-control-your-steam-deck</guid>
+                
+                <category>Steam Deck</category>
+                
+                <category>Gaming</category>
+                
+                
+            </item>
         
             <item>
                 <title>Apple 檔案系統（APFS）的 Firmlink 黑魔法</title>
@@ -214,170 +441,6 @@
             </item>
         
             <item>
-                <title>調整 VMware 中 Windows 11 on ARM 顯示器解析度</title>
-                <description>&lt;p&gt;Windows on ARM 因微軟授權的因素目前尚未被 VMware Fusion 所支援。當 Parallel 決定採取全然不同的策略並提供一定程度的支援時，VMware 與微軟的緊密合作關係迫使他們只能照規定走。不過廣大的網友們依然找到了在搭載了 Apple Silicon 的 Mac 上安裝的方法且解決了大部分會遇到的小問題，但目前仍因為缺乏 VMware 官方顯示驅動程式的緣故無法調整虛擬機顯示器解析度。由於顯示器解析度繼承自 EFI 設定，我們可以透過例如像 &lt;a href=&quot;https://en.wikipedia.org/wiki/GNU_GRUB&quot;&gt;GNU GRUB&lt;/a&gt; 這類可調整參數的開機程式（Bootloader）來進行變更。&lt;/p&gt;
-
-&lt;h2 id=&quot;取得-grub-執行檔供-efi-使用&quot;&gt;取得 GRUB 執行檔供 EFI 使用&lt;/h2&gt;
-
-&lt;p&gt;與其為了 GRUB 下載整個 Linux 映像檔案，我們可以只下載&lt;a href=&quot;https://deb.debian.org/debian/pool/main/g/grub2/&quot;&gt;這裡&lt;/a&gt;的執行檔。尋找「&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;grub-efi-arm64-bin_2.##-#_arm64.deb&lt;/code&gt;」這種檔名的檔案並下載。對 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.deb&lt;/code&gt; 進行解壓縮，並在再次解壓縮裡面的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;data.tar.xz&lt;/code&gt;。你可以使用像是 &lt;a href=&quot;https://www.keka.io/&quot;&gt;Keka&lt;/a&gt; 這類的圖形化工具程式，又或者使用 macOS 內建的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tar&lt;/code&gt; 指令：&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;curl &lt;span class=&quot;nt&quot;&gt;-s&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-O&lt;/span&gt; https://deb.debian.org/debian/pool/main/g/grub2/grub-efi-arm64-bin_2.06-3_arm64.deb
-&lt;span class=&quot;nb&quot;&gt;tar&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; grub-efi-arm64-bin_2.06-3_arm64.deb &lt;span class=&quot;nt&quot;&gt;-zxv&lt;/span&gt; data.tar.xz
-&lt;span class=&quot;nb&quot;&gt;mkdir &lt;/span&gt;debian
-&lt;span class=&quot;nb&quot;&gt;tar&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; data.tar.xz &lt;span class=&quot;nt&quot;&gt;--to-stdout&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-zxv&lt;/span&gt; usr/lib/grub/arm64-efi/monolithic/grubaa64.efi &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; debian/grubaa64.efi
-&lt;span class=&quot;nb&quot;&gt;rm&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; grub-efi-arm64-bin_2.06-3_arm64.deb data.tar.xz
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;建立-grub-選單設定檔案&quot;&gt;建立 GRUB 選單設定檔案&lt;/h2&gt;
-
-&lt;p&gt;建立一個名為 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;grub.cfg&lt;/code&gt; 的新檔案並將其放置於 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;grubaa64.efi&lt;/code&gt; 相同的的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;debian&lt;/code&gt; 資料夾內：&lt;/p&gt;
-
-&lt;div class=&quot;language-config highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;set&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;timeout&lt;/span&gt;=&lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;set&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;default&lt;/span&gt;=&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;set&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gfxmode&lt;/span&gt;=&lt;span class=&quot;m&quot;&gt;1920&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x1200&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;menuentry&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Windows 11&quot;&lt;/span&gt; {
-	&lt;span class=&quot;n&quot;&gt;insmod&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gfxterm&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;terminal_output&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gfxterm&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;chainloader&lt;/span&gt; /&lt;span class=&quot;n&quot;&gt;efi&lt;/span&gt;/&lt;span class=&quot;n&quot;&gt;microsoft&lt;/span&gt;/&lt;span class=&quot;n&quot;&gt;boot&lt;/span&gt;/&lt;span class=&quot;n&quot;&gt;bootmgfw&lt;/span&gt;.&lt;span class=&quot;n&quot;&gt;efi&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;boot&lt;/span&gt;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;這份設定檔會鏈鎖載入 Windows Boot Manager 前將解析度設定為 1920x1200。你可以將解析度修改為任何 VM 支援的解析度數值。錯誤的數值將以預設值處理。&lt;/p&gt;
-
-&lt;h2 id=&quot;設定-grub&quot;&gt;設定 GRUB&lt;/h2&gt;
-
-&lt;p&gt;在 VMware Fusion 中啟動 Windows 11 虛擬機。找個方法將先前建立的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;debian&lt;/code&gt; 複製進虛擬機當中。選取「開始 &amp;gt; 搜尋 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cmd.exe&lt;/code&gt; &amp;gt; 以系統管理員身分執行」。執行下列指令來掛載 EFI 啟動磁區並將 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;debian&lt;/code&gt; 中的內容放置於 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;EFI/debian&lt;/code&gt; 中。假設你的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;debian&lt;/code&gt; 資料夾位於「&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C:\&lt;/code&gt;」之下：&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-cmd&quot;&gt;mountvol a: /s
-a:
-cd EFI
-mdkir debian
-cd debian
-xcopy c:\debian .
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;關閉 Windows 虛擬機。在 Fusion 的虛擬機設定當中，選擇「Startup Disk」，按住 Option 鍵並選取「Restart to firmware…」開機進入 BIOS：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/c8175a71-7b27-47fa-9de6-d6c41f3b2509_001.png&quot; alt=&quot;Startup Disk&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;在 BIOS 中，依下列步驟為 GRUB 建立新的項目：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;選取「Boot Maintenance Manager &amp;gt; Boot Options &amp;gt; Add Boot Option」。&lt;/li&gt;
-  &lt;li&gt;選取包含「&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.../HD(...&lt;/code&gt;」字串的項目，接著依序選擇「&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;EFI&amp;gt;&lt;/code&gt;」、「&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;debian&amp;gt;&lt;/code&gt;」和「&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;grubaa64.efi&lt;/code&gt;」。&lt;/li&gt;
-  &lt;li&gt;填寫新建立的開機選項的描述，接著選取「Commit Changes and Exit」。&lt;/li&gt;
-  &lt;li&gt;選取「Boot Options &amp;gt; Change Boot Order &amp;gt; Change the Order」。&lt;/li&gt;
-  &lt;li&gt;將新建立的選項移至最上方。&lt;/li&gt;
-  &lt;li&gt;選取「Go Back To Main Page」接著按下 ESC 鍵，輸入 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;y&lt;/code&gt; 儲存變更。&lt;/li&gt;
-  &lt;li&gt;選取「Continue」。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;現在虛擬機將開機制 GRUB 而非 Windows Boot Manager：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/c8175a71-7b27-47fa-9de6-d6c41f3b2509_002.jpg&quot; alt=&quot;GRUB&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;進入系統後顯示器解析度為 1920x1200：&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/c8175a71-7b27-47fa-9de6-d6c41f3b2509_003.jpg&quot; alt=&quot;Windows on ARM&quot; /&gt;&lt;/p&gt;
-</description>
-                <pubDate>Tue, 12 Jul 2022 16:35:50 +0800</pubDate>
-                <link>https://one.vg/tw/blog/change-windows-on-arm-display-resolution-in-vmware</link>
-                <guid isPermaLink="true">https://one.vg/tw/blog/change-windows-on-arm-display-resolution-in-vmware</guid>
-                
-                <category>VMware</category>
-                
-                <category>Windows</category>
-                
-                
-                <category>tw</category>
-                
-            </item>
-        
-            <item>
-                <title>Change Windows 11 on ARM Display Resolution in VMware</title>
-                <description>&lt;p&gt;Windows on ARM isn’t yet supported by VMware Fusion due to Microsoft’s licensing. While Parallel decided to take a complete different route and have it supported in some degree, VMware’s close relationship with Microsoft has made them play by the book. But the Internet has found its way to have it installed on Apple Silicon Macs since early on and resolved most of the hiccups it encountered. Still there’s no way to change the display resolution due to lack of graphic drivers from VMware. Since the display resolution was inherited from the EFI settings, it can be changed with the help of other configurable bootloaders such as &lt;a href=&quot;https://en.wikipedia.org/wiki/GNU_GRUB&quot;&gt;GNU GRUB&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;get-grub-binary-for-efi&quot;&gt;Get GRUB Binary for EFI&lt;/h2&gt;
-
-&lt;p&gt;Instead of getting the whole Linux image just for GRUB, we can just download the binary &lt;a href=&quot;https://deb.debian.org/debian/pool/main/g/grub2/&quot;&gt;here&lt;/a&gt;. Look for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;grub-efi-arm64-bin_2.##-#_arm64.deb&lt;/code&gt; and download it. Extract the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.deb&lt;/code&gt; then extract again the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;data.tar.xz&lt;/code&gt; within. You can either use GUI tools such as &lt;a href=&quot;https://www.keka.io/&quot;&gt;Keka&lt;/a&gt; or the macOS built-in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tar&lt;/code&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;curl &lt;span class=&quot;nt&quot;&gt;-s&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-O&lt;/span&gt; https://deb.debian.org/debian/pool/main/g/grub2/grub-efi-arm64-bin_2.06-3_arm64.deb
-&lt;span class=&quot;nb&quot;&gt;tar&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; grub-efi-arm64-bin_2.06-3_arm64.deb &lt;span class=&quot;nt&quot;&gt;-zxv&lt;/span&gt; data.tar.xz
-&lt;span class=&quot;nb&quot;&gt;mkdir &lt;/span&gt;debian
-&lt;span class=&quot;nb&quot;&gt;tar&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; data.tar.xz &lt;span class=&quot;nt&quot;&gt;--to-stdout&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-zxv&lt;/span&gt; usr/lib/grub/arm64-efi/monolithic/grubaa64.efi &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; debian/grubaa64.efi
-&lt;span class=&quot;nb&quot;&gt;rm&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; grub-efi-arm64-bin_2.06-3_arm64.deb data.tar.xz
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;create-grub-menu-configuration-file&quot;&gt;Create GRUB Menu Configuration File&lt;/h2&gt;
-
-&lt;p&gt;Create a new file named &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;grub.cfg&lt;/code&gt; and placed it within the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;debian&lt;/code&gt; folder with the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;grubaa64.efi&lt;/code&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;language-config highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;set&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;timeout&lt;/span&gt;=&lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;set&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;default&lt;/span&gt;=&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;set&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gfxmode&lt;/span&gt;=&lt;span class=&quot;m&quot;&gt;1920&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x1200&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;menuentry&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Windows 11&quot;&lt;/span&gt; {
-	&lt;span class=&quot;n&quot;&gt;insmod&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gfxterm&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;terminal_output&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gfxterm&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;chainloader&lt;/span&gt; /&lt;span class=&quot;n&quot;&gt;efi&lt;/span&gt;/&lt;span class=&quot;n&quot;&gt;microsoft&lt;/span&gt;/&lt;span class=&quot;n&quot;&gt;boot&lt;/span&gt;/&lt;span class=&quot;n&quot;&gt;bootmgfw&lt;/span&gt;.&lt;span class=&quot;n&quot;&gt;efi&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;boot&lt;/span&gt;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;This will make GRUB set the display resolution to 1920x1200 before chain loading the Windows Boot Manager. You can change the resolution to any value that GRUB supports on your VM. Invalid values will revert it back to default.&lt;/p&gt;
-
-&lt;h2 id=&quot;setup-grub&quot;&gt;Setup GRUB&lt;/h2&gt;
-
-&lt;p&gt;Boot the Windows 11 VM in VMware Fusion. Find a way to copy the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;debian&lt;/code&gt; folder we created in the last step into the VM. Select “Start &amp;gt; Search for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cmd.exe&lt;/code&gt; &amp;gt; Open as Administrator”. Run the following command to mount the EFI partition and copy the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;debian&lt;/code&gt; folder to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;EFI/debian&lt;/code&gt;. Assuming you the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;debian&lt;/code&gt; folder is located directly under “&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C:\&lt;/code&gt;”:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&quot;language-cmd&quot;&gt;mountvol a: /s
-a:
-cd EFI
-mdkir debian
-cd debian
-xcopy c:\debian .
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Now shutdown the Windows VM. In the VM settings of Fusion, open “Startup Disk”, hold the Option Key and select “Restart to firmware…” to boot into BIOS:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/c8175a71-7b27-47fa-9de6-d6c41f3b2509_001.png&quot; alt=&quot;Startup Disk&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;In BIOS, follow these steps to create a new entry for GRUB:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Select “Boot Maintenance Manager &amp;gt; Boot Options &amp;gt; Add Boot Option”.&lt;/li&gt;
-  &lt;li&gt;Select the entry with “&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.../HD(...&lt;/code&gt;”, follow by “&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;EFI&amp;gt;&lt;/code&gt;”, “&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;debian&amp;gt;&lt;/code&gt;” and “&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;grubaa64.efi&lt;/code&gt;”.&lt;/li&gt;
-  &lt;li&gt;Choose a description for the new boot option then select “Commit Changes and Exit”.&lt;/li&gt;
-  &lt;li&gt;Select “Boot Options &amp;gt; Change Boot Order &amp;gt; Change the Order”.&lt;/li&gt;
-  &lt;li&gt;Move the newly created option to the top.&lt;/li&gt;
-  &lt;li&gt;Select “Go Back To Main Page” then press ESC key, type &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;y&lt;/code&gt; to save your changes.&lt;/li&gt;
-  &lt;li&gt;Select “Continue”.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;It should now boot to GRUB instead of Windows Boot Manager:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/c8175a71-7b27-47fa-9de6-d6c41f3b2509_002.jpg&quot; alt=&quot;GRUB&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;The display resolution is now 1920x1200:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/c8175a71-7b27-47fa-9de6-d6c41f3b2509_003.jpg&quot; alt=&quot;Windows on ARM&quot; /&gt;&lt;/p&gt;
-</description>
-                <pubDate>Tue, 12 Jul 2022 16:35:50 +0800</pubDate>
-                <link>https://one.vg/blog/change-windows-on-arm-display-resolution-in-vmware</link>
-                <guid isPermaLink="true">https://one.vg/blog/change-windows-on-arm-display-resolution-in-vmware</guid>
-                
-                <category>VMware</category>
-                
-                <category>Windows</category>
-                
-                
-            </item>
-        
-            <item>
                 <title>在 VMware Fusion 中啟用 HID Passthrough</title>
                 <description>&lt;p&gt;最近購買了一副新鍵盤，它在各方面都表現的相當不錯，但只能透過 Windows 環境才能更新韌體。如果嘗試將鍵盤直接透過 USB 連接到 Windows 虛擬機，你將會失望的發現這類的輸入裝置不會顯示在虛擬機的 USB 裝置清單中。&lt;/p&gt;
 
@@ -463,214 +526,6 @@ xcopy c:\debian .
                 <category>VMware</category>
                 
                 <category>macOS</category>
-                
-                
-            </item>
-        
-            <item>
-                <title>GitHub Pages 的多語言 404 頁面</title>
-                <description>&lt;p&gt;許多具備程式語言能力的人（包含我自己）偏好靜態網站：它們相對快速、更加安全且幾乎可以被託管於任何地方（甚至免費）。雖然靜態網站仍有許多缺點（例如：缺乏互動性），但大多數可以透過第三方服務來達成與動態網站相近的功能。總體而言它仍是多數個人網站的不錯選擇。&lt;/p&gt;
-
-&lt;h2 id=&quot;github-pages&quot;&gt;GitHub Pages&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://pages.github.com/&quot;&gt;GitHub Pages&lt;/a&gt; 是目前最受歡迎的靜態網站託管平台之一：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;它的服務是免費的。&lt;/li&gt;
-  &lt;li&gt;它原生支援部落格軟體 &lt;a href=&quot;https://jekyllrb.com/&quot;&gt;Jekyll&lt;/a&gt;。&lt;/li&gt;
-  &lt;li&gt;它支援&lt;a href=&quot;https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/about-custom-domains-and-github-pages&quot;&gt;自訂網域&lt;/a&gt;.&lt;/li&gt;
-  &lt;li&gt;它可透過 &lt;a href=&quot;https://letsencrypt.org/&quot;&gt;Let’s Encrypt&lt;/a&gt; 支援 &lt;a href=&quot;https://docs.github.com/en/pages/getting-started-with-github-pages/securing-your-github-pages-site-with-https&quot;&gt;HTTPS&lt;/a&gt;。&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;多年來我使用此服務且認為它相當優秀。只是接著便是「雖然…可是…」的部分了。&lt;/p&gt;
-
-&lt;h2 id=&quot;多語言-404-頁面&quot;&gt;多語言 404 頁面&lt;/h2&gt;
-
-&lt;p&gt;雖然 GitHub &lt;a href=&quot;https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-custom-404-page-for-your-github-pages-site&quot;&gt;允許&lt;/a&gt;在人們嘗試存取網站不存在的頁面時顯示客製化的 404 錯誤頁面且對多數人而言它沒有什麼大問題，但如果打算將你的網站多國語言化便會是個問題：因為它只允許單一版本的錯誤頁面。舉例來說，當檢視此部落格的中文版本時，如果你不知何故點選了一個應為中文頁面的不存在網址，像是：「&lt;a href=&quot;https://one.vg/tw/nonexistent&quot;&gt;https://one.vg/tw/nonexistent&lt;/a&gt;」將會被 GitHub 導向英文版的「&lt;a href=&quot;https://one.vg/404.html&quot;&gt;https://one.vg/404.html&lt;/a&gt;」。此行為可能會導致不黯英文的使用者混亂且無法由此繼續。&lt;/p&gt;
-
-&lt;p&gt;其中一個解決方式為利用 JavaScript 基於網誌路徑來顯示對應的語系字串。然而，這種做法可能使經常變動佈局（layout）或動態網址生成的網站難以維護。我的做法是建立一個 404 頁面範本來讓各語系能擁有自己的對應頁面：&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
-├── _data/
-│   └── settings.yml &lt;span class=&quot;c&quot;&gt;# 定義語系清單&lt;/span&gt;
-├── _includes/
-│   └── 404.html     &lt;span class=&quot;c&quot;&gt;# 頁面範本&lt;/span&gt;
-├── tw/
-│   └── _pages/
-│       └── 404.html &lt;span class=&quot;c&quot;&gt;# 中文（台灣）&lt;/span&gt;
-└── 404.html         &lt;span class=&quot;c&quot;&gt;# 英文&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;當使用者抵達英文版的頁面時，他們將會被轉而導向對應的語言版本頁面（如本站的情況）。如此我們可以保持更清楚的網站程式碼架構且更易於依照各語言的需求客製化對應頁面。&lt;/p&gt;
-
-&lt;p&gt;範本的部分，可以直接使用原先的 404 頁面並移除前綴的 Front Matter 區域；位於根目錄下的 404 頁面，我們可以將其修改為類似下面的狀態：&lt;/p&gt;
-
-&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;---
-layout: default
-title: &apos;Page Not Found&apos;
-permalink: /404.html
----
-{% include 404.html %}
-
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;script&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nb&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;onload&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;locale&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;location&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pathname&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;locale_list&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;site&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;settings&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;locale&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;locale_list&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}};&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;locale_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;includes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;locale&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;redirect&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;encodeURI&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;location&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pathname&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-      &lt;span class=&quot;nx&quot;&gt;location&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;href&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;location&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;origin&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;locale&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;/404.html?redirect=&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;redirect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;以上這段語法會讀取定義於 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_data/settings.yml&lt;/code&gt; 內的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;locale_list&lt;/code&gt; 陣列，作為路徑導向判斷的允許清單：&lt;/p&gt;
-
-&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;locale_list&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;[&quot;en&quot;,&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;tw&quot;]&apos;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;接著它會檢查網址路徑，嘗試判斷對應的語系並進行重新導向，同時將目前的路徑作為請求參數一併傳送，以便重新導向後可以將網址列恢復為原先用戶輸入的內容。請留意我們只使用路徑部分而非整個 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;href&lt;/code&gt; 值，以避免&lt;a href=&quot;https://cwe.mitre.org/data/definitions/601.html&quot;&gt;開放式重導向&lt;/a&gt;漏洞。&lt;/p&gt;
-
-&lt;p&gt;其他語系的頁面，我們可以採用類似下方的做法：&lt;/p&gt;
-
-&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;---
-layout: default
-title: &apos;找不到網頁&apos;
-permalink: /tw/404.html
-locale: tw
----
-{% include 404.html %}
-
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;script&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nb&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;onload&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;location&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;search&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;queryString&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;location&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;search&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;urlParams&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;URLSearchParams&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;queryString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-      &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;redirect&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;decodeURI&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;urlParams&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;redirect&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
-      &lt;span class=&quot;nb&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;history&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pushState&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;{{ site.url }}&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;redirect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;此頁面會顯示必要的內容並在不重新載入頁面的情況下還原網址列內容。你可以透過下面的連結來檢視相關效果：&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://one.vg/nonexistent&quot;&gt;https://one.vg/nonexistent&lt;/a&gt;（英文）&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://one.vg/tw/nonexistent&quot;&gt;https://one.vg/tw/nonexistent&lt;/a&gt;（中文）&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-                <pubDate>Mon, 27 Jun 2022 15:09:03 +0800</pubDate>
-                <link>https://one.vg/tw/blog/multilingual-404-page-for-github-pages</link>
-                <guid isPermaLink="true">https://one.vg/tw/blog/multilingual-404-page-for-github-pages</guid>
-                
-                <category>Coding</category>
-                
-                <category>Jekyll</category>
-                
-                
-                <category>tw</category>
-                
-            </item>
-        
-            <item>
-                <title>Multilingual 404 Page for GitHub Pages</title>
-                <description>&lt;p&gt;Many of those who can code (myself included) prefer static websites: they are relatively fast, more secure and can be hosted almost anywhere (even for free). Although there are disadvantages of static websites such as lack of interactiveness, most of them can be overcame with 3rd-party services to have features similar to dynamic websites. Overall it’s still a better deal for most personal websites.&lt;/p&gt;
-
-&lt;h2 id=&quot;github-pages&quot;&gt;GitHub Pages&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://pages.github.com/&quot;&gt;GitHub Pages&lt;/a&gt; is currently one of the most popular free platform for hosting static websites:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;It’s free.&lt;/li&gt;
-  &lt;li&gt;It supports &lt;a href=&quot;https://jekyllrb.com/&quot;&gt;Jekyll&lt;/a&gt; blog-aware natively.&lt;/li&gt;
-  &lt;li&gt;It supports &lt;a href=&quot;https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/about-custom-domains-and-github-pages&quot;&gt;custom domains&lt;/a&gt;.&lt;/li&gt;
-  &lt;li&gt;It support &lt;a href=&quot;https://docs.github.com/en/pages/getting-started-with-github-pages/securing-your-github-pages-site-with-https&quot;&gt;HTTPS&lt;/a&gt; via &lt;a href=&quot;https://letsencrypt.org/&quot;&gt;Let’s Encrypt&lt;/a&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;I’ve been using it for years and it’s terrific. Then there’s the “but” part.&lt;/p&gt;
-
-&lt;h2 id=&quot;multilingual-404-page&quot;&gt;Multilingual 404 Page&lt;/h2&gt;
-
-&lt;p&gt;Although GitHub &lt;a href=&quot;https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-custom-404-page-for-your-github-pages-site&quot;&gt;does allow you&lt;/a&gt; to display a custom 404 error page when people try to access nonexistent pages on your site and it works fine for most people, it would become a problem if you are trying to make you website multilingual as it only allows a single version of it. For example, when viewing this blog in Chinese, if somehow you clicked on a nonexistent URL path that should’ve been in Chinese localization, e.g. “&lt;a href=&quot;https://one.vg/tw/nonexistent&quot;&gt;https://one.vg/tw/nonexistent&lt;/a&gt;” will be redirect to “&lt;a href=&quot;https://one.vg/404.html&quot;&gt;https://one.vg/404.html&lt;/a&gt;” by GitHub, which is in English. This behavior could be confusing as the users might not be familiar with English and unable to continue from there.&lt;/p&gt;
-
-&lt;p&gt;One way of solving this is using JavaScript to display the designated localization strings based on the pathname of the URL. However, this would be difficult to maintain especially if you change your website layouts frequently or have dynamic URL generation mechanism. My approach is creating a template of 404 page so each localization can have its own version of the page:&lt;/p&gt;
-
-&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
-├── _data/
-│   └── settings.yml &lt;span class=&quot;c&quot;&gt;# Defined localization List&lt;/span&gt;
-├── _includes/
-│   └── 404.html     &lt;span class=&quot;c&quot;&gt;# Template&lt;/span&gt;
-├── tw/
-│   └── _pages/
-│       └── 404.html &lt;span class=&quot;c&quot;&gt;# Chinese (Taiwan)&lt;/span&gt;
-└── 404.html         &lt;span class=&quot;c&quot;&gt;# English&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Once the users landed on the English version of it, they will be redirected to the corresponding localized page (as seen on this website). By doing so, we can have a more clearer structure of the website source code and easier to customized the page to each localization’s need.&lt;/p&gt;
-
-&lt;p&gt;For the template, simply use your original 404 page and remove the front matter section. For the 404 page in the root folder, we can make it something like below:&lt;/p&gt;
-
-&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;---
-layout: default
-title: &apos;Page Not Found&apos;
-permalink: /404.html
----
-{% include 404.html %}
-
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;script&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nb&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;onload&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;locale&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;location&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pathname&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;locale_list&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{{&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;site&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;settings&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;locale&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;locale_list&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}};&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;locale_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;includes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;locale&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;redirect&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;encodeURI&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;location&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pathname&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-      &lt;span class=&quot;nx&quot;&gt;location&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;href&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;location&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;origin&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;locale&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;/404.html?redirect=&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;redirect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;The script will have the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;locale_list&lt;/code&gt; defined in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_data/settings.yml&lt;/code&gt;, which serves as an allow-list for path redirecting:&lt;/p&gt;
-
-&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;locale_list&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;[&quot;en&quot;,&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;tw&quot;]&apos;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;It will then check the URL pathname and try to determine the corresponding localization, then redirect to it with the current path as query string so we can restore the user-entered one once redirected. Note that we only took the pathname instead of the whole &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;href&lt;/code&gt; value to prevent &lt;a href=&quot;https://cwe.mitre.org/data/definitions/601.html&quot;&gt;open redirect&lt;/a&gt; vulnerability.&lt;/p&gt;
-
-&lt;p&gt;For localized pages, we can do something like below:&lt;/p&gt;
-
-&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;---
-layout: default
-title: &apos;找不到網頁&apos;
-permalink: /tw/404.html
-locale: tw
----
-{% include 404.html %}
-
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;script&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nb&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;onload&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;location&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;search&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;queryString&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;location&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;search&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;urlParams&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;URLSearchParams&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;queryString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-      &lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;redirect&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;decodeURI&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;urlParams&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;redirect&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
-      &lt;span class=&quot;nb&quot;&gt;window&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;history&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;pushState&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;{{ site.url }}&lt;/span&gt;&lt;span class=&quot;dl&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;redirect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;The page will display the necessary contents and change the URL of the browser back to its origin with the query value without reloading the page. You can check out the results with the following links:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://one.vg/nonexistent&quot;&gt;https://one.vg/nonexistent&lt;/a&gt; (English)&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://one.vg/tw/nonexistent&quot;&gt;https://one.vg/tw/nonexistent&lt;/a&gt; (Chinese)&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-                <pubDate>Mon, 27 Jun 2022 15:09:03 +0800</pubDate>
-                <link>https://one.vg/blog/multilingual-404-page-for-github-pages</link>
-                <guid isPermaLink="true">https://one.vg/blog/multilingual-404-page-for-github-pages</guid>
-                
-                <category>Coding</category>
-                
-                <category>Jekyll</category>
                 
                 
             </item>
@@ -845,6 +700,110 @@ locale: tw
                 <category>Fashion</category>
                 
                 <category>Dior</category>
+                
+                
+            </item>
+        
+            <item>
+                <title>透過 Quartz 濾鏡減少 PDF 檔案大小</title>
+                <description>&lt;p&gt;macOS 內建 Quartz 濾鏡「減少檔案大小」，可透過重新壓縮圖形來減少檔案的大小。對於需要降低高品質的 PDF 檔案來發送電子郵件附件或上傳至有檔案大小限制的網站時它相當的方便相當的方便。&lt;/p&gt;
+
+&lt;p&gt;不過這個濾鏡有個小問題：預設它會將圖片解析度縮小至一半，且有著 512 像素的長寬上限。這將使得壓縮後的圖片內容過於模糊而難以閱讀。幸運的是，我們有方法可以客製化濾鏡壓縮參數以符合特定的需求。&lt;/p&gt;
+
+&lt;h2 id=&quot;透過色彩同步工具程式修改-quartz-濾鏡&quot;&gt;透過「色彩同步工具程式」修改 Quartz 濾鏡&lt;/h2&gt;
+
+&lt;p&gt;「色彩同步工具程式」位於「應用程式 &amp;gt; 工具程式」中（也可以透過 Spotlight 開啟）：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/200e4c26-c102-432f-9c4d-626274db5702_001.jpg&quot; alt=&quot;色彩同步工具程式路徑&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;首先，點擊「複製」按鈕來建立一個可編輯的「減少檔案大小」濾鏡副本：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/200e4c26-c102-432f-9c4d-626274db5702_002.jpg&quot; alt=&quot;複製濾鏡&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;接著重新命名以及修改新建立的濾鏡來調整目標影像品質：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/200e4c26-c102-432f-9c4d-626274db5702_003.jpg&quot; alt=&quot;編輯濾鏡&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;直接修改-quartz-濾鏡檔案&quot;&gt;直接修改 Quartz 濾鏡檔案&lt;/h2&gt;
+
+&lt;p&gt;雖然圖形介面可以調整影像的壓縮率，但因為滑桿未顯示百分比數值導致我們無法精確的調整畫質參數。想直接編輯參數，開啟 Finder，找到位於「&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/Library/Filters&lt;/code&gt;」（簡單的方法為在 Finder 選單「前往 &amp;gt; 移至資料夾…」中貼上該路徑）的濾鏡檔案：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/200e4c26-c102-432f-9c4d-626274db5702_004.jpg&quot; alt=&quot;找出濾鏡位置&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;透過文字編輯器開啟與剛才建立的濾鏡名稱相符的「&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.qfilter&lt;/code&gt;」檔案：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/200e4c26-c102-432f-9c4d-626274db5702_005.jpg&quot; alt=&quot;編輯濾鏡&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;即可指定相關的數值。其中「Compression Quality」介於 0.0 和 1.0 之間，數值越高品質越佳。&lt;/p&gt;
+
+&lt;h2 id=&quot;套用-quartz-濾鏡&quot;&gt;套用 Quartz 濾鏡&lt;/h2&gt;
+
+&lt;p&gt;建立好的濾鏡可以透過預覽程式於儲存或匯出 PDF 檔案時套用：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/200e4c26-c102-432f-9c4d-626274db5702_006.jpg&quot; alt=&quot;套用濾鏡&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;測試相關的參數以找出最符合使用情境的組合。你也可以建立多個客製化的濾鏡。&lt;/p&gt;
+</description>
+                <pubDate>Sun, 12 Jun 2022 14:39:14 +0800</pubDate>
+                <link>https://one.vg/tw/blog/reduce-pdf-size-with-quartz-filter</link>
+                <guid isPermaLink="true">https://one.vg/tw/blog/reduce-pdf-size-with-quartz-filter</guid>
+                
+                <category>Mac</category>
+                
+                <category>macOS</category>
+                
+                
+                <category>tw</category>
+                
+            </item>
+        
+            <item>
+                <title>Reduce PDF Size with Quartz Filter</title>
+                <description>&lt;p&gt;macOS has a built-in Quartz filter named “Reduce File Size”, which can be used to reducing the size of the file by recompressing graphics. It’s useful when you need to reduce the size of a high quality PDF for emailing or uploading to a website that has file size limitations.&lt;/p&gt;
+
+&lt;p&gt;But there’s a small issue: by default, this filter scales the image resolution by 50% and has a maximum width or height of 512 pixels, render most of the images way too blur to be readable. Fortunately, there’s a way to customize it to your needs.&lt;/p&gt;
+
+&lt;h2 id=&quot;modify-quartz-filters-in-colorsync-utility&quot;&gt;Modify Quartz filters in ColorSync Utility&lt;/h2&gt;
+
+&lt;p&gt;ColorSync Utility can be found in “Applications &amp;gt; Utilities” (or simply use Spotlight):&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/200e4c26-c102-432f-9c4d-626274db5702_001.jpg&quot; alt=&quot;ColorSync Utility Path&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;First, duplicate the existing “Reduce File Size” filter by clicking the duplicate button so we can have a modifiable copy:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/200e4c26-c102-432f-9c4d-626274db5702_002.jpg&quot; alt=&quot;Duplicate Filter&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Then rename and modify the newly created filter to adjust the target image quality:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/200e4c26-c102-432f-9c4d-626274db5702_003.jpg&quot; alt=&quot;Edit Filter&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;modify-quartz-filters-directly&quot;&gt;Modify Quartz Filters Directly&lt;/h2&gt;
+
+&lt;p&gt;Although the image compression is adjustable, we are unable to specify the quality factor/recompressing ratio as it’s set by a slider without percentage value. To edit the values directly, open Finder, locate the filter file at “&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/Library/Filters&lt;/code&gt;” (an easier way is via “Finder &amp;gt; Go &amp;gt; Go to Folder…” and paste the path):&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/200e4c26-c102-432f-9c4d-626274db5702_004.jpg&quot; alt=&quot;Locate Filter&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Open the “&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.qfilter&lt;/code&gt;” file with text editor that matched the one you created:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/200e4c26-c102-432f-9c4d-626274db5702_005.jpg&quot; alt=&quot;Edit Filter&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;You can then specify the values. The “Compression Quality” is between 0.0 and 1.0, higher means better quality.&lt;/p&gt;
+
+&lt;h2 id=&quot;apply-quartz-filters&quot;&gt;Apply Quartz Filters&lt;/h2&gt;
+
+&lt;p&gt;The created filter is accessible in Preview app when saving or exporting:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/200e4c26-c102-432f-9c4d-626274db5702_006.jpg&quot; alt=&quot;Apply Filter&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Test the values to find what works best for you. You can also have multiple customized filter.&lt;/p&gt;
+</description>
+                <pubDate>Sun, 12 Jun 2022 14:39:14 +0800</pubDate>
+                <link>https://one.vg/blog/reduce-pdf-size-with-quartz-filter</link>
+                <guid isPermaLink="true">https://one.vg/blog/reduce-pdf-size-with-quartz-filter</guid>
+                
+                <category>Mac</category>
+                
+                <category>macOS</category>
                 
                 
             </item>

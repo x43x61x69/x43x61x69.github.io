@@ -6,28 +6,30 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>文章列表 - 第 2 頁（共 2 頁） | One</title>
-  <meta name='description' content='Been there. Done that.'>
+  <title>透過 VNC 遠端管理 Steam Deck | One</title>
+  <meta name='description' content='如何為 Steam Deck 設置 x11vnc。'>
 
-  <link rel="canonical" href="https://one.vg/tw/page/2/">
+  <link rel="canonical" href="https://one.vg/tw/blog/remote-control-your-steam-deck">
   <link rel="alternate" type="application/rss+xml" title="One" href="/feed.xml">
+  <link rel="alternate" hreflang="en" href="/blog/remote-control-your-steam-deck">
+  <link rel="alternate" hreflang="zh" href="/tw/blog/remote-control-your-steam-deck">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="icon" type="image/png" href="/favicon.png">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="文章列表 - 第 2 頁（共 2 頁） | One">
-  <meta name="twitter:description" content="Been there. Done that.">
-  <meta name="twitter:image:src" content="https://one.vg/images/cover.jpg">
+  <meta name="twitter:title" content="透過 VNC 遠端管理 Steam Deck | One">
+  <meta name="twitter:description" content="如何為 Steam Deck 設置 x11vnc。">
+  <meta name="twitter:image:src" content="https://one.vg/images/dd78a6cb-ae31-4b93-9e0a-962e5c7988de_cover.jpg">
   <meta name="twitter:site" content="@x43x61x69">
   <meta name="twitter:creator" content="@x43x61x69">
 
   <!-- Facebook OpenGraph -->
-  <meta property="og:url" content="https://one.vg/tw/page/2/">
-  <meta property="og:title" content="文章列表 - 第 2 頁（共 2 頁） | One">
-  <meta property="og:description" content="Been there. Done that.">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="https://one.vg/images/cover.jpg">
+  <meta property="og:url" content="https://one.vg/tw/blog/remote-control-your-steam-deck">
+  <meta property="og:title" content="透過 VNC 遠端管理 Steam Deck | One">
+  <meta property="og:description" content="如何為 Steam Deck 設置 x11vnc。">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://one.vg/images/dd78a6cb-ae31-4b93-9e0a-962e5c7988de_cover.jpg">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -131,11 +133,11 @@
               
                 
                 <li class="nav__item dropdown">
-                  <a href="/page/2/" class="nav__link"><span class="nav__link dropdown-toggle"><ion-icon name="globe-sharp"></ion-icon> English<ion-icon size="small" name="chevron-down-sharp"></ion-icon></span></a>
+                  <a href="/blog/remote-control-your-steam-deck" class="nav__link"><span class="nav__link dropdown-toggle"><ion-icon name="globe-sharp"></ion-icon> English<ion-icon size="small" name="chevron-down-sharp"></ion-icon></span></a>
                   <div class="dropdown-menu">
                     
                     
-                    <a href="/page/2/" class="nav__link"><ion-icon size="small" name="radio-button-off-outline"></ion-icon> English</a>
+                    <a href="/blog/remote-control-your-steam-deck" class="nav__link"><ion-icon size="small" name="radio-button-off-outline"></ion-icon> English</a>
                     
                     
                     
@@ -198,89 +200,297 @@
 
   <!-- begin content -->
   <main class="content" aria-label="Content">
+    <div class="post-head post-image-right">
+  <div class="container">
+    <div class="row">
+
+      <div class="col col-6 col-d-12 post-head__info">
+        <div class="post__info">
+
+          
+          <div class="post__tags">
+            
+              
+              <a href="/tw/tags#steam deck" class="post__tag" style="background-color: #f36920;" >Steam Deck</a>
+            
+              
+              <a href="/tw/tags#gaming" class="post__tag" style="background-color: #f36920;" >電玩遊戲</a>
+            
+          </div>
+          
+
+          <h1 class="post__title">透過 VNC 遠端管理 Steam Deck</h1>
+
+          <div class="post__meta">
+            
+              <a href="/tw/about/" class="post__author">Cai</a>
+            
+            <time datetime="2023-01-02T04:37:17+08:00" class="post__date">02 Jan 2023</time>
+          </div>
+
+        </div>
+      </div>
+
+      
+      <div class="col col-6 col-d-12 post-head__image">
+        <div class="post-image">
+          <img class="lazy" data-src="/images/dd78a6cb-ae31-4b93-9e0a-962e5c7988de_cover.jpg" alt="透過 VNC 遠端管理 Steam Deck">
+        </div>
+      </div>
+      
+
+    </div>
+  </div>
+</div>
+
+<!-- begin post -->
+<div class="container animate">
+
+  <article class="post">
+
+    <div class="post__content">
+      
+        
+        
+        <div class="post__locale">
+          <p>
+            <ion-icon name="language-outline"></ion-icon> 本文亦提供以下語言版本：
+            
+              
+              
+                <a href="/blog/remote-control-your-steam-deck" class="locale en" title="View in English">English</a>
+              
+              
+              
+              
+            
+          </p>
+        </div>
+        <hr />
+        
+      
+      <p>Steam Deck 實際上就是一台內建了遊戲控制器的小型遊戲用個人電腦，搭載了類似遊戲主機介面的「遊戲模式」（Gaming Mode）來取代傳統電腦的「桌面模式」（Desktop Mode）。不過很難想像玩家們會願意為了它放棄自己的非 Steam 遊戲收藏，亦或那些目前不相容於 Steam 官方 Proton 轉譯層的遊戲。更多時候你會發現你需要經常性的在兩個模式間切換，但在 7 吋大的螢幕上使用桌面模式實在不是一個理想的方式；如果不想要被虛擬鍵盤佔據一半的螢幕，你還會需要一副額外的實體鍵盤。這些聽起來對於「玩遊戲」這件事而言實在有些繁瑣。</p>
+
+<p>幸運的是，SteamOS 3.x 本質上就是一個客製化版本的 Arch Linux，我們可以利用既有的 Linux 工具來讓我們的生活更容易一些：在你的電腦上遠端管理 Steam Deck 的桌面模式。</p>
+
+<h2 id="切換至桌面模式">切換至桌面模式</h2>
+
+<p>為了要安裝非 Steam 官方的軟體，我們需要先將主機切換至桌面模式。在 Steam Deck 上按一下 <img src="/images/dd78a6cb-ae31-4b93-9e0a-962e5c7988de_steam.svg" title="[Steam]" style="height: 1em !important" /> 鍵，接著於選單中選擇「<i>電源 &gt; 切換至桌面</i>」。桌面模式目前僅有英文介面。</p>
+
+<p><img src="/images/dd78a6cb-ae31-4b93-9e0a-962e5c7988de_001_tw.png" alt="切換至桌面模式" />
+<em>按一下 <img src="/images/dd78a6cb-ae31-4b93-9e0a-962e5c7988de_steam.svg" title="[Steam]" style="height: 1em !important" /> 鍵 &gt; 電源 &gt; 切換至桌面。</em></p>
+
+<h2 id="設定使用者密碼">設定使用者密碼</h2>
+
+<p>桌面模式中預設的使用者帳號 (<code class="language-plaintext highlighter-rouge">deck</code>) 並沒有設定密碼。不過為了之後要進行的操作所需我們必須先為它設置一個密碼。我們可以透過 SteamOS 的圖形介面（GUI）進行設定。這項操作建議使用外接鍵盤，但你也可以透過遊戲控制器上的 <img src="/images/dd78a6cb-ae31-4b93-9e0a-962e5c7988de_steam.svg" title="[Steam]" style="height: 1em !important" /> + <img src="/images/dd78a6cb-ae31-4b93-9e0a-962e5c7988de_x.svg" title="[X]" style="height: 1em !important" /> 組合鍵叫出虛擬鍵盤來使用。</p>
+
+<p><img src="/images/dd78a6cb-ae31-4b93-9e0a-962e5c7988de_002.png" alt="變更密碼" />
+<em>透過「Application Launcher &gt; Settings &gt; System Settings &gt; Users &gt; Your Account &gt; Change Password」來設定密碼。</em></p>
+
+<p>如果你偏好使用指令介面（CLI），也可以在 <em>Konsole</em> （位於「”<em>Application Launcher &gt; System &gt; Konsole</em>“」）中透過 <code class="language-plaintext highlighter-rouge">passwd</code> 指令來變更密碼。請注意指令介面下輸入的密碼不會顯示，輸入完後只要按下 <code class="language-plaintext highlighter-rouge">[Enter]</code> 鍵完成設定即可：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">(</span>deck@steamdeck ~<span class="o">)</span><span class="nv">$ </span>passwd
+New password:
+Retype new password:
+passwd: password updated successfully
+</code></pre></div></div>
+
+<h2 id="開啟-secure-shellssh">開啟 Secure Shell（SSH）</h2>
+
+<p>取自維基百科：</p>
+
+<blockquote>
+  <p>Secure Shell （簡稱 SSH）是一種加密的網路傳輸協定，可在不安全的網路中為網路服務提供安全的傳輸環境。常見的用途是遠端登入系統和遠端執行命令。</p>
+</blockquote>
+
+<p>SteamOS 內建了 SSH 服務但基於安全原因預設為停用。如果想要透過指令模式在電腦上遠端操作 Steam Deck，你可以選擇將它開啟。此步驟為選擇性。</p>
+
+<p>開啟的方式為在 <em>Konsole</em> 內使用下列指令，並依照提示輸入上一步中我們設定好的使用這密碼：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">(</span>deck@steamdeck ~<span class="o">)</span><span class="nv">$ </span><span class="nb">sudo </span>systemctl <span class="nb">enable </span>sshd.service
+Created symlink /etc/systemd/system/multi-user.target.wants/sshd.service → /usr/lib/systemd/system/sshd.service.
+<span class="o">(</span>deck@steamdeck ~<span class="o">)</span><span class="nv">$ </span><span class="nb">sudo </span>systemctl start sshd.service
+</code></pre></div></div>
+
+<p>「Enable」表示服務將會在下次開機起隨系統自動啟動，而「Start」表示會在目前的工作階段啟用服務。要停用或停止運行中的 SSH 服務，只需要將指令中的對應參數改為 <code class="language-plaintext highlighter-rouge">disable</code> 或 <code class="language-plaintext highlighter-rouge">stop</code> 即可。基於安全因素，建議在不使用時將此服務關閉。</p>
+
+<h4 id="decky-loader">Decky Loader</h4>
+
+<p>SteamOS 在系統更新時會將 <code class="language-plaintext highlighter-rouge">/home</code>（使用者個人目錄，包含系統本身以外的使用者相關的資料和設定值）之外的系統檔案全部還原回初始狀態，上述的變更在每次系統更新後都需要再次執行。如果不想要每次更新後都重複這些步驟（記錄顯示，SteamOS 在首年內推出了 90 次系統更新），可以考慮安裝「<a href="https://github.com/SteamDeckHomebrew/decky-loader">Decky Loader</a>」和其中的「System Toolbox」套件以便直接在遊戲模式下開啟或關閉 SSH 服務，且不用擔心系統更新後需要重新手動設定。</p>
+
+<p><img src="/images/dd78a6cb-ae31-4b93-9e0a-962e5c7988de_003.png" alt="Decky Loader" />
+<em>Decky Loader 和 System Toolbox 套件。</em></p>
+
+<h2 id="設置-virtual-network-computingvnc">設置 Virtual Network Computing（VNC）</h2>
+
+<p>取自維基百科：</p>
+
+<blockquote>
+  <p>Virtual Network Computing（簡稱 VNC），為一種使用 RFB 協定的圖形化桌面分享及遠端操作軟體。此軟體藉由網路，可傳送鍵盤與滑鼠的動作及即時的螢幕畫面。</p>
+</blockquote>
+
+<p>簡而言之，它可以讓你在電腦上遠端操作你的 Steam Deck 桌面模式。SteamOS 目前無任何內建的 VNC 伺服器，也未在 Flathub（系統內建的 App Store）內提供，所以我們必須要透過 Arch Linux 的套件管理工具 <a href="https://wiki.archlinux.org/title/pacman"><code class="language-plaintext highlighter-rouge">pacman</code></a> 來安裝。</p>
+
+<p>有鑒於這個流程及其冗長乏味且每次系統更新後都需要重新執行，這裡提供一個自動化<a href="https://gist.github.com/x43x61x69/9a5a231a25426e8a2cc0f7c24cfdaed9">指令代碼</a>。只要將下方的指令貼在 <em>Konsole</em> 內執行（需要網路連線。另外，由於 GitHub 網址路徑很長，你可以選擇直接於 Steam Deck 桌面模式中的瀏覽器內瀏覽本文章來複製貼上這行指令，或者透過 SSH 來執行）：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sh <span class="nt">-c</span> <span class="s2">"</span><span class="si">$(</span>curl <span class="nt">-fsSL</span> https://gist.githubusercontent.com/x43x61x69/9a5a231a25426e8a2cc0f7c24cfdaed9/raw/vnc_install.sh?<span class="nv">$RANDOM</span><span class="si">)</span><span class="s2">"</span>
+</code></pre></div></div>
+
+<p>這個指令代碼會為再次安裝建立快捷方式，往後將不會再需要複製此指令。一旦執行完成，桌面上將會出現一個新的「VNC」資料夾，其中包含所有你需要的功能快捷方式，需要時只要雙擊圖示即可。例如：雙擊「<em>Start VNC</em>」將會啟動 VNC 服務（螢幕上不會顯示任何東西，但實際上有在運行）。現在你可以透過 VNC 檢視程式來遠端連線至 Steam Deck 的 IP 位置。在 macOS 中，內建了一個名為「<em>螢幕共享</em>」的 VNC 檢視程式：</p>
+
+<p><img src="/images/dd78a6cb-ae31-4b93-9e0a-962e5c7988de_004.png" alt="螢幕共享" />
+<em>透過 macOS 內建的「螢幕共享」來遠端存取 Steam Deck。</em></p>
+
+<h4 id="這個指令代碼包含什麼功能">這個指令代碼包含什麼功能？</h4>
+
+<ul>
+  <li>自動開啟與關閉 SteamOS 系統的唯讀保護。</li>
+  <li>初始化 <code class="language-plaintext highlighter-rouge">pacman</code> 的金鑰。</li>
+  <li>安裝 x11vnc 伺服器。</li>
+  <li>建立啟動與停用 VNC 服務的快捷方式。</li>
+  <li>建立重設 VNC 密碼的快捷方式。</li>
+  <li>建立系統更新後重新安裝 VNC 快捷方式。</li>
+  <li>建立登入後自動啟動 VNC 服務的指令代碼。</li>
+</ul>
+
+<p>只個指令代碼可以安全地重複執行，所以不必擔心初期操作失敗。</p>
+
+<h4 id="啟動後自動執行">啟動後自動執行</h4>
+
+<p>部分的人會建議設置一個系統服務來讓 VNC 服務自動啟動。但為求簡潔起見，這裡建議透過圖形介面來設定：</p>
+
+<ul>
+  <li><em>Application Launcher &gt; System &gt; System Settings &gt; Startup and Shutdown &gt; + Add… &gt; Login Script</em>.</li>
+  <li>選擇桌面「VNC」資料夾中的「<code class="language-plaintext highlighter-rouge">vnc_startup.sh</code>」。</li>
+</ul>
+
+<p><img src="/images/dd78a6cb-ae31-4b93-9e0a-962e5c7988de_005.png" alt="啟動指令代碼" /></p>
+
+<p>當然，這個步驟是選擇性的。你也可以選擇透過快捷方式手動啟用或停用 VNC 服務。</p>
+
+    </div>
+
+    <div class="post__share">
+      <ul class="share__list list-reset">
+        <li class="share__item">
+          <a class="share__link share__twitter"
+            href="https://twitter.com/intent/tweet?text=%E9%80%8F%E9%81%8E%20VNC%20%E9%81%A0%E7%AB%AF%E7%AE%A1%E7%90%86%20Steam%20Deck&url=https://one.vg/tw/blog/remote-control-your-steam-deck"
+            onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"
+            title="在 Twitter 上分享此文章" rel="nofollow"><ion-icon size="small" name="logo-twitter"></ion-icon></a>
+        </li>
+        <li class="share__item">
+          <a class="share__link share__facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://one.vg/tw/blog/remote-control-your-steam-deck"
+            onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"
+            title="在 Facebook 上分享此文章" rel="nofollow"><ion-icon name="logo-facebook"></ion-icon></a>
+        </li>
+      </ul>
+    </div>
+
     
+    
+    
+
+    
+
+    <div class="post__navigation">
+      
+
+      
+      <a class="next" href="/tw/blog/apple-file-system-firmlink-black-magic" style="background-color: #292F36;">
+        <img class="post__nav-image lazy" data-src="/images/719906d8-a991-4ef4-9d9e-d4232a47a612_cover.jpg" alt="Apple 檔案系統（APFS）的 Firmlink 黑魔法">
+        <div class="post__image__cover image-cover-js" data-accent="#292F36"></div>
+        <div class="post__nav-box">
+          <div class="post__nav post__nav__next">下一篇文章</div>
+          <h4 class="post__nav__title">Apple 檔案系統（APFS）的 Firmlink 黑魔法</h4>
+        </div>
+      </a>
+      
+    </div>
+
+  </article>
+</div>
+<!-- end post -->
+
+
 
 <div class="container">
-  <div class="row animate">
+  <div class="row">
+    <div class="col col-12">
     
-      <div class="article col  col-4 col-d-6 col-t-12">
-  <div class="article__inner">
+    <!-- begin comments -->
+<div class="show-comments animate" id="show-comments" style="display: none;">
+  <button class="button button--middle button--rounded" id="show-comments-button" onclick="load_comments();return false;">載入留言</button>
+</div>
 
+<div id="comments" class="post__comments">
+  <noscript>請開啟 JavaScript 功能以檢視留言。</noscript>
+</div>
 
-    <a class="article__image" href="/tw/blog/install-macos-ventura-beta-in-vmware-fusion" style="background-color: #f73535;">
-      
-      <div class="article__image__cover image-cover-js" data-accent="#f73535"></div>
-      <img class="lazy" data-src="/images/8187bc26-3fab-4947-be03-2fac6c048001_cover.jpg" alt="在 VMware Fusion 中安裝 macOS Ventura 預覽版">
-      
-    </a>
-
-    <div class="article__content">
-
-      
-      <div class="article__tags">
-        
-          
-          <a href="/tw/tags#mac" class="article__tag" style="background-color: #f73535;">Mac</a>
-        
-          
-          <a href="/tw/tags#macos" class="article__tag" style="background-color: #f73535;">macOS</a>
-        
-      </div>
-      
-
-      <h2 class="article__title">
-        <a href="/tw/blog/install-macos-ventura-beta-in-vmware-fusion">在 VMware Fusion 中安裝 macOS Ventura 預覽版</a>
-      </h2>
-
-      <div class="article__meta">
-        
-        <a href="/tw/about/" class="article__author">Cai</a>
-        
-        <time datetime="2022-06-08T14:54:24+08:00" class="article__date" >08 Jun 2022</time>
-      </div>
-
+<script>
+  var comments_loaded = false;
+  var comments_container = document.getElementById("comments");
+  document.getElementById("show-comments").style.display = "block";
+  if (window.location.hash == '#comments'){
+    load_comments();
+  }
+  function load_comments() {
+    if (!comments_loaded) {
+      comments_loaded = true;
+      window.location.hash = '#comments';
+      var e = document.createElement("script");
+      e.type = "text/javascript";
+      e.async = true;
+      e.src = "https://giscus.app/client.js";
+      e.setAttribute("data-repo", "x43x61x69/blog-comments");
+      e.setAttribute("data-repo-id", "R_kgDOHjXgmw");
+      e.setAttribute("data-category", "General");
+      e.setAttribute("data-category-id", "DIC_kwDOHjXgm84CP2Zd");
+      e.setAttribute("data-mapping", "specific");
+      e.setAttribute("data-term", "dd78a6cb-ae31-4b93-9e0a-962e5c7988de");
+      e.setAttribute("data-reactions-enabled", "0");
+      e.setAttribute("data-emit-metadata", "0");
+      e.setAttribute("data-input-position", "top");
+      e.setAttribute("data-theme", "https://one.vg/css/transparent_dark.css");
+      e.setAttribute("data-lang", "zh-TW");
+      e.setAttribute("data-loading", "lazy");
+      e.setAttribute("crossOrigin", "anonymous");
+      document.getElementById("comments").appendChild(e);
+      // Hide the button after opening
+      document.getElementById("show-comments-button").style.display = "none";
+      // Show comments
+      comments_container.classList.add("is-open");
+    }
+  }
+</script>
+<!-- end comments -->
+    
     </div>
   </div>
 </div>
-    
-  </div>
-</div>
 
-<!-- begin pagination -->
-<nav class="pagination animate">
-  <div class="container">
-    <div class="pagination__list">
 
-      
-
-        
-          <a class="previous-link" href="/tw/"><ion-icon name="arrow-back-sharp"></ion-icon></a>
-        
-
-      
-
-      <div class="counter-box">
-        
+<!-- begin related posts -->
+<div class="container">
+  <section class="related-posts  animate">
+    <div class="row">
+      <div class="col col-12">
+        <div class="container__inner">
+          <div class="section__info">
+            <div class="section__head">
+              <h2 class="section__title">您可能也喜歡</h2>
+                <a href="/tw/tags#steam deck" class="section__link related-tag">檢視所有 <span>Steam Deck</span></a>
+                  </div>
+          </div>
+          <div class="row">
           
-            <a class="back-link" href="/tw/">1</a>
-          
-
-
-          
-
-          
-            <span class="active-link">2</span>
-            
-          
-        
+          </div>
+        </div>
       </div>
-
-      
-
     </div>
-  </div>
-</nav>
-<!-- end pagination -->
+  </section>
+</div>
+<!-- end related posts -->
+
 
   </main>
   <!-- end content -->
@@ -314,10 +524,6 @@
         </li>
         
         <li class="social__item">
-          <a class="social__link" href="https://www.reddit.com/user/x43x61x69" target="_blank" rel="noopener" aria-label="social icon"><ion-icon name="logo-reddit"></ion-icon></a>
-        </li>
-        
-        <li class="social__item">
           <a class="social__link" href="https://stackoverflow.com/users/3642077/cai?tab=profile" target="_blank" rel="noopener" aria-label="social icon"><ion-icon name="logo-stackoverflow"></ion-icon></a>
         </li>
         
@@ -342,6 +548,36 @@
     </div>
 
     
+    
+    <div class="recent-posts">
+      
+        <a class="recent-posts__image" href="/tw/blog/remote-control-your-steam-deck" style="background-color: #f36920;"><img class="lazy" data-src="/images/dd78a6cb-ae31-4b93-9e0a-962e5c7988de_cover.jpg" alt="透過 VNC 遠端管理 Steam Deck"></a>
+      
+      <div class="recent-posts__content">
+        <div class="article__meta">
+          
+          <div class="article__tags">
+            
+              
+              <a href="/tw/tags#steam deck" class="article__tag" style="background-color: #f36920;">Steam Deck</a>
+            
+              
+              <a href="/tw/tags#gaming" class="article__tag" style="background-color: #f36920;">電玩遊戲</a>
+            
+          </div>
+          
+        </div>
+        <h4 class="recent-posts__title"><a href="/tw/blog/remote-control-your-steam-deck">透過 VNC 遠端管理 Steam Deck</a></h4>
+        <div class="article__bottom">
+          <div class="article__meta">
+            
+            <a href="/about/" class="article__author">Cai</a>
+            
+            <time datetime="2023-01-02T04:37:17+08:00" class="article__date">02 Jan 2023</time>
+          </div>
+        </div>
+      </div>
+    </div>
     
     <div class="recent-posts">
       
@@ -373,36 +609,6 @@
       </div>
     </div>
     
-    <div class="recent-posts">
-      
-        <a class="recent-posts__image" href="/tw/blog/change-windows-on-arm-display-resolution-in-vmware" style="background-color: #b89987;"><img class="lazy" data-src="/images/c8175a71-7b27-47fa-9de6-d6c41f3b2509_cover.jpg" alt="調整 VMware 中 Windows 11 on ARM 顯示器解析度"></a>
-      
-      <div class="recent-posts__content">
-        <div class="article__meta">
-          
-          <div class="article__tags">
-            
-              
-              <a href="/tw/tags#vmware" class="article__tag" style="background-color: #b89987;">VMware</a>
-            
-              
-              <a href="/tw/tags#windows" class="article__tag" style="background-color: #b89987;">Windows</a>
-            
-          </div>
-          
-        </div>
-        <h4 class="recent-posts__title"><a href="/tw/blog/change-windows-on-arm-display-resolution-in-vmware">調整 VMware 中 Windows 11 on ARM 顯示器解析度</a></h4>
-        <div class="article__bottom">
-          <div class="article__meta">
-            
-            <a href="/about/" class="article__author">Cai</a>
-            
-            <time datetime="2022-07-12T16:35:50+08:00" class="article__date">12 Jul 2022</time>
-          </div>
-        </div>
-      </div>
-    </div>
-    
 
   </div>
 </div>
@@ -423,7 +629,7 @@
     <div class="row">
       <div class="col col-12">
         <div class="footer__inner">
-          <div class="copyright">版權所有 &copy; 2022 Cai。保留一切權利。</div>
+          <div class="copyright">版權所有 &copy; 2023 Cai。保留一切權利。</div>
         </div>
       </div>
     </div>
