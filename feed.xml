@@ -5,8 +5,8 @@
         <description></description>
         <link>https://one.vg/</link>
         <atom:link href="https://one.vg/feed.xml" rel="self" type="application/rss+xml"/>
-        <pubDate>Mon, 02 Jan 2023 06:18:49 +0800</pubDate>
-        <lastBuildDate>Mon, 02 Jan 2023 06:18:49 +0800</lastBuildDate>
+        <pubDate>Mon, 02 Jan 2023 09:11:24 +0800</pubDate>
+        <lastBuildDate>Mon, 02 Jan 2023 09:11:24 +0800</lastBuildDate>
         <generator>Jekyll v4.2.2</generator>
         
             <item>
@@ -29,7 +29,7 @@
 &lt;p&gt;&lt;img src=&quot;/images/dd78a6cb-ae31-4b93-9e0a-962e5c7988de_002.png&quot; alt=&quot;變更密碼&quot; /&gt;
 &lt;em&gt;透過「Application Launcher &amp;gt; Settings &amp;gt; System Settings &amp;gt; Users &amp;gt; Your Account &amp;gt; Change Password」來設定密碼。&lt;/em&gt;&lt;/p&gt;
 
-&lt;p&gt;如果你偏好使用指令介面（CLI），也可以在 &lt;em&gt;Konsole&lt;/em&gt; （位於「”&lt;em&gt;Application Launcher &amp;gt; System &amp;gt; Konsole&lt;/em&gt;“」）中透過 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;passwd&lt;/code&gt; 指令來變更密碼。請注意指令介面下輸入的密碼不會顯示，輸入完後只要按下 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[Enter]&lt;/code&gt; 鍵完成設定即可：&lt;/p&gt;
+&lt;p&gt;如果你偏好使用指令介面（CLI），也可以在 &lt;em&gt;Konsole&lt;/em&gt; （位於「&lt;em&gt;Application Launcher &amp;gt; System &amp;gt; Konsole&lt;/em&gt;」）中透過 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;passwd&lt;/code&gt; 指令來變更密碼。請注意指令介面下輸入的密碼不會顯示，輸入完後只要按下 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[Enter]&lt;/code&gt; 鍵完成設定即可：&lt;/p&gt;
 
 &lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;deck@steamdeck ~&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;passwd
 New password:
